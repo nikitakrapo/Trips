@@ -4,14 +4,14 @@ plugins {
 }
 
 android {
-    compileSdk 31
+    compileSdk AppConfig.compileSdk
 
     defaultConfig {
         applicationId "com.nikitakrapo.android.trips"
-        minSdk 23
-        targetSdk 31
+        minSdk AppConfig.minSdk
+        targetSdk AppConfig.targetSdk
         versionCode 1
-        versionName "1.0"
+        versionName "0.0.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -37,8 +37,8 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_version
-        kotlinCompilerVersion '1.5.21'
+        kotlinCompilerExtensionVersion Versions.compose
+        kotlinCompilerVersion Config.kotlinCompiler
     }
     packagingOptions {
         resources {
@@ -48,18 +48,22 @@ android {
 }
 
 dependencies {
+    implementation(AndroidXLibs.coreCtx)
+    implementation(AndroidXLibs.appCompat)
+    implementation(AndroidXLibs.lifecycleRuntimeCtx)
+    implementation(AndroidXLibs.activityCompose)
 
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.4.0'
-    implementation 'com.google.android.material:material:1.5.0'
-    implementation AndroidXLibs.composeUi
-    implementation AndroidXLibs.composeMaterial
-    implementation AndroidXLibs.composeUiToolingPreview
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.0'
-    implementation 'androidx.activity:activity-compose:1.4.0'
-    testImplementation 'junit:junit:4.+'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
-    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
-    debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
+    implementation(AndroidXCompose.composeMaterial)
+    implementation(AndroidXCompose.composeUiToolingPreview)
+    implementation(AndroidXCompose.composeUi)
+    debugImplementation(AndroidXCompose.composeUiTooling)
+    androidTestImplementation(AndroidXCompose.composeUiTestJunit4)
+
+    implementation(GoogleLibs.androidMaterial)
+
+    testImplementation(JUnit.jUnit)
+
+    androidTestImplementation(AndroidXTest.androidExtJUnit)
+
+    androidTestImplementation(Espresso.espressoCore)
 }
