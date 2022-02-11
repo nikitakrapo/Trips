@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Trips</string>
+    <string name="explore_screen_title">Explore</string>
+    <string name="trips_screen_title">Trips</string>
+    <string name="profile_screen_title">Profile</string>
+    <string name="cd_profile_picture">Profile picture</string>
+    <string name="cd_search">Search</string>
+    <string name="cd_more_icon">More</string>
 </resources>

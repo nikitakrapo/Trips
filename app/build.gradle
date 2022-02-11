@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -53,13 +54,22 @@ dependencies {
     implementation(AndroidXLibs.lifecycleRuntimeCtx)
     implementation(AndroidXLibs.activityCompose)
 
-    implementation(AndroidXCompose.composeMaterial)
-    implementation(AndroidXCompose.composeUiToolingPreview)
-    implementation(AndroidXCompose.composeUi)
-    debugImplementation(AndroidXCompose.composeUiTooling)
-    androidTestImplementation(AndroidXCompose.composeUiTestJunit4)
+    implementation(JetpackComposeLibs.material)
+    implementation(JetpackComposeLibs.uiToolingPreview)
+    implementation(JetpackComposeLibs.ui)
+    implementation(JetpackComposeLibs.constraintLayout)
+    implementation(JetpackComposeLibs.material3)
+    implementation(JetpackComposeLibs.navigation)
+    debugImplementation(JetpackComposeLibs.uiTooling)
+    androidTestImplementation(JetpackComposeLibs.uiTestJunit4)
 
+    implementation(GoogleLibs.dagger2)
+    kapt(GoogleLibs.daggerCompiler)
+    implementation(GoogleLibs.gson)
     implementation(GoogleLibs.androidMaterial)
+    implementation(GoogleLibs.accompanistSystemUiController)
+
+    implementation(Landscapist.glide)
 
     testImplementation(JUnit.jUnit)
 
