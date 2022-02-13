@@ -69,6 +69,8 @@ dependencies {
     implementation(GoogleLibs.androidMaterial)
     implementation(GoogleLibs.accompanistSystemUiController)
 
+    implementation(JakeWhartonLibs.timber)
+
     implementation(Landscapist.glide)
 
     testImplementation(JUnit.jUnit)

@@ -1,6 +1,5 @@
-package com.nikitakrapo.android.trips.ui.elements
+package com.nikitakrapo.android.trips.ui.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -9,8 +8,6 @@ import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -19,8 +16,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.nikitakrapo.android.trips.R
-import com.nikitakrapo.android.trips.ui.theme.DarkGray
-import com.nikitakrapo.android.trips.ui.theme.NikisBlack
 import com.nikitakrapo.android.trips.ui.theme.TripsTheme
 import com.skydoves.landscapist.glide.GlideImage
 
@@ -113,7 +108,6 @@ fun AccommodationsListItem(
                 },
             text = "Ateshgah Residence", //FIXME
             fontSize = 14.sp,
-            color = NikisBlack
         )
 
         Text(
@@ -124,7 +118,6 @@ fun AccommodationsListItem(
                 },
             text = "Barvikha st. 42, 620017", //FIXME
             fontSize = 12.sp,
-            color = DarkGray
         )
 
         Text(
@@ -135,7 +128,6 @@ fun AccommodationsListItem(
                 },
             text = "5 Jul 14:00 - 8 Jul 14:00", //FIXME
             fontSize = 9.sp,
-            color = DarkGray
         )
     }
 }

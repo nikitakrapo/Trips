@@ -2,8 +2,7 @@ package com.nikitakrapo.android.trips
 
 import android.app.Application
 import android.content.Context
-import com.nikitakrapo.android.trips.di.AppComponent
-import com.nikitakrapo.android.trips.di.DaggerAppComponent
+import timber.log.Timber
 
 class TripsApplication : Application() {
 
@@ -12,6 +11,9 @@ class TripsApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         appComponent = DaggerAppComponent.create()
+        if (BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
+        }
     }
 }
 

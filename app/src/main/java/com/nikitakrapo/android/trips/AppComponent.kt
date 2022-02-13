@@ -1,6 +1,6 @@
-package com.nikitakrapo.android.trips.di
+package com.nikitakrapo.android.trips
 
-import com.nikitakrapo.android.trips.MainActivity
+import com.nikitakrapo.android.trips.ui.MainActivity
 import dagger.Component
 
 @Component

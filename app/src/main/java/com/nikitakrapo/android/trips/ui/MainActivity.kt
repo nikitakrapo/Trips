@@ -1,18 +1,14 @@
-package com.nikitakrapo.android.trips
+package com.nikitakrapo.android.trips.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.SideEffect
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.nikitakrapo.android.trips.ui.TripsApp
+import com.nikitakrapo.android.trips.appComponent
 import com.nikitakrapo.android.trips.ui.theme.TripsTheme
 
 class MainActivity : ComponentActivity() {
@@ -21,11 +17,11 @@ class MainActivity : ComponentActivity() {
         appComponent.inject(this)
         setContent {
             TripsTheme {
-                Surface(color = MaterialTheme.colors.background) {
+                Surface(color = MaterialTheme.colorScheme.background) {
                     val systemUiController = rememberSystemUiController()
-                    val isLight = MaterialTheme.colors.isLight
-                    val surfaceColor = MaterialTheme.colors.surface
-                    val backgroundColor = MaterialTheme.colors.background
+                    val isLight = !isSystemInDarkTheme()
+                    val surfaceVariant = MaterialTheme.colorScheme.surfaceVariant
+                    val backgroundColor = MaterialTheme.colorScheme.background
 
                     SideEffect {
                         systemUiController.setStatusBarColor(
@@ -34,7 +30,7 @@ class MainActivity : ComponentActivity() {
                         )
 
                         systemUiController.setNavigationBarColor(
-                            color = surfaceColor,
+                            color = surfaceVariant,
                             darkIcons = isLight
                         )
                     }

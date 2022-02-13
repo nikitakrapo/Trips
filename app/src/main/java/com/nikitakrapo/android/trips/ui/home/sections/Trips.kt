@@ -1,13 +1,12 @@
-package com.nikitakrapo.android.trips.ui.screens
+package com.nikitakrapo.android.trips.ui.home.sections
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavController
 
 @Composable
-fun TripsScreen(
+fun Trips(
     modifier: Modifier = Modifier
 ) {
     Text(

@@ -19,6 +19,10 @@ object JetpackComposeLibs {
     const val material3 = "androidx.compose.material3:material3:${Versions.composeMaterial3}"
 }
 
+object JakeWhartonLibs {
+    const val timber = "com.jakewharton.timber:timber:${Versions.timber}"
+}
+
 object AndroidXTest {
     const val androidExtJUnit = "androidx.test.ext:junit:${Versions.androidExtJUnit}"
 }
