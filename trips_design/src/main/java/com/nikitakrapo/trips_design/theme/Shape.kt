@@ -1,4 +1,4 @@
-package com.nikitakrapo.android.trips.ui.theme
+package com.nikitakrapo.trips_design.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes

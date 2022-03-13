@@ -9,7 +9,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.SideEffect
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.nikitakrapo.android.trips.appComponent
-import com.nikitakrapo.android.trips.ui.theme.TripsTheme
+import com.nikitakrapo.trips_design.theme.TripsTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

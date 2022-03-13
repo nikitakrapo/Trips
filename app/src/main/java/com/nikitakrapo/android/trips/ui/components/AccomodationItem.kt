@@ -20,7 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.nikitakrapo.android.trips.R
-import com.nikitakrapo.android.trips.ui.theme.TripsTheme
+import com.nikitakrapo.trips_design.theme.TripsTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

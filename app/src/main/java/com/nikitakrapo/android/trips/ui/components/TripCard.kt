@@ -14,7 +14,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import com.nikitakrapo.android.trips.R
 import com.nikitakrapo.android.trips.ui.home.sections.trips.Trip
 import com.nikitakrapo.android.trips.ui.noRippleClickable
-import com.nikitakrapo.android.trips.ui.theme.TripsTheme
+import com.nikitakrapo.trips_design.theme.TripsTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

@@ -1,7 +1,6 @@
-package com.nikitakrapo.android.trips.ui.theme
+package com.nikitakrapo.trips_design.theme
 
 import androidx.compose.ui.graphics.Color
-
 
 val md_theme_light_primary = Color(0xFF9b4427)
 val md_theme_light_onPrimary = Color(0xFFffffff)

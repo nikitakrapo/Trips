@@ -1,4 +1,4 @@
-package com.nikitakrapo.android.trips.ui.theme
+package com.nikitakrapo.trips_design.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.darkColors
@@ -7,8 +7,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-import com.nikitakrapo.trips_design.theme.Typography
-import com.nikitakrapo.trips_design.theme.TypographyM2
 
 
 private val LightSchemeColors = lightColorScheme(

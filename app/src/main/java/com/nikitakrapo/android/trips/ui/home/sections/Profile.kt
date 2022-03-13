@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.nikitakrapo.android.trips.R
-import com.nikitakrapo.android.trips.ui.theme.TripsTheme
+import com.nikitakrapo.trips_design.theme.TripsTheme
 
 @Composable
 fun Profile(
