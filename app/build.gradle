@@ -2,15 +2,16 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 
 android {
-    compileSdk AppConfig.compileSdk
+    compileSdk Config.compileSdk
 
     defaultConfig {
         applicationId "com.nikitakrapo.android.trips"
-        minSdk AppConfig.minSdk
-        targetSdk AppConfig.targetSdk
+        minSdk Config.minSdk
+        targetSdk Config.targetSdk
         versionCode 1
         versionName "0.0.1"
 
@@ -49,27 +50,37 @@ android {
 }
 
 dependencies {
-    implementation(AndroidXLibs.coreCtx)
-    implementation(AndroidXLibs.appCompat)
-    implementation(AndroidXLibs.lifecycleRuntimeCtx)
-    implementation(AndroidXLibs.activityCompose)
+    implementation(AndroidX.coreCtx)
+    implementation(AndroidX.appCompat)
+    implementation(AndroidX.lifecycleRuntimeCtx)
+    implementation(AndroidX.activityCompose)
 
-    implementation(JetpackComposeLibs.material)
-    implementation(JetpackComposeLibs.uiToolingPreview)
-    implementation(JetpackComposeLibs.ui)
-    implementation(JetpackComposeLibs.constraintLayout)
-    implementation(JetpackComposeLibs.material3)
-    implementation(JetpackComposeLibs.navigation)
-    debugImplementation(JetpackComposeLibs.uiTooling)
-    androidTestImplementation(JetpackComposeLibs.uiTestJunit4)
+    implementation(AndroidX.roomRuntime)
+    kapt(AndroidX.roomCompiler)
 
-    implementation(GoogleLibs.dagger2)
-    kapt(GoogleLibs.daggerCompiler)
-    implementation(GoogleLibs.gson)
-    implementation(GoogleLibs.androidMaterial)
-    implementation(GoogleLibs.accompanistSystemUiController)
+    implementation(JetpackCompose.material)
+    implementation(JetpackCompose.uiToolingPreview)
+    implementation(JetpackCompose.ui)
+    implementation(JetpackCompose.constraintLayout)
+    implementation(JetpackCompose.material3)
+    implementation(JetpackCompose.navigation)
+    debugImplementation(JetpackCompose.uiTooling)
+    debugImplementation(JetpackCompose.uiTestManifest)
+    androidTestImplementation(JetpackCompose.uiTestJunit4)
 
-    implementation(JakeWhartonLibs.timber)
+    implementation(Google.dagger2)
+    kapt(Google.daggerCompiler)
+    implementation(Google.gson)
+    implementation(Google.androidMaterial)
+    implementation(Google.accompanistSystemUiController)
+    implementation(Google.accompanistSwipeRefresh)
+    implementation(Google.accompanistNavigationAnimation)
+    implementation(Google.accompanistNavigationMaterial)
+    implementation(Google.accompanistInsets)
+    implementation(Google.maps)
+    implementation(Google.playServicesMaps)
+
+    implementation(JakeWharton.timber)
 
     implementation(Landscapist.glide)
 
@@ -78,4 +89,6 @@ dependencies {
     androidTestImplementation(AndroidXTest.androidExtJUnit)
 
     androidTestImplementation(Espresso.espressoCore)
+
+    implementation(project(Features.tripsDesign))
 }

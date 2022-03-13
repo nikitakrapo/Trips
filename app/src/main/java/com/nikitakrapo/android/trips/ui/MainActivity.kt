@@ -20,17 +20,17 @@ class MainActivity : ComponentActivity() {
                 Surface(color = MaterialTheme.colorScheme.background) {
                     val systemUiController = rememberSystemUiController()
                     val isLight = !isSystemInDarkTheme()
-                    val surfaceVariant = MaterialTheme.colorScheme.surfaceVariant
-                    val backgroundColor = MaterialTheme.colorScheme.background
 
+                    val statusBarColor = MaterialTheme.colorScheme.background
+                    val navBarColor = MaterialTheme.colorScheme.surfaceVariant
                     SideEffect {
                         systemUiController.setStatusBarColor(
-                            color = backgroundColor,
+                            color = statusBarColor,
                             darkIcons = isLight
                         )
 
                         systemUiController.setNavigationBarColor(
-                            color = surfaceVariant,
+                            color = navBarColor,
                             darkIcons = isLight
                         )
                     }

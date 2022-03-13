@@ -2,31 +2,32 @@ package com.nikitakrapo.android.trips.ui.components
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.nikitakrapo.android.trips.R
+import com.nikitakrapo.android.trips.ui.home.sections.trips.Trip
+import com.nikitakrapo.android.trips.ui.noRippleClickable
 import com.nikitakrapo.android.trips.ui.theme.TripsTheme
-import com.skydoves.landscapist.glide.GlideImage
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TripCard(
     modifier: Modifier = Modifier,
-    openTripScreen: (Unit) -> Unit = {}
+    tripCardState: TripCardState,
+    onClick: (Trip) -> Unit = {}
 ) {
     Card(
-        modifier = modifier,
-        elevation = 8.dp,
+        modifier = modifier
+            .noRippleClickable {
+                onClick(tripCardState.trip)
+            },
         shape = RoundedCornerShape(10.dp)
     ) {
         ConstraintLayout(
@@ -45,9 +46,8 @@ fun TripCard(
                         top.linkTo(parent.top, margin = 16.dp)
                         start.linkTo(parent.start, margin = 16.dp)
                     },
-                text = "Ekaterinburg - Tbilisi",
-                fontWeight = FontWeight.Medium,
-                fontSize = 20.sp
+                text = tripCardState.trip.name,
+                style = MaterialTheme.typography.titleLarge
             )
 
             Text(
@@ -55,10 +55,10 @@ fun TripCard(
                     .constrainAs(tripDates) {
                         top.linkTo(tripTitle.bottom)
                         start.linkTo(tripTitle.start)
+                        bottom.linkTo(parent.bottom, margin = 16.dp) // FIXME: remove
                     },
-                text = "5 Jul - 12 Jul",
-                fontWeight = FontWeight.Normal,
-                fontSize = 14.sp
+                text = tripCardState.trip.dates,
+                style = MaterialTheme.typography.bodyLarge
             )
 
             IconButton(
@@ -79,59 +79,6 @@ fun TripCard(
     }
 }
 
-@Composable
-fun AccommodationsListItem(
-    modifier: Modifier = Modifier,
-) {
-    ConstraintLayout(
-        modifier = modifier
-    ) {
-        val (image, title, location, dates) = createRefs()
-
-        GlideImage(
-            modifier = Modifier
-                .constrainAs(image) {
-                    top.linkTo(parent.top)
-                    start.linkTo(parent.start)
-                }
-                .size(width = 96.dp, height = 56.dp)
-                .clip(shape = RoundedCornerShape(5.dp)),
-            imageModel = "",
-            contentScale = ContentScale.FillBounds
-        )
-
-        Text(
-            modifier = Modifier
-                .constrainAs(title) {
-                    top.linkTo(image.top)
-                    start.linkTo(image.end, margin = 8.dp)
-                },
-            text = "Ateshgah Residence", //FIXME
-            fontSize = 14.sp,
-        )
-
-        Text(
-            modifier = Modifier
-                .constrainAs(location) {
-                    top.linkTo(title.bottom)
-                    start.linkTo(title.start)
-                },
-            text = "Barvikha st. 42, 620017", //FIXME
-            fontSize = 12.sp,
-        )
-
-        Text(
-            modifier = Modifier
-                .constrainAs(dates) {
-                    bottom.linkTo(parent.bottom)
-                    start.linkTo(title.start)
-                },
-            text = "5 Jul 14:00 - 8 Jul 14:00", //FIXME
-            fontSize = 9.sp,
-        )
-    }
-}
-
 @Preview
 @Composable
 fun TripCardPreview() {
@@ -140,35 +87,21 @@ fun TripCardPreview() {
             modifier = Modifier
                 .height(744.dp)
                 .width(360.dp),
-            color = MaterialTheme.colors.background
+            color = MaterialTheme.colorScheme.background
         ) {
             Column(
                 modifier = Modifier
                     .padding(16.dp),
             ) {
                 TripCard(
-                    modifier = Modifier
+                    modifier = Modifier,
+                    tripCardState = TripCardState(
+                        Trip(
+                            name = "Ekaterinburg - Tbilisi",
+                            dates = "5 Jul - 12 Jul"
+                        )
+                    )
                 )
-            }
-        }
-    }
-}
-
-@Preview
-@Composable
-fun AccommodationsListIemPreview() {
-    TripsTheme {
-        Surface(
-            modifier = Modifier
-                .height(744.dp)
-                .width(328.dp),
-            color = MaterialTheme.colors.background
-        ) {
-            Column(
-                modifier = Modifier
-                    .padding(16.dp),
-            ) {
-                AccommodationsListItem()
             }
         }
     }

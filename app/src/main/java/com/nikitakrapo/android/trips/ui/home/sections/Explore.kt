@@ -9,7 +9,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.nikitakrapo.android.trips.ui.components.SearchBar
 
 @Composable
 fun Explore(
@@ -31,8 +30,8 @@ fun ExploreToolbar() {
             .fillMaxWidth()
             .padding(16.dp)
     ) {
-        SearchBar(
-            modifier = Modifier.fillMaxWidth(),
-        )
+//        SearchBar(
+//            modifier = Modifier.fillMaxWidth(),
+//        )
     }
 }

@@ -1,6 +1,7 @@
 package com.nikitakrapo.android.trips.ui.home.sections
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
@@ -22,7 +23,8 @@ import com.nikitakrapo.android.trips.ui.theme.TripsTheme
 
 @Composable
 fun Profile(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navigateToLogin: () -> Unit
 ) {
     Column(
         modifier = modifier.fillMaxSize()
@@ -30,14 +32,16 @@ fun Profile(
         ProfileHeader(
             modifier = Modifier
                 .padding(16.dp)
-                .fillMaxWidth()
+                .fillMaxWidth(),
+            navigateToLogin = navigateToLogin
         )
     }
 }
 
 @Composable
 fun ProfileHeader(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navigateToLogin: () -> Unit
 ) {
     ConstraintLayout(modifier = modifier) {
         val (profilePicture, nickname) = createRefs()
@@ -49,7 +53,8 @@ fun ProfileHeader(
                     start.linkTo(parent.start)
                 }
                 .size(64.dp)
-                .clip(RoundedCornerShape(32.dp)),
+                .clip(RoundedCornerShape(32.dp))
+                .clickable { navigateToLogin() },
             painter = ColorPainter(Color.Gray),
             contentDescription = stringResource(R.string.cd_profile_picture)
         )
@@ -76,7 +81,7 @@ fun ProfileScreenPreview() {
                 .width(360.dp),
             color = MaterialTheme.colors.background
         ) {
-            Profile()
+            Profile(navigateToLogin = {})
         }
     }
 }
