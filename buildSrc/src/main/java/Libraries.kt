@@ -21,13 +21,14 @@ object JetpackCompose {
     const val navigation = "androidx.navigation:navigation-compose:${Versions.navigationCompose}"
     const val constraintLayout = "androidx.constraintlayout:constraintlayout-compose:${Versions.constraintLayoutCompose}"
     const val material3 = "androidx.compose.material3:material3:${Versions.material3Compose}"
+    const val materialIcons = "androidx.compose.material:material-icons-core:${Versions.compose}"
 }
 
 object Wear {
     const val wear = "androidx.wear:wear:${Versions.wear}"
-    const val composeMaterial = "androidx.wear.compose:compose-material:${Versions.wear}"
-    const val composeFoundation = "androidx.wear.compose:compose-foundation:${Versions.wear}"
-    const val composeNavigation = "androidx.wear.compose:compose-navigation:${Versions.wear}"
+    const val composeMaterial = "androidx.wear.compose:compose-material:${Versions.wearCompose}"
+    const val composeFoundation = "androidx.wear.compose:compose-foundation:${Versions.wearCompose}"
+    const val composeNavigation = "androidx.wear.compose:compose-navigation:${Versions.wearCompose}"
 }
 
 object JakeWharton {

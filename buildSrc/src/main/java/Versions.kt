@@ -14,6 +14,7 @@ object Versions {
 
     // AndroidX Wear
     const val wear = "1.2.0"
+    const val wearCompose = "1.0.0-alpha18"
 
     // Google
     const val dagger2 = "2.40.5"

@@ -22,7 +22,11 @@ android {
         }
     }
     buildFeatures {
-        viewBinding true
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion Versions.compose
+        kotlinCompilerVersion Config.kotlinCompiler
     }
 }
 
@@ -32,6 +36,7 @@ dependencies {
 
     implementation AndroidX.coreCtx
     implementation AndroidX.activityCompose
+    implementation JetpackCompose.materialIcons
 
     implementation Wear.composeMaterial
     implementation Wear.composeFoundation
@@ -41,4 +46,6 @@ dependencies {
     implementation 'androidx.percentlayout:percentlayout:1.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
+
+    implementation project(Features.tripsDesign)
 }

@@ -11,7 +11,6 @@ import androidx.compose.ui.Modifier
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
-import com.nikitakrapo.android.trips.ui.home.sections.Explore
 import com.nikitakrapo.android.trips.ui.home.sections.Profile
 import com.nikitakrapo.android.trips.ui.home.sections.trips.Trips
 
@@ -25,7 +24,6 @@ fun Home(
     navigateToLogin: () -> Unit
 ) {
     val screens = listOf(
-        HomeScreen.Explore,
         HomeScreen.Trips,
         HomeScreen.Profile
     )
@@ -45,13 +43,6 @@ fun Home(
         ) {
             screens.forEach { screen ->
                 when (screen) {
-                    HomeScreen.Explore -> composable(
-                        route = screen.route,
-                        enterTransition = { fadeIn(animationSpec = tween(0)) },
-                        exitTransition = { fadeOut(animationSpec = tween(0)) },
-                        popEnterTransition = { fadeIn(animationSpec = tween(0)) },
-                        popExitTransition = { fadeOut(animationSpec = tween(0)) },
-                    ) { Explore() }
 
                     HomeScreen.Trips -> composable(
                         route = screen.route,
