@@ -58,6 +58,8 @@ dependencies {
     implementation(AndroidX.roomRuntime)
     kapt(AndroidX.roomCompiler)
 
+    implementation(AndroidX.coreSplashScreen)
+
     implementation(JetpackCompose.material)
     implementation(JetpackCompose.uiToolingPreview)
     implementation(JetpackCompose.ui)

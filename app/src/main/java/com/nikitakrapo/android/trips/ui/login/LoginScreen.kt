@@ -4,7 +4,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
-import com.nikitakrapo.android.trips.ui.navigation.Screen
+import com.nikitakrapo.android.trips.ui.MainSections
 
 sealed class LoginScreen(val route: String) {
     object SignIn : LoginScreen("sign_in")
@@ -14,7 +14,7 @@ sealed class LoginScreen(val route: String) {
 fun NavGraphBuilder.loginGraph(navController: NavController) {
     navigation(
         startDestination = LoginScreen.SignIn.route,
-        route = Screen.Login.route
+        route = MainSections.Login.route
     ) {
         composable(route = LoginScreen.SignIn.route) {
             SignIn(

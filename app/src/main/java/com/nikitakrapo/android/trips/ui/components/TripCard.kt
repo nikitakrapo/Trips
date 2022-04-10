@@ -12,7 +12,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.nikitakrapo.android.trips.R
-import com.nikitakrapo.android.trips.ui.home.sections.trips.Trip
+import com.nikitakrapo.android.trips.ui.home.trips.Trip
 import com.nikitakrapo.android.trips.ui.noRippleClickable
 import com.nikitakrapo.trips_design.theme.TripsTheme
 

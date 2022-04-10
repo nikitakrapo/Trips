@@ -1,4 +1,4 @@
-package com.nikitakrapo.android.trips.ui.home.sections.trips
+package com.nikitakrapo.android.trips.ui.home.trips
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

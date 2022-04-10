@@ -1,4 +1,4 @@
-package com.nikitakrapo.android.trips.ui.home.sections.trips.add_trip
+package com.nikitakrapo.android.trips.ui.add_trip
 
 sealed class AddTripEvent {
     class NameTextFieldChanged(val text: String) : AddTripEvent()

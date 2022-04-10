@@ -11,7 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.nikitakrapo.android.trips.R
 import com.nikitakrapo.android.trips.ThemedPreview
-import com.nikitakrapo.android.trips.ui.home.sections.trips.Trip
+import com.nikitakrapo.android.trips.ui.home.trips.Trip
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

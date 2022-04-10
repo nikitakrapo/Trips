@@ -11,8 +11,9 @@ import androidx.compose.ui.Modifier
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
-import com.nikitakrapo.android.trips.ui.home.sections.Profile
-import com.nikitakrapo.android.trips.ui.home.sections.trips.Trips
+import com.nikitakrapo.android.trips.ui.home.profile.Profile
+import com.nikitakrapo.android.trips.ui.home.trips.Trip
+import com.nikitakrapo.android.trips.ui.home.trips.Trips
 
 @OptIn(
     ExperimentalAnimationApi::class,
@@ -21,38 +22,45 @@ import com.nikitakrapo.android.trips.ui.home.sections.trips.Trips
 )
 @Composable
 fun Home(
-    navigateToLogin: () -> Unit
+    openLogin: () -> Unit,
+    openTripCard: (Trip) -> Unit,
+    openAddTrip: () -> Unit,
 ) {
     val screens = listOf(
-        HomeScreen.Trips,
-        HomeScreen.Profile
+        HomeSections.Trips,
+        HomeSections.Profile
     )
     val navController = rememberAnimatedNavController()
     Scaffold(
         bottomBar = {
             TripsNavigationBar(
                 navController = navController,
-                homeScreens = screens
+                homeSections = screens
             )
         }
     ) { innerPadding ->
         AnimatedNavHost(
             navController,
-            startDestination = HomeScreen.Trips.route,
+            startDestination = HomeSections.Trips.route,
             Modifier.padding(innerPadding)
         ) {
             screens.forEach { screen ->
                 when (screen) {
 
-                    HomeScreen.Trips -> composable(
+                    HomeSections.Trips -> composable(
                         route = screen.route,
                         enterTransition = { fadeIn(animationSpec = tween(0)) },
                         exitTransition = { fadeOut(animationSpec = tween(0)) },
                         popEnterTransition = { fadeIn(animationSpec = tween(0)) },
                         popExitTransition = { fadeOut(animationSpec = tween(0)) },
-                    ) { Trips() }
+                    ) {
+                        Trips(
+                            openAddTrip = openAddTrip,
+                            openTripCard = openTripCard,
+                        )
+                    }
 
-                    HomeScreen.Profile -> composable(
+                    HomeSections.Profile -> composable(
                         route = screen.route,
                         enterTransition = { fadeIn(animationSpec = tween(0)) },
                         exitTransition = { fadeOut(animationSpec = tween(0)) },
@@ -60,7 +68,7 @@ fun Home(
                         popExitTransition = { fadeOut(animationSpec = tween(0)) },
                     ) {
                         Profile(
-                            navigateToLogin = navigateToLogin
+                            navigateToLogin = openLogin
                         )
                     }
                 }

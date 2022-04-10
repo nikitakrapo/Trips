@@ -25,7 +25,7 @@ import com.nikitakrapo.android.trips.ui.NoRippleTheme
 fun TripsNavigationBar(
     modifier: Modifier = Modifier,
     navController: NavController,
-    homeScreens: List<HomeScreen>
+    homeSections: List<HomeSections>
 ) {
     NavigationBar(
         modifier = modifier.shadow(elevation = 8.dp),
@@ -33,7 +33,7 @@ fun TripsNavigationBar(
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentDestination = navBackStackEntry?.destination
 
-        homeScreens.forEach { screen ->
+        homeSections.forEach { screen ->
             CompositionLocalProvider(LocalRippleTheme provides NoRippleTheme) {
                 NavigationBarItem(
                     modifier = Modifier

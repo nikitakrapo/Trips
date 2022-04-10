@@ -22,4 +22,11 @@
     <style name="Theme.Trips.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.Trips.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="Theme.Trips.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/deep_orange</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_trips_logo</item>
+
+        <item name="postSplashScreenTheme">@style/Theme.Trips</item>
+    </style>
 </resources>

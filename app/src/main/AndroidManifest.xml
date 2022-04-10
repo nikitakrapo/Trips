@@ -14,7 +14,7 @@
             android:name=".ui.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.Trips.NoActionBar">
+            android:theme="@style/Theme.Trips.Starting">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

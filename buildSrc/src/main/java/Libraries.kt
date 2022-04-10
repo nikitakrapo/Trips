@@ -9,6 +9,8 @@ object AndroidX {
 
     const val roomRuntime = "androidx.room:room-runtime:${Versions.room}"
     const val roomCompiler = "androidx.room:room-compiler:${Versions.room}"
+
+    const val coreSplashScreen = "androidx.core:core-splashscreen:${Versions.splashScreen}"
 }
 
 object JetpackCompose {

@@ -1,4 +1,4 @@
-package com.nikitakrapo.android.trips.ui.home.sections.trips
+package com.nikitakrapo.android.trips.ui.home.trips
 
 data class UserTripListUiState(
     val showProgressBar: Boolean = true,

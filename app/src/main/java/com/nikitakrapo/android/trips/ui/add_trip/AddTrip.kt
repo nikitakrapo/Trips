@@ -1,4 +1,4 @@
-package com.nikitakrapo.android.trips.ui.home.sections.trips.add_trip
+package com.nikitakrapo.android.trips.ui.add_trip
 
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Column

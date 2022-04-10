@@ -1,4 +1,4 @@
-package com.nikitakrapo.android.trips.ui.home.sections
+package com.nikitakrapo.android.trips.ui.home.profile
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable

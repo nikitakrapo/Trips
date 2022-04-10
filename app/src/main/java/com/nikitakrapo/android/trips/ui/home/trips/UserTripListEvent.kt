@@ -1,4 +1,4 @@
-package com.nikitakrapo.android.trips.ui.home.sections.trips
+package com.nikitakrapo.android.trips.ui.home.trips
 
 sealed class UserTripListEvent {
     class LoadedFromNetwork(

@@ -1,4 +1,4 @@
-package com.nikitakrapo.android.trips.ui.home.sections.trips
+package com.nikitakrapo.android.trips.ui.home.trips
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
@@ -10,12 +10,18 @@ import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 @Composable
 fun Trips(
     modifier: Modifier = Modifier,
+    openTripCard: (Trip) -> Unit,
+    openAddTrip: () -> Unit,
 ) {
     val navController = rememberAnimatedNavController()
     AnimatedNavHost(
         navController = navController,
         startDestination = TripsScreen.UserTripList.route,
     ) {
-        tripsScreenGraph(navController)
+        tripsScreenGraph(
+            navController,
+            openTripCard,
+            openAddTrip,
+        )
     }
 }

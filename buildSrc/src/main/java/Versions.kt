@@ -11,6 +11,7 @@ object Versions {
     const val lifecycleRuntimeCtx = "2.4.0"
     const val androidExtJUnit = "1.1.3"
     const val room = "2.4.2" // x_googleBoy_x
+    const val splashScreen = "1.0.0-beta02"
 
     // AndroidX Wear
     const val wear = "1.2.0"

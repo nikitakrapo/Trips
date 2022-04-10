@@ -1,4 +1,4 @@
-package com.nikitakrapo.android.trips.ui.home.sections.trips
+package com.nikitakrapo.android.trips.ui.home.trips
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
