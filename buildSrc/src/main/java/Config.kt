@@ -1,4 +1,7 @@
 object Config {
+    const val versionName = "0.0.2"
+    const val versionCode = 2
+
     const val compileSdk = 31
     const val minSdk = 23
     const val targetSdk = 31
