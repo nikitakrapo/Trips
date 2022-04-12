@@ -2,7 +2,7 @@ package com.nikitakrapo.android.trips
 
 import android.app.Application
 import android.content.Context
-import com.nikitakrapo.analytics.firebase.AnalyticsDefaultParameters
+import com.nikitakrapo.analytics.firebase.AnalyticsCommonParameters
 import com.nikitakrapo.analytics.firebase.AnalyticsEnvironment
 import timber.log.Timber
 
@@ -28,12 +28,10 @@ class TripsApplication : Application() {
         val firebaseProvider = appComponent.firebaseProvider()
         firebaseProvider.init(
             this,
-            AnalyticsDefaultParameters(
-                environment,
-                BuildConfig.VERSION_NAME
+            AnalyticsCommonParameters(
+                environment
             )
         )
-        firebaseProvider.reportAppOpen()
     }
 
 }

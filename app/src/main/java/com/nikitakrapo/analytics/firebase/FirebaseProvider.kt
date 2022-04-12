@@ -4,7 +4,6 @@ import android.content.Context
 import android.os.Bundle
 import com.google.firebase.FirebaseApp
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.nikitakrapo.analytics.Events
 import javax.inject.Inject
 
 class FirebaseProvider @Inject constructor() {
@@ -12,11 +11,11 @@ class FirebaseProvider @Inject constructor() {
 
     fun init(
         context: Context,
-        analyticsDefaultParameters: AnalyticsDefaultParameters,
+        analyticsCommonParameters: AnalyticsCommonParameters,
     ) {
         FirebaseApp.initializeApp(context)
         firebaseAnalytics = FirebaseAnalytics.getInstance(context)
-        firebaseAnalytics.setDefaultEventParameters(analyticsDefaultParameters.toBundle())
+        firebaseAnalytics.setDefaultEventParameters(analyticsCommonParameters.toBundle())
     }
 
     fun reportEvent(event: String) {
@@ -25,9 +24,5 @@ class FirebaseProvider @Inject constructor() {
 
     fun reportAttributedEvent(event: String, params: Bundle) {
         firebaseAnalytics.logEvent(event, params)
-    }
-
-    fun reportAppOpen() {
-        reportEvent(Events.APP_OPEN)
     }
 }
