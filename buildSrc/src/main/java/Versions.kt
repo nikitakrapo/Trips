@@ -25,8 +25,13 @@ object Versions {
     const val maps = "1.0.0"
     const val playServicesMaps = "18.0.2"
 
+    const val secretsGradle = "2.0.0"
+
     const val firebaseBoM = "29.3.0"
     const val firebaseAnalytics = "20.1.3"
+
+    const val firebaseCrashlyticsPlugin = "2.8.1"
+    const val googleServicesPlugin = "4.3.10"
 
     // Jake Wharton
     const val timber = "5.0.1"
