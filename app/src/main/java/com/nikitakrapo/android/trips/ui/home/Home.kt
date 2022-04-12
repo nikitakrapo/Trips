@@ -11,9 +11,10 @@ import androidx.compose.ui.Modifier
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
-import com.nikitakrapo.android.trips.ui.home.profile.Profile
-import com.nikitakrapo.android.trips.ui.home.trips.Trip
-import com.nikitakrapo.android.trips.ui.home.trips.Trips
+import com.nikitakrapo.android.trips.ui.profile.Profile
+import com.nikitakrapo.android.trips.ui.trip_list.Trip
+import com.nikitakrapo.android.trips.ui.trip_list.Trips
+import com.nikitakrapo.android.trips.viewmodels.ViewModelFactory
 
 @OptIn(
     ExperimentalAnimationApi::class,
@@ -23,6 +24,7 @@ import com.nikitakrapo.android.trips.ui.home.trips.Trips
 @Composable
 fun Home(
     openLogin: () -> Unit,
+    viewModelFactory: ViewModelFactory,
     openTripCard: (Trip) -> Unit,
     openAddTrip: () -> Unit,
 ) {
@@ -55,6 +57,7 @@ fun Home(
                         popExitTransition = { fadeOut(animationSpec = tween(0)) },
                     ) {
                         Trips(
+                            viewModelFactory = viewModelFactory,
                             openAddTrip = openAddTrip,
                             openTripCard = openTripCard,
                         )

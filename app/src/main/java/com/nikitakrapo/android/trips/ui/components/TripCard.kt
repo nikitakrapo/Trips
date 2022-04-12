@@ -1,5 +1,7 @@
 package com.nikitakrapo.android.trips.ui.components
 
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -12,22 +14,23 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.nikitakrapo.android.trips.R
-import com.nikitakrapo.android.trips.ui.home.trips.Trip
-import com.nikitakrapo.android.trips.ui.noRippleClickable
+import com.nikitakrapo.android.trips.ui.trip_list.Trip
 import com.nikitakrapo.trips_design.theme.TripsTheme
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun TripCard(
     modifier: Modifier = Modifier,
     tripCardState: TripCardState,
-    onClick: (Trip) -> Unit = {}
+    onClick: (Trip) -> Unit = {},
+    onLongClick: (Trip) -> Unit = {},
 ) {
     Card(
         modifier = modifier
-            .noRippleClickable {
-                onClick(tripCardState.trip)
-            },
+            .combinedClickable(
+                onClick = { onClick(tripCardState.trip) },
+                onLongClick = { onLongClick(tripCardState.trip) },
+            ),
         shape = RoundedCornerShape(10.dp)
     ) {
         ConstraintLayout(

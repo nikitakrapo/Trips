@@ -1,12 +1,15 @@
-package com.nikitakrapo.android.trips.data.cache.trips
+package com.nikitakrapo.android.trips.data.trips
 
 import androidx.room.*
-import com.nikitakrapo.android.trips.data.cache.dto.TripEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface UserTripsDao {
     @Query("SELECT * FROM TripEntity")
     fun getAll(): List<TripEntity>
+
+    @Query("SELECT * FROM TripEntity")
+    fun getTripsFlow(): Flow<List<TripEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun addTrip(trip: TripEntity)

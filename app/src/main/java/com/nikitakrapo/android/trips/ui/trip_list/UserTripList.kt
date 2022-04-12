@@ -1,4 +1,4 @@
-package com.nikitakrapo.android.trips.ui.home.trips
+package com.nikitakrapo.android.trips.ui.trip_list
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -30,6 +30,7 @@ fun UserTripList(
     onTripCardClick: (Trip) -> Unit = {},
     onTripsSwipeRefresh: () -> Unit = {},
     onAddTripClick: () -> Unit = {},
+    onLongTripClick: (Trip) -> Unit = {},
 ) {
     Scaffold(
         modifier = modifier,
@@ -69,12 +70,12 @@ fun UserTripList(
                                 .verticalScroll(rememberScrollState()),
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
+                            Spacer(modifier = Modifier.height(32.dp))
                             Text(
-                                text = "No trips!",
+                                text = stringResource(R.string.trip_list_empty),
                                 style = MaterialTheme.typography.titleLarge,
                                 textAlign = TextAlign.Center
                             )
-
                         }
                     } else {
                         LazyColumn(
@@ -85,6 +86,7 @@ fun UserTripList(
                         ) {
                             items(userTripListUiState.tripList) { trip ->
                                 TripCard(
+                                    onLongClick = onLongTripClick,
                                     tripCardState = TripCardState(trip),
                                     onClick = onTripCardClick
                                 )

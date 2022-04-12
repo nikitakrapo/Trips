@@ -10,7 +10,7 @@ class TripsApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        appComponent = DaggerAppComponent.create()
+        appComponent = DaggerAppComponent.factory().create(this)
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }
