@@ -25,6 +25,9 @@ object Versions {
     const val maps = "1.0.0"
     const val playServicesMaps = "18.0.2"
 
+    const val firebaseBoM = "29.3.0"
+    const val firebaseAnalytics = "20.1.3"
+
     // Jake Wharton
     const val timber = "5.0.1"
 

@@ -54,6 +54,9 @@ object Google {
     const val accompanistInsets = "com.google.accompanist:accompanist-insets:${Versions.accompanist}"
     const val maps = "com.google.maps.android:maps-compose:${Versions.maps}"
     const val playServicesMaps = "com.google.android.gms:play-services-maps:${Versions.playServicesMaps}"
+
+    const val firebaseBoM = "com.google.firebase:firebase-bom:${Versions.firebaseBoM}"
+    const val firebaseAnalytics = "com.google.firebase:firebase-analytics-ktx"
 }
 
 object Landscapist {
