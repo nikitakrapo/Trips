@@ -1,17 +1,21 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
+    id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
 }
 
 android {
-    compileSdk 31
+    compileSdk Config.compileSdk
 
     defaultConfig {
         applicationId "com.nikitakrapo.android.trips"
-        minSdk 23
-        targetSdk 31
-        versionCode 1
-        versionName "1.0"
+        minSdk Config.minSdk
+        targetSdk Config.targetSdk
+        versionCode Config.versionCode
+        versionName Config.versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -32,13 +36,16 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
         useIR = true
+        freeCompilerArgs += [
+                "-Xjvm-default=all"
+        ]
     }
     buildFeatures {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_version
-        kotlinCompilerVersion '1.5.21'
+        kotlinCompilerExtensionVersion Versions.compose
+        kotlinCompilerVersion Config.kotlinCompiler
     }
     packagingOptions {
         resources {
@@ -48,18 +55,59 @@ android {
 }
 
 dependencies {
+    implementation(AndroidX.coreCtx)
+    implementation(AndroidX.appCompat)
+    implementation(AndroidX.lifecycleRuntimeCtx)
+    implementation(AndroidX.activityCompose)
 
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.4.0'
-    implementation 'com.google.android.material:material:1.5.0'
-    implementation AndroidXLibs.composeUi
-    implementation AndroidXLibs.composeMaterial
-    implementation AndroidXLibs.composeUiToolingPreview
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.0'
-    implementation 'androidx.activity:activity-compose:1.4.0'
-    testImplementation 'junit:junit:4.+'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
-    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
-    debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
+    implementation(AndroidX.roomRuntime)
+    kapt(AndroidX.roomCompiler)
+    implementation(AndroidX.roomKtx)
+
+    implementation(AndroidX.coreSplashScreen)
+
+    implementation(JetpackCompose.material)
+    implementation(JetpackCompose.uiToolingPreview)
+    implementation(JetpackCompose.ui)
+    implementation(JetpackCompose.constraintLayout)
+    implementation(JetpackCompose.material3)
+    implementation(JetpackCompose.navigation)
+    debugImplementation(JetpackCompose.uiTooling)
+    debugImplementation(JetpackCompose.uiTestManifest)
+    androidTestImplementation(JetpackCompose.uiTestJunit4)
+
+    implementation(MviKotlin.core)
+    implementation(MviKotlin.main)
+    implementation(MviKotlin.logging)
+    implementation(MviKotlin.timeTravel)
+    implementation(MviKotlin.coroutinesExtensions)
+    implementation(MviKotlin.rx)
+
+    implementation(Google.dagger2)
+    kapt(Google.daggerCompiler)
+    implementation(Google.gson)
+    implementation(Google.androidMaterial)
+    implementation(Google.accompanistSystemUiController)
+    implementation(Google.accompanistSwipeRefresh)
+    implementation(Google.accompanistNavigationAnimation)
+    implementation(Google.accompanistNavigationMaterial)
+    implementation(Google.accompanistInsets)
+    implementation(Google.maps)
+    implementation(Google.playServicesMaps)
+
+    implementation(platform(Google.firebaseBoM))
+    implementation(Google.firebaseAnalytics)
+    implementation(Google.firebaseCrashlytics)
+
+    implementation(JakeWharton.timber)
+
+    implementation(Landscapist.glide)
+
+    testImplementation(JUnit.jUnit)
+
+    androidTestImplementation(AndroidXTest.androidExtJUnit)
+
+    androidTestImplementation(Espresso.espressoCore)
+
+    implementation(project(Features.tripsDesign))
 }
