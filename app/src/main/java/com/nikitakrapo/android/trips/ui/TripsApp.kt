@@ -83,7 +83,13 @@ fun NavGraphBuilder.tripsAppNavGraph(
             tripsRepository = tripsRepository,
             tripName = tripName ?: "" //TODO: resolve this normally
         )
-        TripDetail(tripDetail = component, closeScreen = { navController.popBackStack() })
+        TripDetail(
+            models = component.models,
+            labels = component.labels,
+            onBackArrowPressed = { component.accept(TripDetail.Event.BackArrowClicked) },
+            onDeleteTripClicked = { component.accept(TripDetail.Event.DeleteClicked) },
+            closeScreen = { navController.popBackStack() }
+        )
     }
 
     composable(
