@@ -9,6 +9,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import com.nikitakrapo.android.trips.R
 import com.nikitakrapo.trip_details.TripDetails.Label
 import com.nikitakrapo.trip_details.TripDetails.Model
@@ -39,7 +40,11 @@ fun TripDetail(
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
-                    Text(modelsState.value.name) //TODO: handle overflow
+                    Text(
+                        text = modelsState.value.name,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                    )
                 },
                 navigationIcon = {
                     IconButton(onClick = onBackArrowPressed) {
