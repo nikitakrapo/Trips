@@ -10,21 +10,26 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.nikitakrapo.android.trips.R
-import com.nikitakrapo.android.trips.ui.trip.TripDetail.Event
+import com.nikitakrapo.android.trips.ui.trip.TripDetail.Model
+import com.nikitakrapo.android.trips.ui.trip.TripDetailStore.Label
+import kotlinx.coroutines.flow.Flow
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TripDetail(
     modifier: Modifier = Modifier,
-    tripDetail: TripDetail, //TODO: accept only state and callbacks, not component itself
-    closeScreen: () -> Unit,
+    models: Flow<Model>,
+    labels: Flow<Label>,
+    onBackArrowPressed: () -> Unit,
+    onDeleteTripClicked: () -> Unit,
+    closeScreen: () -> Unit, //TODO: it should not be here
 ) {
-    val state = tripDetail.models.collectAsState(TripDetail.Model())
-    val labels = tripDetail.labels.collectAsState(initial = null)
+    val models = models.collectAsState(Model())
+    val labels = labels.collectAsState(initial = null)
 
     LaunchedEffect(labels.value) {
         when (labels.value) {
-            is TripDetailStore.Label.CloseScreen -> closeScreen()
+            is Label.CloseScreen -> closeScreen()
             null -> {}
         }
     }
@@ -34,15 +39,15 @@ fun TripDetail(
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
-                    Text(state.value.name) //TODO: handle overflow
+                    Text(models.value.name) //TODO: handle overflow
                 },
                 navigationIcon = {
-                    IconButton(onClick = { tripDetail.accept(Event.BackArrowClicked) }) {
+                    IconButton(onClick = onBackArrowPressed) {
                         Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = stringResource(R.string.cd_back_icon))
                     }
                 },
                 actions = {
-                    IconButton(onClick = { tripDetail.accept(Event.DeleteClicked) }) {
+                    IconButton(onClick = onDeleteTripClicked) {
                         Icon(imageVector = Icons.Filled.Delete, contentDescription = stringResource(R.string.cd_delete_trip))
                     }
                 }
