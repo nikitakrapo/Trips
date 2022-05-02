@@ -1,5 +1,4 @@
 object Features {
-
     const val tripsDesign = ":trips_design"
-    const val tripDetails = ":trip_details"
+    const val tripDetails = ":components:trip_details"
 }

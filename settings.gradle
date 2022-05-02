@@ -11,4 +11,4 @@ rootProject.name = "Trips"
 include ':app'
 include ':trips_design'
 include ':wear'
-include ':trip_details'
+include ':components:trip_details'
