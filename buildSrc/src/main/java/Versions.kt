@@ -17,6 +17,9 @@ object Versions {
     const val wear = "1.2.0"
     const val wearCompose = "1.0.0-alpha18"
 
+    // Arkivanov
+    const val mviKotlin = "3.0.0-beta02"
+
     // Google
     const val dagger2 = "2.40.5"
     const val gson = "2.8.9"

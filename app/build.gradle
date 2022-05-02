@@ -76,6 +76,13 @@ dependencies {
     debugImplementation(JetpackCompose.uiTestManifest)
     androidTestImplementation(JetpackCompose.uiTestJunit4)
 
+    implementation(MviKotlin.core)
+    implementation(MviKotlin.main)
+    implementation(MviKotlin.logging)
+    implementation(MviKotlin.timeTravel)
+    implementation(MviKotlin.coroutinesExtensions)
+    implementation(MviKotlin.rx)
+
     implementation(Google.dagger2)
     kapt(Google.daggerCompiler)
     implementation(Google.gson)

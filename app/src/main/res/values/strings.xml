@@ -16,4 +16,6 @@
     <string name="loading">Loading</string>
     <string name="adding_progress">Adding...</string>
     <string name="trip_list_empty">No trips yet!</string>
+    <string name="cd_delete_trip">Delete trip</string>
+    <string name="trip_deleted">Trip deleted</string>
 </resources>
