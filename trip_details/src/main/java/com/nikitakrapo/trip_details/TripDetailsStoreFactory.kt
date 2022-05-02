@@ -1,27 +1,29 @@
-package com.nikitakrapo.android.trips.ui.trip
+package com.nikitakrapo.trip_details
 
 import com.arkivanov.mvikotlin.core.store.SimpleBootstrapper
 import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.core.utils.ExperimentalMviKotlinApi
 import com.arkivanov.mvikotlin.extensions.coroutines.coroutineExecutorFactory
-import com.nikitakrapo.android.trips.data.TripsRepository
-import com.nikitakrapo.android.trips.ui.trip.TripDetailStore.*
+import com.nikitakrapo.data.TripDetailsRepository
+import com.nikitakrapo.trip_details.TripDetails.Label
+import com.nikitakrapo.trip_details.TripDetailsStore.Intent
+import com.nikitakrapo.trip_details.TripDetailsStore.State
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
-class TripDetailStoreFactory(
+internal class TripDetailsStoreFactory(
     private val storeFactory: StoreFactory,
     private val mainContext: CoroutineContext,
-    private val tripsRepository: TripsRepository,
+    private val tripsRepository: TripDetailsRepository,
     private val tripName: String
 ) {
 
     @OptIn(ExperimentalMviKotlinApi::class)
-    fun create(): TripDetailStore =
+    fun create(): TripDetailsStore =
         // TODO: E/MVIKotlin: Could not enable time travel for the store: TripDetailStore. Duplicate store name.
-        object : TripDetailStore, Store<Intent, State, Label> by storeFactory.create<Intent, Unit, Msg, State, Label>(
+        object : TripDetailsStore, Store<Intent, State, Label> by storeFactory.create<Intent, Unit, Msg, State, Label>(
             name = "TripDetailStore",
             initialState = State(name = tripName),
             bootstrapper = SimpleBootstrapper(Unit),

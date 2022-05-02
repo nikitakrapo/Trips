@@ -45,7 +45,7 @@ android {
     }
     composeOptions {
         kotlinCompilerExtensionVersion Versions.compose
-        kotlinCompilerVersion Config.kotlinCompiler
+        kotlinCompilerVersion Config.kotlin
     }
     packagingOptions {
         resources {
@@ -110,4 +110,5 @@ dependencies {
     androidTestImplementation(Espresso.espressoCore)
 
     implementation(project(Features.tripsDesign))
+    implementation(project(Features.tripDetails))
 }

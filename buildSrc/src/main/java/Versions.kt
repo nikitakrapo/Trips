@@ -20,6 +20,9 @@ object Versions {
     // Arkivanov
     const val mviKotlin = "3.0.0-beta02"
 
+    // Kotlin
+    const val coroutines = "1.6.1"
+
     // Google
     const val dagger2 = "2.40.5"
     const val gson = "2.8.9"

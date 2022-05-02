@@ -1,3 +1,11 @@
+object KotlinLib {
+    const val std = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Config.kotlin}"
+    const val reflect = "org.jetbrains.kotlin:kotlin-reflect:${Config.kotlin}"
+    const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
+    const val coroutinesAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
+    const val coroutinesTest = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.coroutines}"
+}
+
 object AndroidX {
     const val coreCtx = "androidx.core:core-ktx:${Versions.coreCtx}"
 

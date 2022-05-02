@@ -1,25 +1,23 @@
-package com.nikitakrapo.android.trips.ui.trip
+package com.nikitakrapo.trip_details
 
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.labels
 import com.arkivanov.mvikotlin.extensions.coroutines.states
-import com.nikitakrapo.android.trips.data.TripsRepository
-import com.nikitakrapo.android.trips.ui.trip.TripDetail.Event
-import com.nikitakrapo.android.trips.ui.trip.TripDetail.Model
-import com.nikitakrapo.android.trips.ui.trip.TripDetailStore.Intent
-import com.nikitakrapo.android.trips.ui.trip.TripDetailStore.Label
+import com.nikitakrapo.data.TripDetailsRepository
+import com.nikitakrapo.trip_details.TripDetails.*
+import com.nikitakrapo.trip_details.TripDetailsStore.Intent
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlin.coroutines.CoroutineContext
 
-class TripDetailComponent(
+class TripDetailsComponent(
     storeFactory: StoreFactory,
     componentContext: CoroutineContext,
-    tripsRepository: TripsRepository,
+    tripsRepository: TripDetailsRepository,
     tripName: String,
-) : TripDetail {
+) : TripDetails {
 
-    private val store = TripDetailStoreFactory(storeFactory, componentContext, tripsRepository, tripName).create()
+    private val store = TripDetailsStoreFactory(storeFactory, componentContext, tripsRepository, tripName).create()
 
     override val models: Flow<Model> = store.states.map(::toModel)
 

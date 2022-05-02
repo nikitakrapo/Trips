@@ -1,9 +1,8 @@
-package com.nikitakrapo.android.trips.ui.trip
+package com.nikitakrapo.trip_details
 
-import com.nikitakrapo.android.trips.ui.trip.TripDetailStore.Label
 import kotlinx.coroutines.flow.Flow
 
-interface TripDetail {
+interface TripDetails {
 
     val models: Flow<Model>
 
@@ -22,5 +21,9 @@ interface TripDetail {
         object ExpandDescriptionClicked : Event()
         object BackArrowClicked : Event()
         object DeleteClicked : Event()
+    }
+
+    sealed class Label {
+        object CloseScreen : Label()
     }
 }

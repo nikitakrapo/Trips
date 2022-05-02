@@ -1,4 +1,4 @@
-package com.nikitakrapo.android.trips.ui.trip
+package com.nikitakrapo.android.trips.ui.trip_details
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -10,8 +10,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.nikitakrapo.android.trips.R
-import com.nikitakrapo.android.trips.ui.trip.TripDetail.Model
-import com.nikitakrapo.android.trips.ui.trip.TripDetailStore.Label
+import com.nikitakrapo.trip_details.TripDetails.Label
+import com.nikitakrapo.trip_details.TripDetails.Model
 import kotlinx.coroutines.flow.Flow
 
 @OptIn(ExperimentalMaterial3Api::class)

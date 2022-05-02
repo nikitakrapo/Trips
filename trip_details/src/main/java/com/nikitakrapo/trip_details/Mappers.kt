@@ -1,7 +1,7 @@
-package com.nikitakrapo.android.trips.ui.trip
+package com.nikitakrapo.trip_details
 
-fun toModel(state: TripDetailStore.State): TripDetail.Model {
-    return TripDetail.Model(
+internal fun toModel(state: TripDetailsStore.State): TripDetails.Model {
+    return TripDetails.Model(
         name = state.name,
         imageUrl = state.imageUrl,
         description = state.description,

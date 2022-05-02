@@ -22,9 +22,10 @@ import com.nikitakrapo.android.trips.ui.add_trip.AddTripEvent
 import com.nikitakrapo.android.trips.ui.add_trip.AddTripViewModel
 import com.nikitakrapo.android.trips.ui.home.Home
 import com.nikitakrapo.android.trips.ui.login.loginGraph
-import com.nikitakrapo.android.trips.ui.trip.TripDetail
-import com.nikitakrapo.android.trips.ui.trip.TripDetailComponent
+import com.nikitakrapo.android.trips.ui.trip_details.TripDetail
 import com.nikitakrapo.android.trips.viewmodels.ViewModelFactory
+import com.nikitakrapo.trip_details.TripDetails.Event
+import com.nikitakrapo.trip_details.TripDetailsComponent
 import kotlinx.coroutines.Dispatchers
 import timber.log.Timber
 
@@ -76,8 +77,8 @@ fun NavGraphBuilder.tripsAppNavGraph(
         if (tripName == null) {
             Timber.e("TripName not passed")
         }
-        val tripsRepository = LocalContext.current.appComponent.tripsRespository() //TODO: DI
-        val component = TripDetailComponent(
+        val tripsRepository = LocalContext.current.appComponent.tripDetailsRepository() //TODO: DI
+        val component = TripDetailsComponent(
             storeFactory = TimeTravelStoreFactory(),
             componentContext = Dispatchers.Main,
             tripsRepository = tripsRepository,
@@ -86,8 +87,8 @@ fun NavGraphBuilder.tripsAppNavGraph(
         TripDetail(
             models = component.models,
             labels = component.labels,
-            onBackArrowPressed = { component.accept(TripDetail.Event.BackArrowClicked) },
-            onDeleteTripClicked = { component.accept(TripDetail.Event.DeleteClicked) },
+            onBackArrowPressed = { component.accept(Event.BackArrowClicked) },
+            onDeleteTripClicked = { component.accept(Event.DeleteClicked) },
             closeScreen = { navController.popBackStack() }
         )
     }

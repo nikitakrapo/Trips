@@ -6,6 +6,7 @@ import com.nikitakrapo.android.trips.data.TripsRepository
 import com.nikitakrapo.android.trips.data.trips.TripsModule
 import com.nikitakrapo.android.trips.ui.ApplicationModule
 import com.nikitakrapo.android.trips.ui.MainActivity
+import com.nikitakrapo.android.trips.ui.trip_details.TripDetailsRepository
 import com.nikitakrapo.android.trips.viewmodels.ViewModelModule
 import dagger.BindsInstance
 import dagger.Component
@@ -22,6 +23,8 @@ interface AppComponent {
     fun firebaseProvider(): FirebaseProvider
 
     fun tripsRespository(): TripsRepository
+
+    fun tripDetailsRepository(): TripDetailsRepository
 
     fun inject(activity: MainActivity)
 

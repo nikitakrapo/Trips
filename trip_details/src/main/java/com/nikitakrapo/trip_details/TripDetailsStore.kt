@@ -1,9 +1,11 @@
-package com.nikitakrapo.android.trips.ui.trip
+package com.nikitakrapo.trip_details
 
 import com.arkivanov.mvikotlin.core.store.Store
-import com.nikitakrapo.android.trips.ui.trip.TripDetailStore.*
+import com.nikitakrapo.trip_details.TripDetails.Label
+import com.nikitakrapo.trip_details.TripDetailsStore.Intent
+import com.nikitakrapo.trip_details.TripDetailsStore.State
 
-interface TripDetailStore : Store<Intent, State, Label> {
+internal interface TripDetailsStore : Store<Intent, State, Label> {
 
     sealed class Intent {
         object SwitchDescriptionExpanded : Intent()
@@ -17,8 +19,4 @@ interface TripDetailStore : Store<Intent, State, Label> {
         val description: String? = null,
         val isDescriptionExpanded: Boolean = false
     )
-
-    sealed class Label {
-        object CloseScreen : Label()
-    }
 }
