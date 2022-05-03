@@ -11,7 +11,7 @@ android {
     compileSdk Config.compileSdk
 
     defaultConfig {
-        applicationId "com.nikitakrapo.android.trips"
+        applicationId "com.nikitakrapo.trips"
         minSdk Config.minSdk
         targetSdk Config.targetSdk
         versionCode Config.versionCode

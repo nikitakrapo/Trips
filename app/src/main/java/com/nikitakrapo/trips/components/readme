@@ -1,0 +1,2 @@
+this package is for components' adapters (views, datasource implementations, etc.)
+todo: all the rest should be moved to separate modules
