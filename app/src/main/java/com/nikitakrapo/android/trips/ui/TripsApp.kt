@@ -1,11 +1,7 @@
 package com.nikitakrapo.android.trips.ui
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
@@ -14,17 +10,15 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.arkivanov.mvikotlin.timetravel.store.TimeTravelStoreFactory
+import com.nikitakrapo.add_trip.AddTrip
+import com.nikitakrapo.add_trip.AddTripComponent
 import com.nikitakrapo.android.trips.appComponent
-import com.nikitakrapo.android.trips.ui.MainSections.*
 import com.nikitakrapo.android.trips.ui.add_trip.AddTrip
-import com.nikitakrapo.android.trips.ui.add_trip.AddTripAction
-import com.nikitakrapo.android.trips.ui.add_trip.AddTripEvent
-import com.nikitakrapo.android.trips.ui.add_trip.AddTripViewModel
 import com.nikitakrapo.android.trips.ui.home.Home
 import com.nikitakrapo.android.trips.ui.login.loginGraph
 import com.nikitakrapo.android.trips.ui.trip_details.TripDetail
 import com.nikitakrapo.android.trips.viewmodels.ViewModelFactory
-import com.nikitakrapo.trip_details.TripDetails.Event
+import com.nikitakrapo.trip_details.TripDetails
 import com.nikitakrapo.trip_details.TripDetailsComponent
 import kotlinx.coroutines.Dispatchers
 import timber.log.Timber
@@ -36,7 +30,7 @@ fun TripsApp(
     val navController = rememberNavController()
     NavHost(
         navController = navController,
-        startDestination = Home.route
+        startDestination = MainSections.Home.route
     ) {
         tripsAppNavGraph(navController, viewModelFactory)
     }
@@ -56,24 +50,24 @@ fun NavGraphBuilder.tripsAppNavGraph(
     navController: NavController,
     viewModelFactory: ViewModelFactory
 ) {
-    composable(Home.route) {
+    composable(MainSections.Home.route) {
         Home(
             viewModelFactory = viewModelFactory,
-            openLogin = { navController.navigate(Login.route) },
-            openTripCard = { navController.navigate("${TripDetails.route}/${it.name}") }, // xd
-            openAddTrip = { navController.navigate(AddTrip.route) },
+            openLogin = { navController.navigate(MainSections.Login.route) },
+            openTripCard = { navController.navigate("${MainSections.TripDetails.route}/${it.name}") }, // xd
+            openAddTrip = { navController.navigate(MainSections.AddTrip.route) },
         )
     }
 
     loginGraph(navController)
 
     composable(
-        route = "${TripDetails.route}/{${TripDetails.tripNameArg}}",
-        arguments = listOf(navArgument(TripDetails.tripNameArg) {
+        route = "${MainSections.TripDetails.route}/{${MainSections.TripDetails.tripNameArg}}",
+        arguments = listOf(navArgument(MainSections.TripDetails.tripNameArg) {
             type = NavType.StringType
         })
     ) { backStackEntry ->
-        val tripName = backStackEntry.arguments?.getString(TripDetails.tripNameArg)
+        val tripName = backStackEntry.arguments?.getString(MainSections.TripDetails.tripNameArg)
         if (tripName == null) {
             Timber.e("TripName not passed")
         }
@@ -87,39 +81,28 @@ fun NavGraphBuilder.tripsAppNavGraph(
         TripDetail(
             models = component.models,
             labels = component.labels,
-            onBackArrowPressed = { component.accept(Event.BackArrowClicked) },
-            onDeleteTripClicked = { component.accept(Event.DeleteClicked) },
+            onBackArrowPressed = { component.accept(TripDetails.Event.BackArrowClicked) },
+            onDeleteTripClicked = { component.accept(TripDetails.Event.DeleteClicked) },
             closeScreen = { navController.popBackStack() }
         )
     }
 
     composable(
-        route = AddTrip.route
+        route = MainSections.AddTrip.route
     ) {
-        val viewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current)
-
-        val addTripViewModel: AddTripViewModel =
-            ViewModelProvider(viewModelStoreOwner, viewModelFactory)[AddTripViewModel::class.java]
-        val addTripUiState = addTripViewModel.uiState.collectAsState()
-        val addTripActions = addTripViewModel.actions.collectAsState()
-        val event = addTripActions.value
-
-        LaunchedEffect(event) {
-            when (event) {
-                AddTripAction.CloseScreen -> {
-                    navController.popBackStack()
-                }
-                null -> {}
-            }
-        }
-
+        val addTripRepository = LocalContext.current.appComponent.addTripRepository()
+        val component = AddTripComponent(
+            storeFactory = TimeTravelStoreFactory(),
+            componentContext = Dispatchers.Main,
+            addTripRepository = addTripRepository
+        )
         AddTrip(
-            uiState = addTripUiState.value,
-            onNameChanged = { newName ->
-                addTripViewModel.onViewEvent(AddTripEvent.NameTextFieldChanged(newName))
-            },
-            onBackArrow = { addTripViewModel.onViewEvent(AddTripEvent.BackArrowClicked) },
-            onAddClick = { addTripViewModel.onViewEvent(AddTripEvent.AddTripClicked) }
+            models = component.models,
+            labels = component.labels,
+            onBackArrowPressed = { component.accept(AddTrip.Event.BackArrowClicked) },
+            onNameChanged = { component.accept(AddTrip.Event.NameTextFieldChanged(it)) },
+            onAddClick = { component.accept(AddTrip.Event.AddTripClicked) },
+            closeScreen = { navController.popBackStack() }
         )
     }
 }

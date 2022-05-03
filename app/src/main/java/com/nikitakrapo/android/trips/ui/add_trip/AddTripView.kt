@@ -8,27 +8,42 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import com.nikitakrapo.add_trip.AddTrip.Label
+import com.nikitakrapo.add_trip.AddTrip.Model
 import com.nikitakrapo.android.trips.R
-import com.nikitakrapo.android.trips.ThemedPreview
+import kotlinx.coroutines.flow.Flow
 
 @OptIn(ExperimentalMaterial3Api::class, androidx.compose.material.ExperimentalMaterialApi::class)
 @Composable
 fun AddTrip(
     modifier: Modifier = Modifier,
-    uiState: AddTripUiState,
+    models: Flow<Model>,
+    labels: Flow<Label>,
+    onBackArrowPressed: () -> Unit = {},
     onNameChanged: (String) -> Unit = {},
     onAddClick: () -> Unit = {},
-    onBackArrow: () -> Unit = {}
+    closeScreen: () -> Unit = {}, //TODO: it shouldn't be here
 ) {
+    val modelsFlow = models.collectAsState(initial = Model())
+    val labelFlow = labels.collectAsState(initial = null)
+
+    LaunchedEffect(labelFlow.value) {
+        when (labelFlow.value) {
+            is Label.CloseScreen -> closeScreen()
+            null -> {}
+        }
+    }
+
     val localFocusManager = LocalFocusManager.current
     Scaffold(
         modifier = modifier
@@ -40,7 +55,7 @@ fun AddTrip(
         topBar = {
             CenterAlignedTopAppBar(
                 navigationIcon = {
-                    IconButton(onClick = onBackArrow) {
+                    IconButton(onClick = onBackArrowPressed) {
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
                             contentDescription = stringResource(
@@ -69,7 +84,7 @@ fun AddTrip(
                         end.linkTo(parent.end, 16.dp)
                         width = Dimension.fillToConstraints
                     },
-                value = uiState.nameTextField,
+                value = modelsFlow.value.nameText,
                 onValueChange = onNameChanged,
                 label = {
                     Text("Trip name")
@@ -92,10 +107,10 @@ fun AddTrip(
                         width = Dimension.fillToConstraints
                     },
                 onClick = onAddClick,
-                enabled = !uiState.isAddFabLoading
+                enabled = !modelsFlow.value.isAddButtonLoading
             ) {
                 Text(
-                    text = if (!uiState.isAddFabLoading) {
+                    text = if (!modelsFlow.value.isAddButtonLoading) {
                         stringResource(R.string.add_trip)
                     } else {
                         stringResource(R.string.adding_progress)
@@ -105,27 +120,5 @@ fun AddTrip(
                 )
             }
         }
-    }
-}
-
-@Preview
-@Composable
-fun AddTripBottomSheet_Preview_Empty() {
-    ThemedPreview {
-        AddTrip(
-            uiState = AddTripUiState()
-        )
-    }
-}
-
-@Preview
-@Composable
-fun AddTripBottomSheet_Preview_Loading() {
-    ThemedPreview {
-        AddTrip(
-            uiState = AddTripUiState(
-                isAddFabLoading = true
-            )
-        )
     }
 }

@@ -111,4 +111,5 @@ dependencies {
 
     implementation(project(Features.tripsDesign))
     implementation(project(Features.tripDetails))
+    implementation(project(Features.addTrip))
 }
