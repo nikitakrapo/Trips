@@ -4,7 +4,9 @@ import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.labels
 import com.arkivanov.mvikotlin.extensions.coroutines.states
 import com.nikitakrapo.data.TripDetailsRepository
-import com.nikitakrapo.trip_details.TripDetails.*
+import com.nikitakrapo.trip_details.TripDetails.Event
+import com.nikitakrapo.trip_details.TripDetails.Label
+import com.nikitakrapo.trip_details.TripDetails.Model
 import com.nikitakrapo.trip_details.TripDetailsStore.Intent
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

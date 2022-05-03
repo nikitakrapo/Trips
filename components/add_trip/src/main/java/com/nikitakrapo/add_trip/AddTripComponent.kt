@@ -3,7 +3,9 @@ package com.nikitakrapo.add_trip
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.labels
 import com.arkivanov.mvikotlin.extensions.coroutines.states
-import com.nikitakrapo.add_trip.AddTrip.*
+import com.nikitakrapo.add_trip.AddTrip.Event
+import com.nikitakrapo.add_trip.AddTrip.Label
+import com.nikitakrapo.add_trip.AddTrip.Model
 import com.nikitakrapo.add_trip.AddTripStore.Intent
 import com.nikitakrapo.data.AddTripRepository
 import kotlinx.coroutines.flow.Flow
