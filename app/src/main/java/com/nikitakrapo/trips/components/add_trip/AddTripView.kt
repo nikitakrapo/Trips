@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
@@ -18,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import com.nikitakrapo.add_trip.AddTrip
 import com.nikitakrapo.add_trip.AddTrip.Label
 import com.nikitakrapo.add_trip.AddTrip.Model
 import com.nikitakrapo.trips.R
@@ -34,7 +36,7 @@ fun AddTrip(
     onAddClick: () -> Unit = {},
     closeScreen: () -> Unit = {}, //TODO: it shouldn't be here
 ) {
-    val modelsFlow = models.collectAsState(initial = Model())
+    val modelState = models.collectAsState(initial = Model())
     val labelFlow = labels.collectAsState(initial = null)
 
     LaunchedEffect(labelFlow.value) {
@@ -74,7 +76,7 @@ fun AddTrip(
             modifier = Modifier
                 .fillMaxSize(),
         ) {
-            val (nameField, fabNext) = createRefs()
+            val (nameField, nameFieldError, fabNext) = createRefs()
 
             OutlinedTextField(
                 modifier = Modifier
@@ -84,11 +86,12 @@ fun AddTrip(
                         end.linkTo(parent.end, 16.dp)
                         width = Dimension.fillToConstraints
                     },
-                value = modelsFlow.value.nameText,
+                value = modelState.value.nameText,
                 onValueChange = onNameChanged,
                 label = {
                     Text("Trip name")
                 },
+                isError = modelState.value.nameError != null,
                 singleLine = true,
                 maxLines = 1,
                 keyboardActions = KeyboardActions(
@@ -97,6 +100,17 @@ fun AddTrip(
                     }
                 ),
             )
+            if (modelState.value.nameError != null) {
+                val errorText = getTextForNameError(modelState.value)
+                Text(
+                    modifier = Modifier.constrainAs(nameFieldError) {
+                        top.linkTo(nameField.bottom, 4.dp)
+                        start.linkTo(nameField.start)
+                    },
+                    text = errorText,
+                    color = Color.Red
+                )
+            }
 
             ElevatedButton(
                 modifier = Modifier
@@ -107,10 +121,10 @@ fun AddTrip(
                         width = Dimension.fillToConstraints
                     },
                 onClick = onAddClick,
-                enabled = !modelsFlow.value.isAddButtonLoading
+                enabled = modelState.value.isAddButtonEnabled
             ) {
                 Text(
-                    text = if (!modelsFlow.value.isAddButtonLoading) {
+                    text = if (!modelState.value.isAdding) {
                         stringResource(R.string.add_trip)
                     } else {
                         stringResource(R.string.adding_progress)
@@ -120,5 +134,22 @@ fun AddTrip(
                 )
             }
         }
+    }
+}
+
+@Composable
+fun getTextForNameError(model: Model): String {
+    val error = model.nameError
+    return when (error) {
+        is AddTrip.TripNameError.InvalidCharacters -> {
+            stringResource(R.string.error_incorrect_characters)
+        }
+        is AddTrip.TripNameError.TooShort -> {
+            stringResource(R.string.error_too_short, error.minChars)
+        }
+        is AddTrip.TripNameError.TooLong -> {
+            stringResource(R.string.error_too_long, error.maxChars) //TODO: should be handled by ux
+        }
+        null -> ""
     }
 }

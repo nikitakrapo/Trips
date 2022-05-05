@@ -2,6 +2,7 @@ package com.nikitakrapo.add_trip
 
 import com.arkivanov.mvikotlin.core.store.Store
 import com.nikitakrapo.add_trip.AddTrip.Label
+import com.nikitakrapo.add_trip.AddTrip.TripNameError
 import com.nikitakrapo.add_trip.AddTripStore.Intent
 import com.nikitakrapo.add_trip.AddTripStore.State
 
@@ -16,6 +17,8 @@ internal interface AddTripStore : Store<Intent, State, Label> {
 
     data class State(
         val nameText: String = "",
-        val isAddButtonLoading: Boolean = false,
+        val nameError: TripNameError? = null,
+        val isAddButtonEnabled: Boolean = false,
+        val isAdding: Boolean = false,
     )
 }

@@ -20,6 +20,7 @@ import com.nikitakrapo.trips.components.home.Home
 import com.nikitakrapo.trips.components.login.loginGraph
 import com.nikitakrapo.trips.components.trip_details.TripDetail
 import com.nikitakrapo.trips.viewmodels.ViewModelFactory
+import com.nikitakrapo.validators.TripNameTextValidatorImpl
 import kotlinx.coroutines.Dispatchers
 import timber.log.Timber
 
@@ -94,7 +95,8 @@ fun NavGraphBuilder.tripsAppNavGraph(
         val component = AddTripComponent(
             storeFactory = TimeTravelStoreFactory(),
             componentContext = Dispatchers.Main,
-            addTripRepository = addTripRepository
+            addTripRepository = addTripRepository,
+            tripNameTextValidator = TripNameTextValidatorImpl()
         )
         AddTrip(
             models = component.models,

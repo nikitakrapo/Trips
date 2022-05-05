@@ -18,4 +18,7 @@
     <string name="trip_list_empty">No trips yet!</string>
     <string name="cd_delete_trip">Delete trip</string>
     <string name="trip_deleted">Trip deleted</string>
+    <string name="error_incorrect_characters">Incorrect characters</string>
+    <string name="error_too_short">Too short. Should be minimum %1$s characters</string>
+    <string name="error_too_long">Too long. Should be maximum %1$s characters</string>
 </resources>

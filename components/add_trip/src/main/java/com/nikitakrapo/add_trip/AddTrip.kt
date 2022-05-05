@@ -12,8 +12,16 @@ interface AddTrip {
 
     data class Model(
         val nameText: String = "",
-        val isAddButtonLoading: Boolean = false,
+        val nameError: TripNameError? = null, //TODO: make this more abstract - smth like textFieldError
+        val isAddButtonEnabled: Boolean = false,
+        val isAdding: Boolean = false,
     )
+
+    sealed class TripNameError {
+        class InvalidCharacters(val characters: Set<Char>) : TripNameError()
+        class TooShort(val minChars: Int) : TripNameError()
+        class TooLong(val maxChars: Int) : TripNameError()
+    }
 
     sealed class Event {
         class NameTextFieldChanged(val text: String) : Event()

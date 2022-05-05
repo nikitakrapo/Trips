@@ -8,6 +8,7 @@ import com.nikitakrapo.add_trip.AddTrip.Label
 import com.nikitakrapo.add_trip.AddTrip.Model
 import com.nikitakrapo.add_trip.AddTripStore.Intent
 import com.nikitakrapo.data.AddTripRepository
+import com.nikitakrapo.validators.TripNameTextValidator
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlin.coroutines.CoroutineContext
@@ -16,9 +17,10 @@ class AddTripComponent(
     storeFactory: StoreFactory,
     componentContext: CoroutineContext,
     addTripRepository: AddTripRepository,
+    tripNameTextValidator: TripNameTextValidator,
 ) : AddTrip {
 
-    private val store = AddTripStoreFactory(storeFactory, componentContext, addTripRepository).create()
+    private val store = AddTripStoreFactory(storeFactory, componentContext, addTripRepository, tripNameTextValidator).create()
 
     override val models: Flow<Model> = store.states.map(::toModel)
 
