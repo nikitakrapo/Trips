@@ -48,6 +48,9 @@ object Versions {
     // JUnit
     const val jUnit = "4.12"
 
+    // MockK
+    const val mockK = "1.12.3"
+
     // Espresso
     const val espresso = "3.4.0"
 }

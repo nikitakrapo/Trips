@@ -85,6 +85,10 @@ object JUnit {
     const val jUnit = "junit:junit:${Versions.jUnit}"
 }
 
+object Mock {
+    const val mockK = "io.mockk:mockk:${Versions.mockK}"
+}
+
 object Espresso {
     const val espressoCore = "androidx.test.espresso:espresso-core:${Versions.espresso}"
 }

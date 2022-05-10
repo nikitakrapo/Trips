@@ -12,18 +12,21 @@ interface TripDetails {
 
     data class Model(
         val name: String = "",
-        val imageUrl: String = "", // TODO: maybe pass smth like bitmap (so that view will be more stupid)
-        val description: String? = null,
-        val isDescriptionExpanded: Boolean = false
+        val isDropdownMenuOpened: Boolean = false,
     )
 
     sealed class Event {
-        object ExpandDescriptionClicked : Event()
         object BackArrowClicked : Event()
+        object MoreClicked : Event()
+        object OutsideOfDropdownClicked : Event()
         object DeleteClicked : Event()
     }
 
     sealed class Label {
         object CloseScreen : Label()
+    }
+
+    interface ViewCallbacks {
+        fun closeScreen()
     }
 }

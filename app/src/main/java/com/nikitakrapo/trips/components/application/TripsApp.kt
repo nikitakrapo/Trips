@@ -80,11 +80,12 @@ fun NavGraphBuilder.tripsAppNavGraph(
             tripName = tripName ?: "" //TODO: resolve this normally
         )
         TripDetail(
-            models = component.models,
-            labels = component.labels,
-            onBackArrowPressed = { component.accept(TripDetails.Event.BackArrowClicked) },
-            onDeleteTripClicked = { component.accept(TripDetails.Event.DeleteClicked) },
-            closeScreen = { navController.popBackStack() }
+            component = component,
+            callbacks = object : TripDetails.ViewCallbacks {
+                override fun closeScreen() {
+                    navController.popBackStack()
+                }
+            },
         )
     }
 

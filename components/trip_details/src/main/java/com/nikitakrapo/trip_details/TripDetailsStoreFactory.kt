@@ -29,15 +29,15 @@ internal class TripDetailsStoreFactory(
             bootstrapper = SimpleBootstrapper(Unit),
             executorFactory = coroutineExecutorFactory(mainContext) {
                 onAction<Unit> {
-                    launch {
-                        //FIXME: fetch from db
-                        val description = "Stub description"
-                        dispatch(Msg.Loaded(description))
-                    }
+                    //TODO: on init
                 }
 
-                onIntent<Intent.SwitchDescriptionExpanded> {
-                    dispatch(Msg.SwitchDescriptionExpanded)
+                onIntent<Intent.OpenDropdownMenu> {
+                    dispatch(Msg.OpenDropdownMenu)
+                }
+
+                onIntent<Intent.CloseDropdownMenu> {
+                    dispatch(Msg.CloseDropdownMenu)
                 }
 
                 onIntent<Intent.CloseScreen> {
@@ -53,14 +53,14 @@ internal class TripDetailsStoreFactory(
             },
             reducer = { msg ->
                 when (msg) {
-                    is Msg.SwitchDescriptionExpanded -> copy(isDescriptionExpanded = !isDescriptionExpanded)
-                    is Msg.Loaded -> copy(description = msg.description)
+                    Msg.OpenDropdownMenu -> copy(isDropdownMenuOpened = true)
+                    Msg.CloseDropdownMenu -> copy(isDropdownMenuOpened = false)
                 }
             },
         ) {}
 
     private sealed class Msg {
-        object SwitchDescriptionExpanded : Msg()
-        data class Loaded(val description: String) : Msg()
+        object OpenDropdownMenu : Msg()
+        object CloseDropdownMenu : Msg()
     }
 }

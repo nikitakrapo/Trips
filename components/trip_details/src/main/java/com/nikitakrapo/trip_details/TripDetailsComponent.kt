@@ -27,8 +27,9 @@ class TripDetailsComponent(
 
     override fun accept(event: Event) {
         val intent = when (event) {
-            Event.ExpandDescriptionClicked -> Intent.SwitchDescriptionExpanded
             Event.BackArrowClicked -> Intent.CloseScreen
+            Event.MoreClicked -> Intent.OpenDropdownMenu
+            Event.OutsideOfDropdownClicked -> Intent.CloseDropdownMenu
             Event.DeleteClicked -> Intent.DeleteTrip
         }
         store.accept(intent)

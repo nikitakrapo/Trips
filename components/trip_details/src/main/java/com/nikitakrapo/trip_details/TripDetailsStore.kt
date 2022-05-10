@@ -8,15 +8,14 @@ import com.nikitakrapo.trip_details.TripDetailsStore.State
 internal interface TripDetailsStore : Store<Intent, State, Label> {
 
     sealed class Intent {
-        object SwitchDescriptionExpanded : Intent()
         object CloseScreen : Intent()
         object DeleteTrip : Intent()
+        object OpenDropdownMenu : Intent()
+        object CloseDropdownMenu : Intent()
     }
 
     data class State(
         val name: String = "",
-        val imageUrl: String = "",
-        val description: String? = null,
-        val isDescriptionExpanded: Boolean = false
+        val isDropdownMenuOpened: Boolean = false,
     )
 }
