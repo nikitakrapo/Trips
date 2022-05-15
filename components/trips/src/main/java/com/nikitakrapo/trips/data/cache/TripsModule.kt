@@ -4,9 +4,12 @@ import android.content.Context
 import androidx.room.Room
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 @Module
+@InstallIn(SingletonComponent::class)
 object TripsModule {
 
     @Provides
@@ -20,6 +23,7 @@ object TripsModule {
     }
 
     @Provides
+    @Singleton
     fun provideUserTripsDao(tripsDatabase: TripsDatabase): UserTripsDao {
         return tripsDatabase.userTripsDao()
     }

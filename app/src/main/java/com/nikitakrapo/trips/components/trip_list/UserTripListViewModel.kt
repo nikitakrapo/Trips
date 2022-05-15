@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.nikitakrapo.trips.data.TripsRepository
 import com.nikitakrapo.trips.data.dto.Trip
 import com.nikitakrapo.trips.mvi.ViewModelInteractor
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -13,6 +14,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class UserTripListViewModel @Inject constructor(
     private val tripsRepository: TripsRepository
 ) : ViewModel(), ViewModelInteractor<UserTripListUiState, UserTripListEvent, Unit> {

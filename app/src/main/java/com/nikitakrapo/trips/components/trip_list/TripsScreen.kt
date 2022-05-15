@@ -7,8 +7,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import com.google.accompanist.navigation.animation.composable
@@ -31,10 +30,7 @@ fun NavGraphBuilder.tripsScreenGraph(
         popEnterTransition = { fadeIn(animationSpec = tween(0)) },
         popExitTransition = { fadeOut(animationSpec = tween(0)) },
     ) {
-        val viewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current)
-
-        val userTripListViewModel: UserTripListViewModel =
-            ViewModelProvider(viewModelStoreOwner)[UserTripListViewModel::class.java]
+        val userTripListViewModel: UserTripListViewModel = hiltViewModel()
         val tripsUiState = userTripListViewModel.uiState.collectAsState()
         UserTripList(
             modifier = Modifier

@@ -12,14 +12,11 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.nikitakrapo.trips.appComponent
 import com.nikitakrapo.trips.components.application.TripsApp
-import com.nikitakrapo.trips.viewmodels.ViewModelFactory
 import com.nikitakrapo.trips_design.theme.TripsTheme
-import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
 
     private var showSplashScreen: Boolean = true
 

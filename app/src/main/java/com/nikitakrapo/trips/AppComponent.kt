@@ -1,13 +1,12 @@
 package com.nikitakrapo.trips
 
 import android.app.Application
-import com.nikitakrapo.trips.analytics.firebase.FirebaseProvider
-import com.nikitakrapo.trips.data.TripsRepository
-import com.nikitakrapo.trips.data.cache.TripsModule
 import com.nikitakrapo.trips.activity.MainActivity
+import com.nikitakrapo.trips.analytics.firebase.FirebaseProvider
 import com.nikitakrapo.trips.components.add_trip.AddTripRepository
 import com.nikitakrapo.trips.components.trip_details.TripDetailsRepository
-import com.nikitakrapo.trips.viewmodels.ViewModelModule
+import com.nikitakrapo.trips.data.TripsRepository
+import com.nikitakrapo.trips.data.cache.TripsModule
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
@@ -15,7 +14,6 @@ import javax.inject.Singleton
 @Component(modules = [
     ApplicationModule::class,
     TripsModule::class, //TODO: fix scope
-    ViewModelModule::class
 ])
 @Singleton
 interface AppComponent {

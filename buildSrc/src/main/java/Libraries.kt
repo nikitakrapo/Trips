@@ -60,8 +60,9 @@ object AndroidXTest {
 }
 
 object Google {
-    const val dagger2 = "com.google.dagger:dagger:${Versions.dagger2}"
-    const val daggerCompiler = "com.google.dagger:dagger-compiler:${Versions.dagger2}"
+    const val hilt = "com.google.dagger:hilt-android:${Versions.hilt}"
+    const val hiltCompiler = "com.google.dagger:hilt-android-compiler:${Versions.hilt}"
+    const val hiltNavigationCompose = "androidx.hilt:hilt-navigation-compose:${Versions.hiltNavigationCompose}"
     const val gson = "com.google.code.gson:gson:${Versions.gson}"
     const val androidMaterial = "com.google.android.material:material:${Versions.googleAndroidMaterial}"
     const val accompanistSystemUiController = "com.google.accompanist:accompanist-systemuicontroller:${Versions.accompanist}"
