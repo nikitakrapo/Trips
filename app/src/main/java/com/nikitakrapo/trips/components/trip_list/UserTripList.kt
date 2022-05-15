@@ -21,6 +21,7 @@ import com.nikitakrapo.trips.R
 import com.nikitakrapo.trips.ThemedPreview
 import com.nikitakrapo.trips.components.trip_card.TripCard
 import com.nikitakrapo.trips.components.trip_card.TripCardState
+import com.nikitakrapo.trips.data.dto.Trip
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -125,15 +126,12 @@ fun TripsPreview_FilledList() {
                 tripList = listOf(
                     Trip(
                         name = "Ekaterinburg - Tbilisi",
-                        dates = "5 Jul - 12 Jul"
                     ),
                     Trip(
                         name = "Tbilisi - Sochi",
-                        dates = "10 Oct - 25 Oct"
                     ),
                     Trip(
                         name = "Ekaterinburg - Bern",
-                        dates = "14 Jan - 1 Feb"
                     ),
                 )
             )

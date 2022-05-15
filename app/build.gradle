@@ -109,6 +109,7 @@ dependencies {
 
     androidTestImplementation(Espresso.espressoCore)
 
+    implementation(project(Features.trips))
     implementation(project(Features.tripsDesign))
     implementation(project(Features.tripDetails))
     implementation(project(Features.addTrip))

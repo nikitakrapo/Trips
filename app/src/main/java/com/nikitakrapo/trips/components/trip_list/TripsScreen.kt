@@ -12,20 +12,15 @@ import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import com.google.accompanist.navigation.animation.composable
-import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
-import com.nikitakrapo.trips.viewmodels.ViewModelFactory
+import com.nikitakrapo.trips.data.dto.Trip
 
 sealed class TripsScreen(val route: String) {
     object UserTripList : TripsScreen("user_trip_list")
 }
 
-@OptIn(
-    ExperimentalAnimationApi::class,
-    ExperimentalMaterialNavigationApi::class
-)
+@OptIn(ExperimentalAnimationApi::class,)
 fun NavGraphBuilder.tripsScreenGraph(
     navController: NavController,
-    viewModelFactory: ViewModelFactory,
     openTripCard: (Trip) -> Unit,
     openAddTrip: () -> Unit,
 ) {
@@ -39,7 +34,7 @@ fun NavGraphBuilder.tripsScreenGraph(
         val viewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current)
 
         val userTripListViewModel: UserTripListViewModel =
-            ViewModelProvider(viewModelStoreOwner, viewModelFactory)[UserTripListViewModel::class.java]
+            ViewModelProvider(viewModelStoreOwner)[UserTripListViewModel::class.java]
         val tripsUiState = userTripListViewModel.uiState.collectAsState()
         UserTripList(
             modifier = Modifier

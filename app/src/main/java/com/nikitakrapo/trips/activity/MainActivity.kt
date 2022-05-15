@@ -50,9 +50,7 @@ class MainActivity : ComponentActivity() {
                         )
                     }
 
-                    TripsApp(
-                        viewModelFactory
-                    )
+                    TripsApp()
                 }
             }
 

@@ -14,7 +14,7 @@ import javax.inject.Singleton
 
 @Component(modules = [
     ApplicationModule::class,
-    TripsModule::class,
+    TripsModule::class, //TODO: fix scope
     ViewModelModule::class
 ])
 @Singleton

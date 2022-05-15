@@ -14,7 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.nikitakrapo.trips.R
-import com.nikitakrapo.trips.components.trip_list.Trip
+import com.nikitakrapo.trips.data.dto.Trip
 import com.nikitakrapo.trips_design.theme.TripsTheme
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
@@ -39,7 +39,6 @@ fun TripCard(
         ) {
             val (
                 tripTitle,
-                tripDates,
                 moreButton,
             ) = createRefs()
 
@@ -51,17 +50,6 @@ fun TripCard(
                     },
                 text = tripCardState.trip.name,
                 style = MaterialTheme.typography.titleLarge
-            )
-
-            Text(
-                modifier = Modifier
-                    .constrainAs(tripDates) {
-                        top.linkTo(tripTitle.bottom)
-                        start.linkTo(tripTitle.start)
-                        bottom.linkTo(parent.bottom, margin = 16.dp) // FIXME: remove
-                    },
-                text = tripCardState.trip.dates,
-                style = MaterialTheme.typography.bodyLarge
             )
 
             IconButton(
@@ -101,7 +89,6 @@ fun TripCardPreview() {
                     tripCardState = TripCardState(
                         Trip(
                             name = "Ekaterinburg - Tbilisi",
-                            dates = "5 Jul - 12 Jul"
                         )
                     )
                 )

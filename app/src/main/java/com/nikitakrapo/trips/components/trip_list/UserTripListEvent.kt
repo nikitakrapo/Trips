@@ -1,5 +1,7 @@
 package com.nikitakrapo.trips.components.trip_list
 
+import com.nikitakrapo.trips.data.dto.Trip
+
 sealed class UserTripListEvent {
     class LoadedFromNetwork(
         val tripList: List<Trip>,

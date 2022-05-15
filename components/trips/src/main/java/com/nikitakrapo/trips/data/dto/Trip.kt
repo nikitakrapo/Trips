@@ -1,4 +1,4 @@
-package com.nikitakrapo.trips.components.trip_list
+package com.nikitakrapo.trips.data.dto
 
 import java.util.*
 

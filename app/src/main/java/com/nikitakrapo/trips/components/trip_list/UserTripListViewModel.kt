@@ -3,6 +3,7 @@ package com.nikitakrapo.trips.components.trip_list
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nikitakrapo.trips.data.TripsRepository
+import com.nikitakrapo.trips.data.dto.Trip
 import com.nikitakrapo.trips.mvi.ViewModelInteractor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
