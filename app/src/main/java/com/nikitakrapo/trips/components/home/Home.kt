@@ -13,7 +13,6 @@ import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.nikitakrapo.trips.components.profile.Profile
 import com.nikitakrapo.trips.components.trip_list.Trips
-import com.nikitakrapo.trips.data.dto.Trip
 
 @OptIn(
     ExperimentalAnimationApi::class,
@@ -23,7 +22,7 @@ import com.nikitakrapo.trips.data.dto.Trip
 @Composable
 fun Home(
     openLogin: () -> Unit,
-    openTripCard: (Trip) -> Unit,
+    openTripCard: (String) -> Unit,
     openAddTrip: () -> Unit,
 ) {
     val screens = listOf(

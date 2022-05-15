@@ -5,22 +5,24 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import com.google.accompanist.navigation.animation.composable
-import com.nikitakrapo.trips.data.dto.Trip
+import com.nikitakrapo.impl.ui.TripList
+import com.nikitakrapo.impl.viewmodel.UserTripListViewModel
+import com.nikitakrapo.trip_list.component.TripList
 
 sealed class TripsScreen(val route: String) {
     object UserTripList : TripsScreen("user_trip_list")
 }
 
-@OptIn(ExperimentalAnimationApi::class,)
+@OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.tripsScreenGraph(
     navController: NavController,
-    openTripCard: (Trip) -> Unit,
+    openTripCard: (String) -> Unit,
     openAddTrip: () -> Unit,
 ) {
     composable(
@@ -31,15 +33,18 @@ fun NavGraphBuilder.tripsScreenGraph(
         popExitTransition = { fadeOut(animationSpec = tween(0)) },
     ) {
         val userTripListViewModel: UserTripListViewModel = hiltViewModel()
-        val tripsUiState = userTripListViewModel.uiState.collectAsState()
-        UserTripList(
+        LaunchedEffect(Unit) {
+            userTripListViewModel.output.collect {
+                when (it) {
+                    is TripList.Output.AddTripSelected -> openAddTrip()
+                    is TripList.Output.Selected -> openTripCard(it.name)
+                }
+            }
+        }
+        TripList(
             modifier = Modifier
                 .fillMaxSize(),
-            userTripListUiState = tripsUiState.value,
-            onTripCardClick = openTripCard,
-            onTripsSwipeRefresh = { userTripListViewModel.onViewEvent(UserTripListEvent.SwipeRefresh) },
-            onAddTripClick = openAddTrip,
-            onLongTripClick = { userTripListViewModel.onViewEvent(UserTripListEvent.LongTripClick(it)) }
+            component = userTripListViewModel.component,
         )
     }
 }

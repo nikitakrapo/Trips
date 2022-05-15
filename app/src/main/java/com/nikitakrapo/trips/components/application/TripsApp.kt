@@ -50,7 +50,7 @@ fun NavGraphBuilder.tripsAppNavGraph(
     composable(MainSections.Home.route) {
         Home(
             openLogin = { navController.navigate(MainSections.Login.route) },
-            openTripCard = { navController.navigate("${MainSections.TripDetails.route}/${it.name}") }, // xd
+            openTripCard = { navController.navigate("${MainSections.TripDetails.route}/${it}") }, // xd
             openAddTrip = { navController.navigate(MainSections.AddTrip.route) },
         )
     }
