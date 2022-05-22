@@ -12,9 +12,7 @@ import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.nikitakrapo.trips.components.profile.Profile
-import com.nikitakrapo.trips.components.trip_list.Trip
 import com.nikitakrapo.trips.components.trip_list.Trips
-import com.nikitakrapo.trips.viewmodels.ViewModelFactory
 
 @OptIn(
     ExperimentalAnimationApi::class,
@@ -24,8 +22,7 @@ import com.nikitakrapo.trips.viewmodels.ViewModelFactory
 @Composable
 fun Home(
     openLogin: () -> Unit,
-    viewModelFactory: ViewModelFactory,
-    openTripCard: (Trip) -> Unit,
+    openTripCard: (String) -> Unit,
     openAddTrip: () -> Unit,
 ) {
     val screens = listOf(
@@ -57,7 +54,6 @@ fun Home(
                         popExitTransition = { fadeOut(animationSpec = tween(0)) },
                     ) {
                         Trips(
-                            viewModelFactory = viewModelFactory,
                             openAddTrip = openAddTrip,
                             openTripCard = openTripCard,
                         )

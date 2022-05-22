@@ -19,21 +19,18 @@ import com.nikitakrapo.trips.components.add_trip.AddTrip
 import com.nikitakrapo.trips.components.home.Home
 import com.nikitakrapo.trips.components.login.loginGraph
 import com.nikitakrapo.trips.components.trip_details.TripDetail
-import com.nikitakrapo.trips.viewmodels.ViewModelFactory
 import com.nikitakrapo.validators.TripNameTextValidatorImpl
 import kotlinx.coroutines.Dispatchers
 import timber.log.Timber
 
 @Composable
-fun TripsApp(
-    viewModelFactory: ViewModelFactory
-) {
+fun TripsApp() {
     val navController = rememberNavController()
     NavHost(
         navController = navController,
         startDestination = MainSections.Home.route
     ) {
-        tripsAppNavGraph(navController, viewModelFactory)
+        tripsAppNavGraph(navController)
     }
 }
 
@@ -49,13 +46,11 @@ sealed class MainSections(val route: String) {
 
 fun NavGraphBuilder.tripsAppNavGraph(
     navController: NavController,
-    viewModelFactory: ViewModelFactory
 ) {
     composable(MainSections.Home.route) {
         Home(
-            viewModelFactory = viewModelFactory,
             openLogin = { navController.navigate(MainSections.Login.route) },
-            openTripCard = { navController.navigate("${MainSections.TripDetails.route}/${it.name}") }, // xd
+            openTripCard = { navController.navigate("${MainSections.TripDetails.route}/${it}") }, // xd
             openAddTrip = { navController.navigate(MainSections.AddTrip.route) },
         )
     }
@@ -80,11 +75,12 @@ fun NavGraphBuilder.tripsAppNavGraph(
             tripName = tripName ?: "" //TODO: resolve this normally
         )
         TripDetail(
-            models = component.models,
-            labels = component.labels,
-            onBackArrowPressed = { component.accept(TripDetails.Event.BackArrowClicked) },
-            onDeleteTripClicked = { component.accept(TripDetails.Event.DeleteClicked) },
-            closeScreen = { navController.popBackStack() }
+            component = component,
+            callbacks = object : TripDetails.ViewCallbacks {
+                override fun closeScreen() {
+                    navController.popBackStack()
+                }
+            },
         )
     }
 

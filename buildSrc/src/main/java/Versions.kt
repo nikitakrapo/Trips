@@ -24,7 +24,8 @@ object Versions {
     const val coroutines = "1.6.1"
 
     // Google
-    const val dagger2 = "2.40.5"
+    const val hilt = "2.40.5"
+    const val hiltNavigationCompose = "1.0.0"
     const val gson = "2.8.9"
     const val googleAndroidMaterial = "1.5.0"
     const val accompanist = "0.24.3-alpha" // Update with compose
@@ -47,6 +48,9 @@ object Versions {
 
     // JUnit
     const val jUnit = "4.12"
+
+    // MockK
+    const val mockK = "1.12.3"
 
     // Espresso
     const val espresso = "3.4.0"

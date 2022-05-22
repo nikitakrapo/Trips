@@ -5,28 +5,25 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import com.google.accompanist.navigation.animation.composable
-import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
-import com.nikitakrapo.trips.viewmodels.ViewModelFactory
+import com.nikitakrapo.impl.ui.TripList
+import com.nikitakrapo.impl.viewmodel.UserTripListViewModel
+import com.nikitakrapo.trip_list.component.TripList
 
 sealed class TripsScreen(val route: String) {
     object UserTripList : TripsScreen("user_trip_list")
 }
 
-@OptIn(
-    ExperimentalAnimationApi::class,
-    ExperimentalMaterialNavigationApi::class
-)
+@OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.tripsScreenGraph(
     navController: NavController,
-    viewModelFactory: ViewModelFactory,
-    openTripCard: (Trip) -> Unit,
+    openTripCard: (String) -> Unit,
     openAddTrip: () -> Unit,
 ) {
     composable(
@@ -36,19 +33,32 @@ fun NavGraphBuilder.tripsScreenGraph(
         popEnterTransition = { fadeIn(animationSpec = tween(0)) },
         popExitTransition = { fadeOut(animationSpec = tween(0)) },
     ) {
-        val viewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current)
+        val userTripListViewModel: UserTripListViewModel = hiltViewModel()
+        val uiState = userTripListViewModel.component.state.collectAsState()
 
-        val userTripListViewModel: UserTripListViewModel =
-            ViewModelProvider(viewModelStoreOwner, viewModelFactory)[UserTripListViewModel::class.java]
-        val tripsUiState = userTripListViewModel.uiState.collectAsState()
-        UserTripList(
+        LaunchedEffect(Unit) {
+            userTripListViewModel.component.news.collect { news ->
+                when (news) {
+                    is TripList.News.OpenAddTrip -> openAddTrip()
+                    is TripList.News.OpenDetails -> openTripCard(news.name)
+                }
+            }
+        }
+        TripList(
             modifier = Modifier
                 .fillMaxSize(),
-            userTripListUiState = tripsUiState.value,
-            onTripCardClick = openTripCard,
-            onTripsSwipeRefresh = { userTripListViewModel.onViewEvent(UserTripListEvent.SwipeRefresh) },
-            onAddTripClick = openAddTrip,
-            onLongTripClick = { userTripListViewModel.onViewEvent(UserTripListEvent.LongTripClick(it)) }
+            state = uiState.value,
+            onAddTripClicked = {
+                userTripListViewModel.component.accept(TripList.Intent.OpenAddTrip)
+            },
+            onSwipeRefresh = {
+                userTripListViewModel.component.accept(TripList.Intent.RefreshTrips)
+            },
+            onTripClicked = { tripName ->
+                userTripListViewModel.component.accept(
+                    TripList.Intent.OpenTripDetails(tripName)
+                )
+            },
         )
     }
 }

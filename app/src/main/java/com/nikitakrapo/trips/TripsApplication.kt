@@ -4,8 +4,10 @@ import android.app.Application
 import android.content.Context
 import com.nikitakrapo.trips.analytics.firebase.AnalyticsCommonParameters
 import com.nikitakrapo.trips.analytics.firebase.AnalyticsEnvironment
+import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 
+@HiltAndroidApp
 class TripsApplication : Application() {
 
     lateinit var appComponent: AppComponent

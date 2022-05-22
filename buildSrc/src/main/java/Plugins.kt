@@ -4,6 +4,8 @@ object Plugins {
 
     const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Config.kotlin}"
 
+    const val hiltAndroid = "com.google.dagger:hilt-android-gradle-plugin:${Versions.hilt}"
+
     const val googleServices = "com.google.gms:google-services:${Versions.googleServicesPlugin}"
     const val firebaseCrashlyticsGradle = "com.google.firebase:firebase-crashlytics-gradle:${Versions.firebaseCrashlyticsPlugin}"
 }

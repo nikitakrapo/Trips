@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="cd_add_trip">Add trip</string>
+    <string name="trip_list_empty">No trips yet!</string>
+    <string name="cd_more_icon">More</string>
+</resources>
