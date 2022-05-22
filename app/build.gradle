@@ -77,13 +77,6 @@ dependencies {
     debugImplementation(JetpackCompose.uiTestManifest)
     androidTestImplementation(JetpackCompose.uiTestJunit4)
 
-    implementation(MviKotlin.core)
-    implementation(MviKotlin.main)
-    implementation(MviKotlin.logging)
-    implementation(MviKotlin.timeTravel)
-    implementation(MviKotlin.coroutinesExtensions)
-    implementation(MviKotlin.rx)
-
     implementation(project(Features.mvi))
 
     implementation(Google.hilt)
@@ -117,7 +110,8 @@ dependencies {
     implementation(project(Features.tripsDesign))
     implementation(project(Features.tripListCore))
     implementation(project(Features.tripListImpl))
-    implementation(project(Features.tripDetails))
+    implementation(project(Features.tripDetailsCore))
+    implementation(project(Features.tripDetailsImpl))
     implementation(project(Features.addTripCore))
     implementation(project(Features.addTripImpl))
 }

@@ -35,15 +35,6 @@ object JetpackCompose {
     const val materialIcons = "androidx.compose.material:material-icons-core:${Versions.compose}"
 }
 
-object MviKotlin {
-    const val core = "com.arkivanov.mvikotlin:mvikotlin:${Versions.mviKotlin}"
-    const val main = "com.arkivanov.mvikotlin:mvikotlin-main:${Versions.mviKotlin}"
-    const val logging = "com.arkivanov.mvikotlin:mvikotlin-logging:${Versions.mviKotlin}"
-    const val timeTravel = "com.arkivanov.mvikotlin:mvikotlin-timetravel:${Versions.mviKotlin}"
-    const val coroutinesExtensions = "com.arkivanov.mvikotlin:mvikotlin-extensions-coroutines:${Versions.mviKotlin}"
-    const val rx = "com.arkivanov.mvikotlin:rx:${Versions.mviKotlin}"
-}
-
 object Wear {
     const val wear = "androidx.wear:wear:${Versions.wear}"
     const val composeMaterial = "androidx.wear.compose:compose-material:${Versions.wearCompose}"

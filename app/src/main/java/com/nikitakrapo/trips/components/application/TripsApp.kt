@@ -3,7 +3,6 @@ package com.nikitakrapo.trips.components.application
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -12,17 +11,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.arkivanov.mvikotlin.timetravel.store.TimeTravelStoreFactory
 import com.nikitakrapo.add_trip.AddTripFeature
 import com.nikitakrapo.add_trip.impl.ui.AddTripScreen
 import com.nikitakrapo.add_trip.impl.viewmodel.AddTripViewModel
-import com.nikitakrapo.trip_details.TripDetails
-import com.nikitakrapo.trip_details.TripDetailsComponent
-import com.nikitakrapo.trips.appComponent
+import com.nikitakrapo.trip_details.TripDetailsFeature
+import com.nikitakrapo.trip_details.impl.ui.TripDetailsScreen
+import com.nikitakrapo.trip_details.impl.viewmodel.TripDetailsViewModel
 import com.nikitakrapo.trips.components.home.Home
 import com.nikitakrapo.trips.components.login.loginGraph
-import com.nikitakrapo.trips.components.trip_details.TripDetail
-import kotlinx.coroutines.Dispatchers
 import timber.log.Timber
 
 @Composable
@@ -41,6 +37,7 @@ sealed class MainSections(val route: String) {
     object Login : MainSections("login")
     object TripDetails : MainSections("trip_details") {
         const val tripNameArg = "tripName"
+        val fullRoute = "$route/{$tripNameArg}"
     }
 
     object AddTrip : MainSections("add_trip")
@@ -69,19 +66,31 @@ fun NavGraphBuilder.tripsAppNavGraph(
         if (tripName == null) {
             Timber.e("TripName not passed")
         }
-        val tripsRepository = LocalContext.current.appComponent.tripDetailsRepository() //TODO: DI
-        val component = TripDetailsComponent(
-            storeFactory = TimeTravelStoreFactory(),
-            componentContext = Dispatchers.Main,
-            tripsRepository = tripsRepository,
-            tripName = tripName ?: "" //TODO: resolve this normally
-        )
-        TripDetail(
-            component = component,
-            callbacks = object : TripDetails.ViewCallbacks {
-                override fun closeScreen() {
-                    navController.popBackStack()
+        val tripDetailsViewModel: TripDetailsViewModel = hiltViewModel()
+        val uiState = tripDetailsViewModel.component.state.collectAsState()
+
+        LaunchedEffect(Unit) {
+            tripDetailsViewModel.component.news.collect { news ->
+                when (news) {
+                    is TripDetailsFeature.News.CloseScreen ->
+                        navController.popBackStack(MainSections.TripDetails.fullRoute, true)
                 }
+            }
+        }
+
+        TripDetailsScreen(
+            state = uiState.value,
+            onBackArrowClicked = {
+                navController.popBackStack(MainSections.TripDetails.fullRoute, true)
+            },
+            onMoreClicked = {
+                tripDetailsViewModel.component.accept(TripDetailsFeature.Intent.OpenDropdownMenu)
+            },
+            onMoreDismiss = {
+                tripDetailsViewModel.component.accept(TripDetailsFeature.Intent.CloseDropdownMenu)
+            },
+            onDeleteClicked = {
+                tripDetailsViewModel.component.accept(TripDetailsFeature.Intent.DeleteTrip)
             },
         )
     }
@@ -95,7 +104,8 @@ fun NavGraphBuilder.tripsAppNavGraph(
         LaunchedEffect(Unit) {
             addTripViewModel.component.news.collect { news ->
                 when (news) {
-                    AddTripFeature.News.CloseScreen -> navController.popBackStack()
+                    AddTripFeature.News.CloseScreen ->
+                        navController.popBackStack(MainSections.AddTrip.route, true)
                 }
             }
         }

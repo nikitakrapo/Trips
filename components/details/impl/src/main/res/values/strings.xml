@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="cd_back_icon">Go back</string>
+    <string name="cd_more_icon">More</string>
+    <string name="delete_trip">Delete trip</string>
+    <string name="cd_delete_trip">Delete trip</string>
+</resources>

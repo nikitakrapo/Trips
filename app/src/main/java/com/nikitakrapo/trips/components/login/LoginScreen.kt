@@ -19,7 +19,7 @@ fun NavGraphBuilder.loginGraph(navController: NavController) {
         composable(route = LoginScreen.SignIn.route) {
             SignIn(
                 navigateToRegistration = { navController.navigate(LoginScreen.Registration.route) },
-                goBack = { navController.popBackStack() }
+                goBack = { navController.popBackStack(LoginScreen.SignIn.route, true) }
             )
         }
 

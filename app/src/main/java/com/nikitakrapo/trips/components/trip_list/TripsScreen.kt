@@ -12,8 +12,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import com.google.accompanist.navigation.animation.composable
-import com.nikitakrapo.impl.ui.TripList
-import com.nikitakrapo.impl.viewmodel.UserTripListViewModel
+import com.nikitakrapo.trip_list.impl.ui.TripList
+import com.nikitakrapo.trip_list.impl.viewmodel.UserTripListViewModel
 import com.nikitakrapo.trip_list.component.TripList
 
 sealed class TripsScreen(val route: String) {

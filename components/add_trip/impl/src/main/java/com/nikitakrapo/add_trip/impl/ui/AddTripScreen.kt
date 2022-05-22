@@ -3,7 +3,6 @@ package com.nikitakrapo.add_trip.impl.ui
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
@@ -75,6 +74,9 @@ fun AddTripScreen(
                         width = Dimension.fillToConstraints
                     },
                 value = state.nameText,
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    textColor = MaterialTheme.colorScheme.onSurface
+                ),
                 onValueChange = onNameChanged,
                 label = {
                     Text("Trip name")
