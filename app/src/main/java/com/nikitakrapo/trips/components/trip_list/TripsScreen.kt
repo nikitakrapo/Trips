@@ -6,6 +6,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -33,18 +34,31 @@ fun NavGraphBuilder.tripsScreenGraph(
         popExitTransition = { fadeOut(animationSpec = tween(0)) },
     ) {
         val userTripListViewModel: UserTripListViewModel = hiltViewModel()
+        val uiState = userTripListViewModel.component.state.collectAsState()
+
         LaunchedEffect(Unit) {
-            userTripListViewModel.output.collect {
-                when (it) {
-                    is TripList.Output.AddTripSelected -> openAddTrip()
-                    is TripList.Output.Selected -> openTripCard(it.name)
+            userTripListViewModel.component.news.collect { news ->
+                when (news) {
+                    is TripList.News.OpenAddTrip -> openAddTrip()
+                    is TripList.News.OpenDetails -> openTripCard(news.name)
                 }
             }
         }
         TripList(
             modifier = Modifier
                 .fillMaxSize(),
-            component = userTripListViewModel.component,
+            state = uiState.value,
+            onAddTripClicked = {
+                userTripListViewModel.component.accept(TripList.Intent.OpenAddTrip)
+            },
+            onSwipeRefresh = {
+                userTripListViewModel.component.accept(TripList.Intent.RefreshTrips)
+            },
+            onTripClicked = { tripName ->
+                userTripListViewModel.component.accept(
+                    TripList.Intent.OpenTripDetails(tripName)
+                )
+            },
         )
     }
 }

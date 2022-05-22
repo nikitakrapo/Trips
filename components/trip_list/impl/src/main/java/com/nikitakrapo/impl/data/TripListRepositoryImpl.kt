@@ -14,6 +14,10 @@ class TripListRepositoryImpl @Inject constructor(
         tripsRepository.removeTrip(name)
     }
 
+    override suspend fun getTripList(): List<TripModel> {
+        return tripsRepository.getTrips().map(::toModel)
+    }
+
     override fun getTripListFlow(): Flow<List<TripModel>> {
         return tripsRepository.getTripsFlow().map(::toModels)
     }

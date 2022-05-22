@@ -5,20 +5,15 @@ plugins {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_7
-    targetCompatibility = JavaVersion.VERSION_1_7
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
 }
 
 dependencies {
     implementation(KotlinLib.std)
     implementation(KotlinLib.coroutines)
 
-    implementation(MviKotlin.core)
-    implementation(MviKotlin.main)
-    implementation(MviKotlin.logging)
-    implementation(MviKotlin.timeTravel)
-    implementation(MviKotlin.coroutinesExtensions)
-    implementation(MviKotlin.rx)
+    implementation(project(Features.mvi))
 
     testImplementation(JUnit.jUnit)
     testImplementation(Mock.mockK)

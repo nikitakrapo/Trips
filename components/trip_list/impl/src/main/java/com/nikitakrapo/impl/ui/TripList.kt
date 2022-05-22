@@ -9,7 +9,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -18,25 +17,22 @@ import androidx.compose.ui.unit.dp
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.nikitakrapo.impl.R
-import com.nikitakrapo.trip_list.component.TripList
-import com.nikitakrapo.trip_list.component.TripList.Event.AddTripClicked
-import com.nikitakrapo.trip_list.component.TripList.Event.SwipeRefreshPulled
-import com.nikitakrapo.trip_list.component.TripList.Event.TripClicked
-import com.nikitakrapo.trip_list.component.TripList.Model
+import com.nikitakrapo.trip_list.component.TripList.State
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TripList(
     modifier: Modifier = Modifier,
-    component: TripList,
+    state: State,
+    onAddTripClicked: () -> Unit,
+    onSwipeRefresh: () -> Unit,
+    onTripClicked: (String) -> Unit,
 ) {
-    val userTripListUiState = component.models.collectAsState(initial = Model())
-
     Scaffold(
         modifier = modifier,
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { component.accept(AddTripClicked) }
+                onClick = onAddTripClicked,
             ) {
                 Icon(
                     imageVector = Icons.Filled.Add,
@@ -53,11 +49,11 @@ fun TripList(
                 modifier = Modifier
                     .fillMaxSize(),
                 state = rememberSwipeRefreshState(
-                    isRefreshing = userTripListUiState.value.isRefreshing
+                    isRefreshing = state.isRefreshing
                 ),
-                onRefresh = { component.accept(SwipeRefreshPulled) },
+                onRefresh = onSwipeRefresh,
             ) {
-                if (userTripListUiState.value.tripList.isEmpty()) {
+                if (state.tripList.isEmpty()) {
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
@@ -78,10 +74,10 @@ fun TripList(
                         contentPadding = PaddingValues(8.dp),
                         verticalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
-                        items(userTripListUiState.value.tripList) { trip ->
+                        items(state.tripList) { trip ->
                             TripListItem(
                                 tripModel = trip,
-                                onClick = { component.accept(TripClicked(trip.name)) }
+                                onClick = { onTripClicked(trip.name) }
                             )
                         }
                     }
@@ -90,55 +86,3 @@ fun TripList(
         }
     }
 }
-//
-//@Preview
-//@Composable
-//fun TripsPreview_Loading() {
-//    ThemedPreview {
-//        UserTripList(
-//            modifier = Modifier,
-//            userTripListUiState = UserTripListUiState(
-//                showProgressBar = true,
-//                tripList = listOf()
-//            )
-//        )
-//    }
-//}
-//
-//@Preview
-//@Composable
-//fun TripsPreview_FilledList() {
-//    ThemedPreview {
-//        UserTripList(
-//            modifier = Modifier,
-//            userTripListUiState = UserTripListUiState(
-//                showProgressBar = false,
-//                tripList = listOf(
-//                    Trip(
-//                        name = "Ekaterinburg - Tbilisi",
-//                    ),
-//                    Trip(
-//                        name = "Tbilisi - Sochi",
-//                    ),
-//                    Trip(
-//                        name = "Ekaterinburg - Bern",
-//                    ),
-//                )
-//            )
-//        )
-//    }
-//}
-//
-//@Preview
-//@Composable
-//fun TripsPreview_EmptyList() {
-//    ThemedPreview {
-//        UserTripList(
-//            modifier = Modifier,
-//            userTripListUiState = UserTripListUiState(
-//                showProgressBar = false,
-//                tripList = emptyList()
-//            )
-//        )
-//    }
-//}

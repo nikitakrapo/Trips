@@ -55,12 +55,7 @@ dependencies { //FIXME: cleanup!
     debugImplementation(JetpackCompose.uiTestManifest)
     androidTestImplementation(JetpackCompose.uiTestJunit4)
 
-    implementation(MviKotlin.core)
-    implementation(MviKotlin.main)
-    implementation(MviKotlin.logging)
-    implementation(MviKotlin.timeTravel)
-    implementation(MviKotlin.coroutinesExtensions)
-    implementation(MviKotlin.rx)
+    implementation(project(Features.mvi))
 
     implementation(Google.hilt)
     implementation(Google.hiltNavigationCompose)

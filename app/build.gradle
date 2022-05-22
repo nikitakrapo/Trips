@@ -84,6 +84,8 @@ dependencies {
     implementation(MviKotlin.coroutinesExtensions)
     implementation(MviKotlin.rx)
 
+    implementation(project(Features.mvi))
+
     implementation(Google.hilt)
     implementation(Google.hiltNavigationCompose)
     kapt(Google.hiltCompiler)

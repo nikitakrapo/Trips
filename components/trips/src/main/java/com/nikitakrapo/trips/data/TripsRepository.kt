@@ -21,6 +21,10 @@ class TripsRepository @Inject constructor(
         userTripsDao.delete(TripEntity(name))
     }
 
+    suspend fun getTrips(): List<Trip> = withContext(Dispatchers.IO) {
+        userTripsDao.getAll().map { Trip(name = it.name) }
+    }
+
     fun getTripsFlow(): Flow<List<Trip>> {
         return userTripsDao.getTripsFlow().map {
             it.map { entity ->

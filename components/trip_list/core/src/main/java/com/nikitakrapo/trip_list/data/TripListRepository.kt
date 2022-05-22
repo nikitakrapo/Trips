@@ -4,6 +4,7 @@ import com.nikitakrapo.trip_list.dto.TripModel
 import kotlinx.coroutines.flow.Flow
 
 interface TripListRepository {
-    suspend fun removeTrip(name: String)
     fun getTripListFlow(): Flow<List<TripModel>>
+    suspend fun getTripList(): List<TripModel>
+    suspend fun removeTrip(name: String)
 }
