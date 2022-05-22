@@ -5,6 +5,7 @@ import com.nikitakrapo.mvi.elements.Bootstrapper
 import com.nikitakrapo.mvi.elements.NewsPublisher
 import com.nikitakrapo.mvi.elements.Reducer
 import com.nikitakrapo.mvi.feature.BaseFeature
+import com.nikitakrapo.trip_list.component.TripList.Action
 import com.nikitakrapo.trip_list.component.TripList.Effect
 import com.nikitakrapo.trip_list.component.TripList.Intent
 import com.nikitakrapo.trip_list.component.TripList.News
@@ -13,12 +14,19 @@ import com.nikitakrapo.trip_list.data.TripListRepository
 import com.nikitakrapo.trip_list.dto.TripModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 
 class TripList(
     tripListRepository: TripListRepository,
-) : BaseFeature<Intent, Intent, Effect, State, News>(
+) : BaseFeature<Intent, Action, Effect, State, News>(
     initialState = State(),
-    intentToAction = { it },
+    intentToAction = { intent ->
+        when (intent) {
+            is Intent.OpenAddTrip -> Action.OpenAddTrip
+            is Intent.OpenTripDetails -> Action.OpenTripDetails(intent.name)
+            is Intent.RefreshTrips -> Action.RefreshTrips
+        }
+    },
     bootstrapper = BootstrapperImpl,
     actor = ActorImpl(tripListRepository),
     reducer = ReducerImpl,
@@ -29,6 +37,13 @@ class TripList(
         object RefreshTrips : Intent()
         class OpenTripDetails(val name: String) : Intent()
         object OpenAddTrip : Intent()
+    }
+
+    sealed class Action {
+        object ObserveTripList : Action()
+        object RefreshTrips : Action()
+        class OpenTripDetails(val name: String) : Action()
+        object OpenAddTrip : Action()
     }
 
     data class State(
@@ -50,16 +65,19 @@ class TripList(
 
     class ActorImpl(
         private val tripListRepository: TripListRepository,
-    ) : Actor<Intent, Effect, State> {
-        override fun act(action: Intent, state: State): Flow<Effect> =
+    ) : Actor<Action, Effect, State> {
+        override fun act(action: Action, state: State): Flow<Effect> =
             when (action) {
-                is Intent.OpenAddTrip -> flow { emit(Effect.OpenAddTrip) }
-                is Intent.OpenTripDetails -> flow { emit(Effect.OpenTripDetails(action.name)) }
-                is Intent.RefreshTrips -> flow {
+                is Action.OpenAddTrip -> flow { emit(Effect.OpenAddTrip) }
+                is Action.OpenTripDetails -> flow { emit(Effect.OpenTripDetails(action.name)) }
+                is Action.RefreshTrips -> flow {
                     emit(Effect.UpdateIsRefreshing(true))
                     val tripList = tripListRepository.getTripList()
                     emit(Effect.UpdateTripList(tripList))
                     emit(Effect.UpdateIsRefreshing(false))
+                }
+                Action.ObserveTripList -> tripListRepository.getTripListFlow().map { tripList ->
+                    Effect.UpdateTripList(tripList)
                 }
             }
     }
@@ -73,8 +91,8 @@ class TripList(
             }
     }
 
-    object NewsPublisherImpl : NewsPublisher<Intent, Effect, State, News> {
-        override fun publish(action: Intent, effect: Effect, state: State): News? =
+    object NewsPublisherImpl : NewsPublisher<Action, Effect, State, News> {
+        override fun publish(action: Action, effect: Effect, state: State): News? =
             when (effect) {
                 is Effect.OpenAddTrip -> News.OpenAddTrip
                 is Effect.OpenTripDetails -> News.OpenDetails(effect.name)
@@ -82,8 +100,8 @@ class TripList(
             }
     }
 
-    object BootstrapperImpl : Bootstrapper<Intent> {
-        override fun bootstrap(): Flow<Intent> =
-            flow { emit(Intent.RefreshTrips) }
+    object BootstrapperImpl : Bootstrapper<Action> {
+        override fun bootstrap(): Flow<Action> =
+            flow { emit(Action.ObserveTripList) }
     }
 }
