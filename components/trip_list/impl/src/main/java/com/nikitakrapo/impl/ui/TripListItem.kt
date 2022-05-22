@@ -42,6 +42,7 @@ fun TripListItem(
                 modifier = Modifier
                     .constrainAs(tripTitle) {
                         top.linkTo(parent.top, margin = 16.dp)
+                        bottom.linkTo(parent.bottom, margin = 16.dp)
                         start.linkTo(parent.start, margin = 16.dp)
                     },
                 text = tripModel.name,
