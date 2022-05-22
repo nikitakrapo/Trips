@@ -4,7 +4,8 @@ object Features {
     const val tripDetails = ":components:details:trip_details"
     const val tripListCore = ":components:trip_list:core"
     const val tripListImpl = ":components:trip_list:impl"
-    const val addTrip = ":components:add_trip"
+    const val addTripCore = ":components:add_trip:api"
+    const val addTripImpl = ":components:add_trip:impl"
 
     const val mvi = ":components:mvi"
 }

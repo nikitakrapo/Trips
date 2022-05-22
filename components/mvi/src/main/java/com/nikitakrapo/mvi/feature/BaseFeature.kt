@@ -6,11 +6,14 @@ import com.nikitakrapo.mvi.elements.Bootstrapper
 import com.nikitakrapo.mvi.elements.NewsPublisher
 import com.nikitakrapo.mvi.elements.Reducer
 import com.nikitakrapo.mvi.extensions.SameThreadVerifier
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import kotlin.coroutines.cancellation.CancellationException
 
 open class BaseFeature<Intent : Any, Action : Any, Effect : Any, State : Any, News : Any>(
@@ -42,9 +45,8 @@ open class BaseFeature<Intent : Any, Action : Any, Effect : Any, State : Any, Ne
     private val actions: MutableSharedFlow<Action> = MutableSharedFlow()
 
     init {
-        featureScope.launch {
+        featureScope.launch(Dispatchers.Unconfined) {
             actions.collect { action ->
-                println("on action: $action")
                 actorInternalWrapper.act(action, state.value)
             }
         }
@@ -70,17 +72,13 @@ open class BaseFeature<Intent : Any, Action : Any, Effect : Any, State : Any, Ne
         private val actor: Actor<Action, Effect, State>,
     ) {
         fun act(action: Action, state: State) {
-            println("on act")
-            featureScope.launch {
+            featureScope.launch(dispatchers.mainImmediate) {
                 actor.act(action, state).collect { effect ->
-                    println("on effect: $effect")
-                    withContext(dispatchers.main) {
-                        reducerInternalWrapper.reduce(
-                            action,
-                            effect,
-                            _state.value
-                        )
-                    }
+                    reducerInternalWrapper.reduce(
+                        action,
+                        effect,
+                        _state.value
+                    )
                 }
             }
         }
@@ -93,7 +91,6 @@ open class BaseFeature<Intent : Any, Action : Any, Effect : Any, State : Any, Ne
             sameThreadVerifier.verify()
 
             val newState = reducer.reduce(effect, state)
-            println("on reduce: $newState")
             _state.value = newState
             newsPublisherInternalWrapper.publish(action, effect, state)
         }

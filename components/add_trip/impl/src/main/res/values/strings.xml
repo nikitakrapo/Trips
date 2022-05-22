@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="cd_back_icon">Go back</string>
+    <string name="trip_adding">Trip adding</string>
+    <string name="add_trip">Add trip</string>
+    <string name="adding_progress">Adding trip...</string>
+    <string name="error_incorrect_characters">Incorrect characters</string>
+    <string name="error_too_short">Too short. Should be minimum %1$s characters</string>
+    <string name="error_too_long">Too long. Should be maximum %1$s characters</string>
+</resources>

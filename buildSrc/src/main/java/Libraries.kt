@@ -87,7 +87,8 @@ object JUnit {
 }
 
 object Mock {
-    const val mockK = "io.mockk:mockk:${Versions.mockK}"
+    const val mockk = "io.mockk:mockk:${Versions.mockK}"
+    const val mockkAndroid = "io.mockk:mockk-android:${Versions.mockK}"
 }
 
 object Espresso {

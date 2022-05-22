@@ -118,5 +118,6 @@ dependencies {
     implementation(project(Features.tripListCore))
     implementation(project(Features.tripListImpl))
     implementation(project(Features.tripDetails))
-    implementation(project(Features.addTrip))
+    implementation(project(Features.addTripCore))
+    implementation(project(Features.addTripImpl))
 }

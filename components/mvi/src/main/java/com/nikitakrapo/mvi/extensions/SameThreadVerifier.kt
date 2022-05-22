@@ -6,7 +6,9 @@ class SameThreadVerifier(
 
     fun verify() {
         assert(originalThread.id == Thread.currentThread().id) {
-            "Wrong thread"
+            "Wrong thread" +
+                    "\nExpected: ${originalThread.name}" +
+                    "\nActual ${Thread.currentThread().name}"
         }
     }
 }

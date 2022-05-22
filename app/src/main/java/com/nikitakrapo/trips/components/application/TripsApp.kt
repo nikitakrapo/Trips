@@ -1,7 +1,10 @@
 package com.nikitakrapo.trips.components.application
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.platform.LocalContext
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
@@ -10,16 +13,15 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.arkivanov.mvikotlin.timetravel.store.TimeTravelStoreFactory
-import com.nikitakrapo.add_trip.AddTrip
-import com.nikitakrapo.add_trip.AddTripComponent
+import com.nikitakrapo.add_trip.AddTripFeature
+import com.nikitakrapo.add_trip.impl.ui.AddTripScreen
+import com.nikitakrapo.add_trip.impl.viewmodel.AddTripViewModel
 import com.nikitakrapo.trip_details.TripDetails
 import com.nikitakrapo.trip_details.TripDetailsComponent
 import com.nikitakrapo.trips.appComponent
-import com.nikitakrapo.trips.components.add_trip.AddTrip
 import com.nikitakrapo.trips.components.home.Home
 import com.nikitakrapo.trips.components.login.loginGraph
 import com.nikitakrapo.trips.components.trip_details.TripDetail
-import com.nikitakrapo.validators.TripNameTextValidatorImpl
 import kotlinx.coroutines.Dispatchers
 import timber.log.Timber
 
@@ -87,20 +89,28 @@ fun NavGraphBuilder.tripsAppNavGraph(
     composable(
         route = MainSections.AddTrip.route
     ) {
-        val addTripRepository = LocalContext.current.appComponent.addTripRepository()
-        val component = AddTripComponent(
-            storeFactory = TimeTravelStoreFactory(),
-            componentContext = Dispatchers.Main,
-            addTripRepository = addTripRepository,
-            tripNameTextValidator = TripNameTextValidatorImpl()
-        )
-        AddTrip(
-            models = component.models,
-            labels = component.labels,
-            onBackArrowPressed = { component.accept(AddTrip.Event.BackArrowClicked) },
-            onNameChanged = { component.accept(AddTrip.Event.NameTextFieldChanged(it)) },
-            onAddClick = { component.accept(AddTrip.Event.AddTripClicked) },
-            closeScreen = { navController.popBackStack() }
+        val addTripViewModel: AddTripViewModel = hiltViewModel()
+        val uiState = addTripViewModel.component.state.collectAsState()
+
+        LaunchedEffect(Unit) {
+            addTripViewModel.component.news.collect { news ->
+                when (news) {
+                    AddTripFeature.News.CloseScreen -> navController.popBackStack()
+                }
+            }
+        }
+
+        AddTripScreen(
+            state = uiState.value,
+            onBackArrowPressed = {
+                addTripViewModel.component.accept(AddTripFeature.Intent.CloseScreen)
+            },
+            onNameChanged = { text ->
+                addTripViewModel.component.accept(AddTripFeature.Intent.ChangeNameText(text))
+            },
+            onAddClick = {
+                addTripViewModel.component.accept(AddTripFeature.Intent.AddTrip)
+            },
         )
     }
 }

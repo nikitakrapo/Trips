@@ -1,4 +1,4 @@
-package com.nikitakrapo.trips.components.add_trip
+package com.nikitakrapo.add_trip.impl.ui
 
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,44 +8,29 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import com.nikitakrapo.add_trip.AddTrip
-import com.nikitakrapo.add_trip.AddTrip.Label
-import com.nikitakrapo.add_trip.AddTrip.Model
-import com.nikitakrapo.trips.R
-import kotlinx.coroutines.flow.Flow
+import com.nikitakrapo.add_trip.AddTripFeature
+import com.nikitakrapo.add_trip.AddTripFeature.State
+import com.nikitakrapo.add_trip.impl.R
 
 @OptIn(ExperimentalMaterial3Api::class, androidx.compose.material.ExperimentalMaterialApi::class)
 @Composable
-fun AddTrip(
+fun AddTripScreen(
     modifier: Modifier = Modifier,
-    models: Flow<Model>,
-    labels: Flow<Label>,
+    state: State,
     onBackArrowPressed: () -> Unit = {},
     onNameChanged: (String) -> Unit = {},
     onAddClick: () -> Unit = {},
-    closeScreen: () -> Unit = {}, //TODO: it shouldn't be here
 ) {
-    val modelState = models.collectAsState(initial = Model())
-    val labelFlow = labels.collectAsState(initial = null)
-
-    LaunchedEffect(labelFlow.value) {
-        when (labelFlow.value) {
-            is Label.CloseScreen -> closeScreen()
-            null -> {}
-        }
-    }
-
     val localFocusManager = LocalFocusManager.current
     Scaffold(
         modifier = modifier
@@ -57,7 +42,10 @@ fun AddTrip(
         topBar = {
             CenterAlignedTopAppBar(
                 navigationIcon = {
-                    IconButton(onClick = onBackArrowPressed) {
+                    IconButton(
+                        modifier = Modifier.testTag("top_bar_back"),
+                        onClick = onBackArrowPressed
+                    ) {
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
                             contentDescription = stringResource(
@@ -86,12 +74,12 @@ fun AddTrip(
                         end.linkTo(parent.end, 16.dp)
                         width = Dimension.fillToConstraints
                     },
-                value = modelState.value.nameText,
+                value = state.nameText,
                 onValueChange = onNameChanged,
                 label = {
                     Text("Trip name")
                 },
-                isError = modelState.value.nameError != null,
+                isError = state.nameError != null,
                 singleLine = true,
                 maxLines = 1,
                 keyboardActions = KeyboardActions(
@@ -100,8 +88,8 @@ fun AddTrip(
                     }
                 ),
             )
-            if (modelState.value.nameError != null) {
-                val errorText = getTextForNameError(modelState.value)
+            if (state.nameError != null) {
+                val errorText = getTextForNameError(state)
                 Text(
                     modifier = Modifier.constrainAs(nameFieldError) {
                         top.linkTo(nameField.bottom, 4.dp)
@@ -121,10 +109,10 @@ fun AddTrip(
                         width = Dimension.fillToConstraints
                     },
                 onClick = onAddClick,
-                enabled = modelState.value.isAddButtonEnabled
+                enabled = state.isAddButtonEnabled
             ) {
                 Text(
-                    text = if (!modelState.value.isAdding) {
+                    text = if (!state.isAdding) {
                         stringResource(R.string.add_trip)
                     } else {
                         stringResource(R.string.adding_progress)
@@ -138,16 +126,16 @@ fun AddTrip(
 }
 
 @Composable
-fun getTextForNameError(model: Model): String {
-    val error = model.nameError
+fun getTextForNameError(state: State): String {
+    val error = state.nameError
     return when (error) {
-        is AddTrip.TripNameError.InvalidCharacters -> {
+        is AddTripFeature.TripNameError.InvalidCharacters -> {
             stringResource(R.string.error_incorrect_characters)
         }
-        is AddTrip.TripNameError.TooShort -> {
+        is AddTripFeature.TripNameError.TooShort -> {
             stringResource(R.string.error_too_short, error.minChars)
         }
-        is AddTrip.TripNameError.TooLong -> {
+        is AddTripFeature.TripNameError.TooLong -> {
             stringResource(R.string.error_too_long, error.maxChars) //TODO: should be handled by ux
         }
         null -> ""

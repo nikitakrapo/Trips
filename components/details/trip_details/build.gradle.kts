@@ -21,5 +21,5 @@ dependencies {
     implementation(MviKotlin.rx)
 
     testImplementation(JUnit.jUnit)
-    testImplementation(Mock.mockK)
+    testImplementation(Mock.mockk)
 }

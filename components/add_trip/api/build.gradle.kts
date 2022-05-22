@@ -16,5 +16,4 @@ dependencies {
     implementation(project(Features.mvi))
 
     testImplementation(JUnit.jUnit)
-    testImplementation(Mock.mockk)
 }

@@ -1,10 +1,16 @@
-package com.nikitakrapo.validators
+package com.nikitakrapo.add_trip.impl.data
 
-import com.nikitakrapo.add_trip.AddTrip.TripNameError
+import com.nikitakrapo.add_trip.AddTripFeature.TripNameError
+import com.nikitakrapo.validators.TripNameTextValidator
+import javax.inject.Inject
 
 class TripNameTextValidatorImpl(
-    private val config: Config = Config(),
+    private val config: Config,
 ) : TripNameTextValidator {
+
+    @Inject
+    constructor() : this(Config())
+
     override fun validate(name: String): TripNameError? {
         val invalidCharacters = getIncorrectCharacters(name)
         val tooShort = name.length < config.minLen
