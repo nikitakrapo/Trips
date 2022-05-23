@@ -8,14 +8,19 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Trips"
 
-include ':app'
-include ':trips_design'
-include ':wear'
-include ':components:trips'
+// App modules
+include ':apps:trips'
+include ':apps:wear'
+
+// Features (not to confuse with features from mvi)
+include ':features:mvi'
+include ':features:trips'
+include ':features:trips_design'
+
+// Components
 include ':components:details:api'
 include ':components:details:impl'
 include ':components:add_trip:api'
+include ':components:add_trip:impl'
 include ':components:trip_list:core'
 include ':components:trip_list:impl'
-include ':components:mvi'
-include ':components:add_trip:impl'

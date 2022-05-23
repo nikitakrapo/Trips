@@ -44,7 +44,7 @@ android {
 dependencies {
     implementation(project(Features.trips))
     implementation(project(Features.tripsDesign))
-    implementation(project(Features.addTripCore))
+    implementation(project(Components.addTripCore))
 
     implementation(JetpackCompose.ui)
     implementation(JetpackCompose.material)

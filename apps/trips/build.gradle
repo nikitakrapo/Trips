@@ -108,10 +108,10 @@ dependencies {
 
     implementation(project(Features.trips))
     implementation(project(Features.tripsDesign))
-    implementation(project(Features.tripListCore))
-    implementation(project(Features.tripListImpl))
-    implementation(project(Features.tripDetailsCore))
-    implementation(project(Features.tripDetailsImpl))
-    implementation(project(Features.addTripCore))
-    implementation(project(Features.addTripImpl))
+    implementation(project(Components.tripListCore))
+    implementation(project(Components.tripListImpl))
+    implementation(project(Components.tripDetailsCore))
+    implementation(project(Components.tripDetailsImpl))
+    implementation(project(Components.addTripCore))
+    implementation(project(Components.addTripImpl))
 }

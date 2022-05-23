@@ -43,7 +43,7 @@ android {
 
 dependencies { //FIXME: cleanup!
     implementation(project(Features.trips))
-    implementation(project(Features.tripListCore))
+    implementation(project(Components.tripListCore))
 
     implementation(JetpackCompose.material)
     implementation(JetpackCompose.uiToolingPreview)
