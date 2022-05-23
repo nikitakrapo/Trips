@@ -1,3 +1,11 @@
+object KotlinLib {
+    const val std = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Config.kotlin}"
+    const val reflect = "org.jetbrains.kotlin:kotlin-reflect:${Config.kotlin}"
+    const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
+    const val coroutinesAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
+    const val coroutinesTest = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.coroutines}"
+}
+
 object AndroidX {
     const val coreCtx = "androidx.core:core-ktx:${Versions.coreCtx}"
 
@@ -27,15 +35,6 @@ object JetpackCompose {
     const val materialIcons = "androidx.compose.material:material-icons-core:${Versions.compose}"
 }
 
-object MviKotlin {
-    const val core = "com.arkivanov.mvikotlin:mvikotlin:${Versions.mviKotlin}"
-    const val main = "com.arkivanov.mvikotlin:mvikotlin-main:${Versions.mviKotlin}"
-    const val logging = "com.arkivanov.mvikotlin:mvikotlin-logging:${Versions.mviKotlin}"
-    const val timeTravel = "com.arkivanov.mvikotlin:mvikotlin-timetravel:${Versions.mviKotlin}"
-    const val coroutinesExtensions = "com.arkivanov.mvikotlin:mvikotlin-extensions-coroutines:${Versions.mviKotlin}"
-    const val rx = "com.arkivanov.mvikotlin:rx:${Versions.mviKotlin}"
-}
-
 object Wear {
     const val wear = "androidx.wear:wear:${Versions.wear}"
     const val composeMaterial = "androidx.wear.compose:compose-material:${Versions.wearCompose}"
@@ -52,8 +51,9 @@ object AndroidXTest {
 }
 
 object Google {
-    const val dagger2 = "com.google.dagger:dagger:${Versions.dagger2}"
-    const val daggerCompiler = "com.google.dagger:dagger-compiler:${Versions.dagger2}"
+    const val hilt = "com.google.dagger:hilt-android:${Versions.hilt}"
+    const val hiltCompiler = "com.google.dagger:hilt-android-compiler:${Versions.hilt}"
+    const val hiltNavigationCompose = "androidx.hilt:hilt-navigation-compose:${Versions.hiltNavigationCompose}"
     const val gson = "com.google.code.gson:gson:${Versions.gson}"
     const val androidMaterial = "com.google.android.material:material:${Versions.googleAndroidMaterial}"
     const val accompanistSystemUiController = "com.google.accompanist:accompanist-systemuicontroller:${Versions.accompanist}"
@@ -75,6 +75,11 @@ object Landscapist {
 
 object JUnit {
     const val jUnit = "junit:junit:${Versions.jUnit}"
+}
+
+object Mock {
+    const val mockk = "io.mockk:mockk:${Versions.mockK}"
+    const val mockkAndroid = "io.mockk:mockk-android:${Versions.mockK}"
 }
 
 object Espresso {

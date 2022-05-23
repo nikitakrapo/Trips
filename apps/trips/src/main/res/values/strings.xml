@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Trips</string>
+    <string name="trips_screen_title">Trips</string>
+    <string name="profile_screen_title">Profile</string>
+    <string name="cd_profile_picture">Profile picture</string>
+    <string name="cd_more_icon">More</string>
+    <string name="cd_back_icon">Go back</string>
+    <string name="cd_accommodations_images">Accommodations images</string>
+    <string name="cd_accommodation_image">Accommodations image</string>
+    <string name="cd_add_trip">Add trip</string>
+    <string name="trip_adding">Trip adding</string>
+    <string name="accommodations">Accommodations</string>
+    <string name="cd_next">Go next</string>
+    <string name="go_next">Continue</string>
+    <string name="add_trip">Add trip</string>
+    <string name="loading">Loading</string>
+    <string name="adding_progress">Adding...</string>
+    <string name="trip_list_empty">No trips yet!</string>
+    <string name="cd_delete_trip">Delete trip</string>
+    <string name="trip_deleted">Trip deleted</string>
+    <string name="error_incorrect_characters">Incorrect characters</string>
+    <string name="error_too_short">Too short. Should be minimum %1$s characters</string>
+    <string name="error_too_long">Too long. Should be maximum %1$s characters</string>
+    <string name="delete_trip">Delete</string>
+</resources>
