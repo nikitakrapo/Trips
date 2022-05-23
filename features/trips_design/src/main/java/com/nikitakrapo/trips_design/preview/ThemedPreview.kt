@@ -1,4 +1,4 @@
-package com.nikitakrapo.trips
+package com.nikitakrapo.trips_design.preview
 
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme

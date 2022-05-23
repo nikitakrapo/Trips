@@ -6,6 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import com.nikitakrapo.trips.components.application.MainSections
 
+//TODO: move to "login" module
 sealed class LoginScreen(val route: String) {
     object SignIn : LoginScreen("sign_in")
     object Registration : LoginScreen("registration")

@@ -21,6 +21,7 @@ import com.nikitakrapo.trips.components.home.Home
 import com.nikitakrapo.trips.components.login.loginGraph
 import timber.log.Timber
 
+//TODO: move to "root" module
 @Composable
 fun TripsApp() {
     val navController = rememberNavController()

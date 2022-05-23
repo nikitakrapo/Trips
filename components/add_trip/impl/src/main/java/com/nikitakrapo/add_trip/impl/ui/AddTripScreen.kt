@@ -138,7 +138,7 @@ fun getTextForNameError(state: State): String {
             stringResource(R.string.error_too_short, error.minChars)
         }
         is AddTripFeature.TripNameError.TooLong -> {
-            stringResource(R.string.error_too_long, error.maxChars) //TODO: should be handled by ux
+            stringResource(R.string.error_too_long, error.maxChars)
         }
         null -> ""
     }

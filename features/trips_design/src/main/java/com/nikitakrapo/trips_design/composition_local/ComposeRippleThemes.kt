@@ -1,4 +1,4 @@
-package com.nikitakrapo.trips.ui
+package com.nikitakrapo.trips_design.composition_local
 
 import androidx.compose.material.ripple.RippleAlpha
 import androidx.compose.material.ripple.RippleTheme

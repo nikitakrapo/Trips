@@ -21,6 +21,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import com.nikitakrapo.trips.R
 import com.nikitakrapo.trips_design.theme.TripsTheme
 
+//TODO: move to "profile" module
 @Composable
 fun Profile(
     modifier: Modifier = Modifier,
