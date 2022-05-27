@@ -5,18 +5,18 @@ import com.nikitakrapo.mvi.elements.Bootstrapper
 import com.nikitakrapo.mvi.elements.NewsPublisher
 import com.nikitakrapo.mvi.elements.Reducer
 import com.nikitakrapo.mvi.feature.BaseFeature
-import com.nikitakrapo.trip_list.component.TripList.Action
-import com.nikitakrapo.trip_list.component.TripList.Effect
-import com.nikitakrapo.trip_list.component.TripList.Intent
-import com.nikitakrapo.trip_list.component.TripList.News
-import com.nikitakrapo.trip_list.component.TripList.State
+import com.nikitakrapo.trip_list.component.TripListFeature.Action
+import com.nikitakrapo.trip_list.component.TripListFeature.Effect
+import com.nikitakrapo.trip_list.component.TripListFeature.Intent
+import com.nikitakrapo.trip_list.component.TripListFeature.News
+import com.nikitakrapo.trip_list.component.TripListFeature.State
 import com.nikitakrapo.trip_list.data.TripListRepository
 import com.nikitakrapo.trip_list.dto.TripModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 
-class TripList(
+class TripListFeature(
     tripListRepository: TripListRepository,
 ) : BaseFeature<Intent, Action, Effect, State, News>(
     initialState = State(),
@@ -47,7 +47,7 @@ class TripList(
     }
 
     data class State(
-        val tripList: List<TripModel> = emptyList(),
+        val tripList: List<TripModel>? = null,
         val isRefreshing: Boolean = false,
     )
 

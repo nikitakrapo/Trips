@@ -39,7 +39,6 @@ android {
 }
 
 dependencies {
-
     implementation(JetpackCompose.material)
     implementation(JetpackCompose.uiToolingPreview)
     implementation(JetpackCompose.ui)

@@ -15,7 +15,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
-import com.nikitakrapo.trip_list.component.TripList
+import com.nikitakrapo.trip_list.component.TripListFeature
 import com.nikitakrapo.trip_list.impl.ui.TripList
 import com.nikitakrapo.trip_list.impl.viewmodel.UserTripListViewModel
 import com.nikitakrapo.trips.components.profile.Profile
@@ -66,8 +66,8 @@ fun Home(
                         LaunchedEffect(Unit) {
                             userTripListViewModel.component.news.collect { news ->
                                 when (news) {
-                                    is TripList.News.OpenAddTrip -> openAddTrip()
-                                    is TripList.News.OpenDetails -> openTripCard(news.name)
+                                    is TripListFeature.News.OpenAddTrip -> openAddTrip()
+                                    is TripListFeature.News.OpenDetails -> openTripCard(news.name)
                                 }
                             }
                         }
@@ -76,14 +76,14 @@ fun Home(
                                 .fillMaxSize(),
                             state = uiState.value,
                             onAddTripClicked = {
-                                userTripListViewModel.component.accept(TripList.Intent.OpenAddTrip)
+                                userTripListViewModel.component.accept(TripListFeature.Intent.OpenAddTrip)
                             },
                             onSwipeRefresh = {
-                                userTripListViewModel.component.accept(TripList.Intent.RefreshTrips)
+                                userTripListViewModel.component.accept(TripListFeature.Intent.RefreshTrips)
                             },
                             onTripClicked = { tripName ->
                                 userTripListViewModel.component.accept(
-                                    TripList.Intent.OpenTripDetails(tripName)
+                                    TripListFeature.Intent.OpenTripDetails(tripName)
                                 )
                             },
                         )

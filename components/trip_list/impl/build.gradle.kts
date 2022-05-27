@@ -41,7 +41,8 @@ android {
     }
 }
 
-dependencies { //FIXME: cleanup!
+dependencies {
+    implementation(project(Features.tripsDesign))
     implementation(project(Features.trips))
     implementation(project(Components.tripListCore))
 
@@ -50,25 +51,15 @@ dependencies { //FIXME: cleanup!
     implementation(JetpackCompose.ui)
     implementation(JetpackCompose.constraintLayout)
     implementation(JetpackCompose.material3)
-    implementation(JetpackCompose.navigation)
-    debugImplementation(JetpackCompose.uiTooling)
-    debugImplementation(JetpackCompose.uiTestManifest)
-    androidTestImplementation(JetpackCompose.uiTestJunit4)
 
     implementation(project(Features.mvi))
 
     implementation(Google.hilt)
     implementation(Google.hiltNavigationCompose)
     kapt(Google.hiltCompiler)
-    implementation(Google.gson)
     implementation(Google.androidMaterial)
-    implementation(Google.accompanistSystemUiController)
     implementation(Google.accompanistSwipeRefresh)
-    implementation(Google.accompanistNavigationAnimation)
-    implementation(Google.accompanistNavigationMaterial)
     implementation(Google.accompanistInsets)
-    implementation(Google.maps)
-    implementation(Google.playServicesMaps)
 
     implementation(AndroidX.coreCtx)
     implementation(AndroidX.appCompat)
