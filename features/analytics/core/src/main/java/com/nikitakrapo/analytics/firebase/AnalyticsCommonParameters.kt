@@ -1,7 +1,7 @@
-package com.nikitakrapo.trips.analytics.firebase
+package com.nikitakrapo.analytics.firebase
 
 import android.os.Bundle
-import com.nikitakrapo.trips.analytics.firebase.AnalyticsCommonParameters.Companion.PARAM_ENVIRONMENT
+import com.nikitakrapo.analytics.firebase.AnalyticsCommonParameters.Companion.PARAM_ENVIRONMENT
 
 class AnalyticsCommonParameters(
     val environment: AnalyticsEnvironment,

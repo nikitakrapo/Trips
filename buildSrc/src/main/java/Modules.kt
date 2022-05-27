@@ -1,5 +1,6 @@
 object Features {
     const val mvi = ":features:mvi"
+    const val analyticsCore = ":features:analytics:core"
     const val trips = ":features:trips"
     const val tripsDesign = ":features:trips_design"
 }

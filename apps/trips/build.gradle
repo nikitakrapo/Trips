@@ -77,7 +77,6 @@ dependencies {
     debugImplementation(JetpackCompose.uiTestManifest)
     androidTestImplementation(JetpackCompose.uiTestJunit4)
 
-    implementation(project(Features.mvi))
 
     implementation(Google.hilt)
     implementation(Google.hiltNavigationCompose)
@@ -106,6 +105,8 @@ dependencies {
 
     androidTestImplementation(Espresso.espressoCore)
 
+    implementation(project(Features.mvi))
+    implementation(project(Features.analyticsCore))
     implementation(project(Features.trips))
     implementation(project(Features.tripsDesign))
     implementation(project(Components.tripListCore))
