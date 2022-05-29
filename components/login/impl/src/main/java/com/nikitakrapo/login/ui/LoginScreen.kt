@@ -3,16 +3,18 @@
 package com.nikitakrapo.login.ui
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.OutlinedTextField
@@ -28,6 +30,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -38,7 +41,6 @@ import com.nikitakrapo.login.LoginFeature.State
 import com.nikitakrapo.login.impl.R
 import com.nikitakrapo.trips_design.preview.ThemedPreview
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun LogInScreen(
     modifier: Modifier = Modifier,
@@ -53,7 +55,7 @@ fun LogInScreen(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(horizontal = 16.dp),
+            .padding(horizontal = 54.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         OutlinedTextField(
@@ -125,6 +127,20 @@ fun LogInScreen(
             } else {
                 CircularProgressIndicator(modifier = Modifier.size(32.dp))
             }
+        }
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        Row {
+            Text(text = stringResource(R.string.login_not_registered_yet_question))
+
+            Spacer(modifier = Modifier.width(4.dp))
+
+            Text(
+                modifier = Modifier.clickable(onClick = openRegistration),
+                text = stringResource(R.string.login_sign_up),
+                color = Color.Blue,
+            )
         }
     }
 }

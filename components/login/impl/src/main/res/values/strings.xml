@@ -6,4 +6,8 @@
     <string name="login_button_text">Login</string>
     <string name="login_cd_show_password">Show password</string>
     <string name="login_cd_hide_password">Hide password</string>
+    <string name="login_or_register">Or</string>
+    <string name="login_register">Register</string>
+    <string name="login_sign_up">Sign Up</string>
+    <string name="login_not_registered_yet_question">Not registered yet?</string>
 </resources>
