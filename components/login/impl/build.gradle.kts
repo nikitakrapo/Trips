@@ -44,10 +44,9 @@ android {
 //FIXME: ^ move this to separate gradle script ^
 
 dependencies {
-    implementation(project(Features.mvi))
     implementation(project(Features.tripsDesign))
     implementation(project(Features.accountManagerImpl))
-    implementation(project(Components.loginCore))
+    api(project(Components.loginCore))
 
     implementation(AndroidX.coreCtx)
     implementation(AndroidX.appCompat)

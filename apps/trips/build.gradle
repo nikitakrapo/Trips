@@ -105,17 +105,12 @@ dependencies {
 
     androidTestImplementation(Espresso.espressoCore)
 
-    implementation(project(Features.mvi))
     implementation(project(Features.analyticsCore))
     implementation(project(Features.firebase))
     implementation(project(Features.trips))
     implementation(project(Features.tripsDesign))
-    implementation(project(Components.tripListCore))
     implementation(project(Components.tripListImpl))
-    implementation(project(Components.tripDetailsCore))
     implementation(project(Components.tripDetailsImpl))
-    implementation(project(Components.addTripCore))
     implementation(project(Components.addTripImpl))
-    implementation(project(Components.loginCore))
     implementation(project(Components.loginImpl))
 }

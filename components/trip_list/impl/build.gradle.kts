@@ -44,15 +44,13 @@ android {
 dependencies {
     implementation(project(Features.tripsDesign))
     implementation(project(Features.trips))
-    implementation(project(Components.tripListCore))
+    api(project(Components.tripListCore))
 
     implementation(JetpackCompose.material)
     implementation(JetpackCompose.uiToolingPreview)
     implementation(JetpackCompose.ui)
     implementation(JetpackCompose.constraintLayout)
     implementation(JetpackCompose.material3)
-
-    implementation(project(Features.mvi))
 
     implementation(Google.hilt)
     implementation(Google.hiltNavigationCompose)

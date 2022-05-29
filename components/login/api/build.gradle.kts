@@ -13,7 +13,7 @@ dependencies {
     implementation(KotlinLib.std)
     implementation(KotlinLib.coroutines)
 
-    implementation(project(Features.mvi))
+    api(project(Features.mvi))
     implementation(project(Features.accountManager))
 
     testImplementation(JUnit.jUnit)
