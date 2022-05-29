@@ -1,5 +1,7 @@
 package com.nikitakrapo.dto
 
-class Account( //FIXME: probably will match to Firebase's account
-    val name: String
+class Account(
+    val uid: String,
+    val email: String? = null,
+    val displayName: String? = null,
 )

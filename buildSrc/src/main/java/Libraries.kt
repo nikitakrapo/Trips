@@ -4,6 +4,7 @@ object KotlinLib {
     const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
     const val coroutinesAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
     const val coroutinesTest = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.coroutines}"
+    const val coroutinesPlayServices = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:${Versions.coroutines}"
 }
 
 object AndroidX {
@@ -33,6 +34,7 @@ object JetpackCompose {
     const val constraintLayout = "androidx.constraintlayout:constraintlayout-compose:${Versions.constraintLayoutCompose}"
     const val material3 = "androidx.compose.material3:material3:${Versions.material3Compose}"
     const val materialIcons = "androidx.compose.material:material-icons-core:${Versions.compose}"
+    const val materialIconsExtended = "androidx.compose.material:material-icons-extended:${Versions.compose}"
 }
 
 object Wear {

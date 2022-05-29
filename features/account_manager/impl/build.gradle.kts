@@ -34,7 +34,7 @@ android {
     }
 }
 dependencies {
-    implementation(project(Features.accountManager))
+    api(project(Features.accountManager))
     implementation(project(Features.firebase))
 
     implementation(Google.hilt)
@@ -42,4 +42,8 @@ dependencies {
 
     implementation(platform(Google.firebaseBoM))
     implementation(Google.firebaseAuthKtx)
+
+    implementation(KotlinLib.coroutinesPlayServices)
+
+    implementation(JakeWharton.timber)
 }

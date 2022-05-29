@@ -4,10 +4,12 @@ import com.nikitakrapo.dto.Account
 
 interface AccountManager {
 
-    suspend fun performAuthByEmailPassword(email: String, password: String)
+    suspend fun createUserByEmailPassword(email: String, password: String): AuthorizationResult
 
-    sealed class AuthResult {
-        class Success(account: Account) : AuthResult()
-        class Error(error: Exception) : AuthResult()
+    suspend fun signInUserByEmailPassword(email: String, password: String): AuthorizationResult
+
+    sealed class AuthorizationResult {
+        class Success(val account: Account?) : AuthorizationResult()
+        class Error(val error: Exception) : AuthorizationResult()
     }
 }

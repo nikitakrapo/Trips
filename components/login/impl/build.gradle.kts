@@ -46,6 +46,7 @@ android {
 dependencies {
     implementation(project(Features.mvi))
     implementation(project(Features.tripsDesign))
+    implementation(project(Features.accountManagerImpl))
     implementation(project(Components.loginCore))
 
     implementation(AndroidX.coreCtx)
@@ -59,7 +60,7 @@ dependencies {
     implementation(JetpackCompose.constraintLayout)
     implementation(JetpackCompose.material3)
     implementation(JetpackCompose.navigation)
-
+    implementation(JetpackCompose.materialIconsExtended)
 
     implementation(Google.hilt)
     implementation(Google.hiltNavigationCompose)

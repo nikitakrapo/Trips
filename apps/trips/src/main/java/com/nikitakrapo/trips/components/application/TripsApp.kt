@@ -16,7 +16,7 @@ import com.nikitakrapo.add_trip.impl.ui.AddTripScreen
 import com.nikitakrapo.add_trip.impl.viewmodel.AddTripViewModel
 import com.nikitakrapo.login.MainLoginFeature
 import com.nikitakrapo.login.ui.MainLoginScreen
-import com.nikitakrapo.login.viewmodel.LoginViewModel
+import com.nikitakrapo.login.viewmodel.MainLoginViewModel
 import com.nikitakrapo.trip_details.TripDetailsFeature
 import com.nikitakrapo.trip_details.impl.ui.TripDetailsScreen
 import com.nikitakrapo.trip_details.impl.viewmodel.TripDetailsViewModel
@@ -58,11 +58,11 @@ fun NavGraphBuilder.tripsAppNavGraph(
     }
 
     composable(MainSections.Login.route) {
-        val loginViewModel: LoginViewModel = hiltViewModel()
-        val uiState = loginViewModel.component.state.collectAsState()
+        val mainLoginViewModel: MainLoginViewModel = hiltViewModel()
+        val uiState = mainLoginViewModel.component.state.collectAsState()
 
         LaunchedEffect(Unit) {
-            loginViewModel.component.news.collect { news ->
+            mainLoginViewModel.component.news.collect { news ->
                 when (news) {
                     is MainLoginFeature.News.CloseScreen ->
                         navController.popBackStack(MainSections.Login.route, true)

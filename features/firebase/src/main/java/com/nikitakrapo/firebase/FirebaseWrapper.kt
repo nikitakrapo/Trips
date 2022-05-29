@@ -13,7 +13,6 @@ object FirebaseWrapper {
         FirebaseApp.initializeApp(context)
     }
 
-    fun getAuth(): FirebaseAuth {
-        return Firebase.auth
-    }
+    val auth: FirebaseAuth
+        get() = Firebase.auth
 }

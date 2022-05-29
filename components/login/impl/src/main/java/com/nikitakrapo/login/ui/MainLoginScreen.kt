@@ -13,9 +13,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
-import com.nikitakrapo.impl.R
+import com.nikitakrapo.login.impl.R
 import com.nikitakrapo.login.MainLoginFeature.State
-import com.nikitakrapo.login.NavigationLoginScreen
+import com.nikitakrapo.login.MainLoginScreenDestinations
+import com.nikitakrapo.login.mainLoginGraph
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
 @Composable
@@ -43,9 +44,9 @@ fun MainLoginScreen(
         val navController = rememberAnimatedNavController()
         AnimatedNavHost(
             navController,
-            startDestination = NavigationLoginScreen.LogIn.route,
+            startDestination = MainLoginScreenDestinations.LogIn.route,
         ) {
-
+            mainLoginGraph(navController)
         }
     }
 }

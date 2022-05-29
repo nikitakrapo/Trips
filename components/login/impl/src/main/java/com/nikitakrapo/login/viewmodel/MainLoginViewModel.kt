@@ -1,17 +1,14 @@
 package com.nikitakrapo.login.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.nikitakrapo.am.AccountManagerImpl
-import com.nikitakrapo.login.LoginFeature
+import com.nikitakrapo.login.MainLoginFeature
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(
-    accountManager: AccountManagerImpl,
-) : ViewModel() {
+class MainLoginViewModel @Inject constructor() : ViewModel() {
 
-    val component = LoginFeature(accountManager)
+    val component = MainLoginFeature()
 
     override fun onCleared() {
         component.dispose()

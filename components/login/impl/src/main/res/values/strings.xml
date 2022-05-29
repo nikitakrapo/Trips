@@ -4,4 +4,6 @@
     <string name="email_text_field_label">Email</string>
     <string name="password_text_field_label">Password</string>
     <string name="login_button_text">Login</string>
+    <string name="login_cd_show_password">Show password</string>
+    <string name="login_cd_hide_password">Hide password</string>
 </resources>
