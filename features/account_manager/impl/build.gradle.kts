@@ -1,10 +1,8 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
-    id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
-    id("com.google.gms.google-services")
-    id("com.google.firebase.crashlytics")
+    id("kotlin-kapt")
 }
 
 android {
@@ -35,16 +33,13 @@ android {
         jvmTarget = "1.8"
     }
 }
-
 dependencies {
+    implementation(project(Features.accountManager))
     implementation(project(Features.firebase))
-
-    implementation(platform(Google.firebaseBoM))
-    implementation(Google.firebaseAnalytics)
-    implementation(Google.firebaseCrashlytics)
-
-    implementation(KotlinLib.coroutines)
 
     implementation(Google.hilt)
     kapt(Google.hiltCompiler)
+
+    implementation(platform(Google.firebaseBoM))
+    implementation(Google.firebaseAuthKtx)
 }

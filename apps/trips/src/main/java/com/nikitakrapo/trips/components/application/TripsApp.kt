@@ -14,11 +14,13 @@ import androidx.navigation.navArgument
 import com.nikitakrapo.add_trip.AddTripFeature
 import com.nikitakrapo.add_trip.impl.ui.AddTripScreen
 import com.nikitakrapo.add_trip.impl.viewmodel.AddTripViewModel
+import com.nikitakrapo.login.MainLoginFeature
+import com.nikitakrapo.login.ui.MainLoginScreen
+import com.nikitakrapo.login.viewmodel.LoginViewModel
 import com.nikitakrapo.trip_details.TripDetailsFeature
 import com.nikitakrapo.trip_details.impl.ui.TripDetailsScreen
 import com.nikitakrapo.trip_details.impl.viewmodel.TripDetailsViewModel
 import com.nikitakrapo.trips.components.home.Home
-import com.nikitakrapo.trips.components.login.loginGraph
 import timber.log.Timber
 
 //TODO: move to "root" module
@@ -55,7 +57,26 @@ fun NavGraphBuilder.tripsAppNavGraph(
         )
     }
 
-    loginGraph(navController)
+    composable(MainSections.Login.route) {
+        val loginViewModel: LoginViewModel = hiltViewModel()
+        val uiState = loginViewModel.component.state.collectAsState()
+
+        LaunchedEffect(Unit) {
+            loginViewModel.component.news.collect { news ->
+                when (news) {
+                    is MainLoginFeature.News.CloseScreen ->
+                        navController.popBackStack(MainSections.Login.route, true)
+                }
+            }
+        }
+
+        MainLoginScreen(
+            state = uiState.value,
+            onBackArrowClicked = {
+                navController.popBackStack(MainSections.Login.route, true)
+            },
+        )
+    }
 
     composable(
         route = "${MainSections.TripDetails.route}/{${MainSections.TripDetails.tripNameArg}}",

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="cd_go_back">Go back</string>
+    <string name="email_text_field_label">Email</string>
+    <string name="password_text_field_label">Password</string>
+    <string name="login_button_text">Login</string>
+</resources>

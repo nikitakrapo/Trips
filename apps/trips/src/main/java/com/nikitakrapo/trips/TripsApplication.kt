@@ -2,9 +2,7 @@ package com.nikitakrapo.trips
 
 import android.app.Application
 import android.content.Context
-import com.nikitakrapo.analytics.firebase.AnalyticsCommonParameters
-import com.nikitakrapo.analytics.firebase.AnalyticsEnvironment
-import com.nikitakrapo.analytics.firebase.FirebaseWrapper
+import com.nikitakrapo.firebase.FirebaseWrapper
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 
@@ -23,14 +21,7 @@ class TripsApplication : Application() {
     }
 
     private fun initFirebase() {
-        val commonParameters = AnalyticsCommonParameters(
-            environment = if (BuildConfig.DEBUG) {
-                AnalyticsEnvironment.TESTING
-            } else {
-                AnalyticsEnvironment.PRODUCTION
-            }
-        )
-        FirebaseWrapper.init(this, commonParameters)
+        FirebaseWrapper.init(this)
     }
 
 }

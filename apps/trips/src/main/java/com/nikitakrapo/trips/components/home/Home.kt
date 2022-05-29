@@ -52,8 +52,7 @@ fun Home(
         ) {
             screens.forEach { screen ->
                 when (screen) {
-
-                    HomeSections.Trips ->     composable(
+                    HomeSections.Trips -> composable(
                         route = screen.route,
                         enterTransition = { fadeIn(animationSpec = tween(0)) },
                         exitTransition = { fadeOut(animationSpec = tween(0)) },

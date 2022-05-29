@@ -67,6 +67,7 @@ object Google {
     const val firebaseBoM = "com.google.firebase:firebase-bom:${Versions.firebaseBoM}"
     const val firebaseAnalytics = "com.google.firebase:firebase-analytics-ktx"
     const val firebaseCrashlytics = "com.google.firebase:firebase-crashlytics-ktx"
+    const val firebaseAuthKtx = "com.google.firebase:firebase-auth-ktx"
 }
 
 object Landscapist {

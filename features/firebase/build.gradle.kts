@@ -4,7 +4,6 @@ plugins {
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
     id("com.google.gms.google-services")
-    id("com.google.firebase.crashlytics")
 }
 
 android {
@@ -37,11 +36,9 @@ android {
 }
 
 dependencies {
-    implementation(project(Features.firebase))
-
     implementation(platform(Google.firebaseBoM))
     implementation(Google.firebaseAnalytics)
-    implementation(Google.firebaseCrashlytics)
+    implementation(Google.firebaseAuthKtx)
 
     implementation(KotlinLib.coroutines)
 
