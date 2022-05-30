@@ -50,7 +50,6 @@ fun LogInScreen(
     onPasswordVisibilityClick: () -> Unit,
     doLogin: () -> Unit,
     openRegistration: () -> Unit,
-    openTermsOfService: () -> Unit,
 ) {
     Column(
         modifier = modifier
@@ -155,7 +154,7 @@ fun LoginScreenPreview() {
             onPasswordTextChanged = {},
             onPasswordVisibilityClick = {},
             doLogin = { /*TODO*/ },
-            openRegistration = { /*TODO*/ }) {
-        }
+            openRegistration = { /*TODO*/ },
+        )
     }
 }

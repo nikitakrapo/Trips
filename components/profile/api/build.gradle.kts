@@ -1,6 +1,7 @@
 plugins {
     id("java-library")
     id("org.jetbrains.kotlin.jvm")
+    id("kotlin")
 }
 
 java {
@@ -9,5 +10,11 @@ java {
 }
 
 dependencies {
+    implementation(KotlinLib.std)
     implementation(KotlinLib.coroutines)
+
+    api(project(Features.mvi))
+    implementation(project(Features.accountManager))
+
+    testImplementation(JUnit.jUnit)
 }

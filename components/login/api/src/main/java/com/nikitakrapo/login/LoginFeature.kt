@@ -32,6 +32,9 @@ class LoginFeature(
         class ChangePasswordText(val text: String) : Intent()
         object ChangePassportVisibility : Intent()
         object PerformLogin : Intent()
+
+        object OpenRegistration : Intent()
+        object CloseScreen : Intent()
     }
 
     sealed class Effect {
@@ -42,6 +45,9 @@ class LoginFeature(
         object StartedLoggingIn : Effect()
         class FinishedLoggingIn(val result: AuthorizationResult) : Effect()
         class UpdateLoginError(val e: Exception?) : Effect()
+
+        object OpenRegistration : Effect()
+        object CloseScreen : Effect()
     }
 
     data class State(
@@ -55,6 +61,7 @@ class LoginFeature(
 
     sealed class News {
         object CloseScreen : News()
+        object OpenRegistration : News()
     }
 
     private class ActorImpl(
@@ -83,6 +90,8 @@ class LoginFeature(
                     )
                     emit(Effect.FinishedLoggingIn(result))
                 }
+                is Intent.OpenRegistration -> flow { emit(Effect.OpenRegistration) }
+                is Intent.CloseScreen -> flow { emit(Effect.CloseScreen) }
             }
     }
 
@@ -101,6 +110,8 @@ class LoginFeature(
                     else notLoggingInState
                 }
                 is Effect.StartedLoggingIn -> state.copy(isLoggingIn = true)
+                is Effect.CloseScreen,
+                is Effect.OpenRegistration -> state
             }
     }
 
@@ -112,6 +123,8 @@ class LoginFeature(
                         News.CloseScreen
                     else null
                 }
+                is Effect.CloseScreen -> News.CloseScreen
+                is Effect.OpenRegistration -> News.OpenRegistration
                 is Effect.StartedLoggingIn,
                 is Effect.EmailTextChanged,
                 is Effect.UpdateLoginError,
@@ -121,6 +134,7 @@ class LoginFeature(
     }
 
     companion object {
+        //TODO: impl
         private val CLOSE_AFTER_LOGIN_DELAY = 1000L.milliseconds
     }
 }

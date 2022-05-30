@@ -1,5 +1,6 @@
 package com.nikitakrapo.trips.components.application
 
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -11,12 +12,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import androidx.navigation.navigation
 import com.nikitakrapo.add_trip.AddTripFeature
 import com.nikitakrapo.add_trip.impl.ui.AddTripScreen
 import com.nikitakrapo.add_trip.impl.viewmodel.AddTripViewModel
-import com.nikitakrapo.login.MainLoginFeature
-import com.nikitakrapo.login.ui.MainLoginScreen
-import com.nikitakrapo.login.viewmodel.MainLoginViewModel
+import com.nikitakrapo.login.AuthDestinations
+import com.nikitakrapo.login.LoginFeature
+import com.nikitakrapo.login.ui.LogInScreen
+import com.nikitakrapo.login.viewmodel.LoginViewModel
 import com.nikitakrapo.trip_details.TripDetailsFeature
 import com.nikitakrapo.trip_details.impl.ui.TripDetailsScreen
 import com.nikitakrapo.trip_details.impl.viewmodel.TripDetailsViewModel
@@ -29,62 +32,90 @@ fun TripsApp() {
     val navController = rememberNavController()
     NavHost(
         navController = navController,
-        startDestination = MainSections.Home.route
+        startDestination = MainDestinations.Home.route
     ) {
         tripsAppNavGraph(navController)
     }
 }
 
-sealed class MainSections(val route: String) {
-    object Home : MainSections("home")
-    object Login : MainSections("login")
-    object TripDetails : MainSections("trip_details") {
+sealed class MainDestinations(val route: String) {
+    object Home : MainDestinations("home")
+    object Authorization : MainDestinations("authorization")
+    object TripDetails : MainDestinations("trip_details") {
         const val tripNameArg = "tripName"
         val fullRoute = "$route/{$tripNameArg}"
     }
-
-    object AddTrip : MainSections("add_trip")
+    object AddTrip : MainDestinations("add_trip")
 }
 
 fun NavGraphBuilder.tripsAppNavGraph(
     navController: NavController,
 ) {
-    composable(MainSections.Home.route) {
+    composable(MainDestinations.Home.route) {
         Home(
-            openLogin = { navController.navigate(MainSections.Login.route) },
-            openTripCard = { navController.navigate("${MainSections.TripDetails.route}/${it}") }, // xd
-            openAddTrip = { navController.navigate(MainSections.AddTrip.route) },
+            openAuthorization = { navController.navigate(MainDestinations.Authorization.route) },
+            openTripCard = { navController.navigate("${MainDestinations.TripDetails.route}/${it}") },
+            openAddTrip = { navController.navigate(MainDestinations.AddTrip.route) },
         )
     }
 
-    composable(MainSections.Login.route) {
-        val mainLoginViewModel: MainLoginViewModel = hiltViewModel()
-        val uiState = mainLoginViewModel.component.state.collectAsState()
+    navigation(
+        route = MainDestinations.Authorization.route,
+        startDestination = AuthDestinations.LogIn.route
+    ) {
+        composable(route = AuthDestinations.LogIn.route) {
+            val loginViewModel: LoginViewModel = hiltViewModel()
+            val component = loginViewModel.component
+            val uiState = loginViewModel.component.state.collectAsState()
 
-        LaunchedEffect(Unit) {
-            mainLoginViewModel.component.news.collect { news ->
-                when (news) {
-                    is MainLoginFeature.News.CloseScreen ->
-                        navController.popBackStack(MainSections.Login.route, true)
+            LaunchedEffect(Unit) {
+                loginViewModel.component.news.collect { news ->
+                    when (news) {
+                        is LoginFeature.News.CloseScreen -> {
+                            navController.popBackStack(
+                                AuthDestinations.LogIn.route,
+                                true
+                            )
+                        }
+                        is LoginFeature.News.OpenRegistration -> {
+                            navController.navigate(AuthDestinations.Registration.route)
+                        }
+                    }
                 }
             }
+
+            LogInScreen(
+                state = uiState.value,
+                onEmailTextChanged = { email ->
+                    component.accept(LoginFeature.Intent.ChangeEmailText(email))
+                },
+                onPasswordTextChanged = { password ->
+                    component.accept(LoginFeature.Intent.ChangePasswordText(password))
+                },
+                onPasswordVisibilityClick = {
+                    component.accept(LoginFeature.Intent.ChangePassportVisibility)
+                },
+                doLogin = {
+                    component.accept(LoginFeature.Intent.PerformLogin)
+                },
+                openRegistration = {
+                    component.accept(LoginFeature.Intent.OpenRegistration)
+                },
+            )
         }
 
-        MainLoginScreen(
-            state = uiState.value,
-            onBackArrowClicked = {
-                navController.popBackStack(MainSections.Login.route, true)
-            },
-        )
+        composable(route = AuthDestinations.Registration.route) {
+            Text("NOT YET IMPLEMENTED")
+        }
     }
 
     composable(
-        route = "${MainSections.TripDetails.route}/{${MainSections.TripDetails.tripNameArg}}",
-        arguments = listOf(navArgument(MainSections.TripDetails.tripNameArg) {
+        route = "${MainDestinations.TripDetails.route}/{${MainDestinations.TripDetails.tripNameArg}}",
+        arguments = listOf(navArgument(MainDestinations.TripDetails.tripNameArg) {
             type = NavType.StringType
         })
     ) { backStackEntry ->
-        val tripName = backStackEntry.arguments?.getString(MainSections.TripDetails.tripNameArg)
+        val tripName = backStackEntry.arguments?.getString(MainDestinations.TripDetails.tripNameArg)
         if (tripName == null) {
             Timber.e("TripName not passed")
         }
@@ -95,7 +126,7 @@ fun NavGraphBuilder.tripsAppNavGraph(
             tripDetailsViewModel.component.news.collect { news ->
                 when (news) {
                     is TripDetailsFeature.News.CloseScreen ->
-                        navController.popBackStack(MainSections.TripDetails.fullRoute, true)
+                        navController.popBackStack(MainDestinations.TripDetails.fullRoute, true)
                 }
             }
         }
@@ -103,7 +134,7 @@ fun NavGraphBuilder.tripsAppNavGraph(
         TripDetailsScreen(
             state = uiState.value,
             onBackArrowClicked = {
-                navController.popBackStack(MainSections.TripDetails.fullRoute, true)
+                navController.popBackStack(MainDestinations.TripDetails.fullRoute, true)
             },
             onMoreClicked = {
                 tripDetailsViewModel.component.accept(TripDetailsFeature.Intent.OpenDropdownMenu)
@@ -118,7 +149,7 @@ fun NavGraphBuilder.tripsAppNavGraph(
     }
 
     composable(
-        route = MainSections.AddTrip.route
+        route = MainDestinations.AddTrip.route
     ) {
         val addTripViewModel: AddTripViewModel = hiltViewModel()
         val uiState = addTripViewModel.component.state.collectAsState()
@@ -127,7 +158,7 @@ fun NavGraphBuilder.tripsAppNavGraph(
             addTripViewModel.component.news.collect { news ->
                 when (news) {
                     AddTripFeature.News.CloseScreen ->
-                        navController.popBackStack(MainSections.AddTrip.route, true)
+                        navController.popBackStack(MainDestinations.AddTrip.route, true)
                 }
             }
         }

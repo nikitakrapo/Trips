@@ -15,6 +15,9 @@ object Components {
     const val tripListImpl = ":components:trip_list:impl"
     const val addTripCore = ":components:add_trip:api"
     const val addTripImpl = ":components:add_trip:impl"
+
+    const val profileCore = ":components:profile:api"
+    const val profileImpl = ":components:profile:impl"
     const val loginCore = ":components:login:api"
     const val loginImpl = ":components:login:impl"
 }

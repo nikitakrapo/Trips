@@ -113,4 +113,5 @@ dependencies {
     implementation(project(Components.tripDetailsImpl))
     implementation(project(Components.addTripImpl))
     implementation(project(Components.loginImpl))
+    implementation(project(Components.profileImpl))
 }

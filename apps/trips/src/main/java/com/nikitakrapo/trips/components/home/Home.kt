@@ -1,9 +1,6 @@
 package com.nikitakrapo.trips.components.home
 
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
@@ -15,10 +12,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import com.nikitakrapo.profile.ProfileFeature
+import com.nikitakrapo.profile.ui.ProfileScreen
+import com.nikitakrapo.profile.viewmodel.ProfileViewModel
 import com.nikitakrapo.trip_list.component.TripListFeature
 import com.nikitakrapo.trip_list.impl.ui.TripList
 import com.nikitakrapo.trip_list.impl.viewmodel.UserTripListViewModel
-import com.nikitakrapo.trips.components.profile.Profile
 
 //TODO: move to "home" module
 @OptIn(
@@ -28,7 +27,7 @@ import com.nikitakrapo.trips.components.profile.Profile
 )
 @Composable
 fun Home(
-    openLogin: () -> Unit,
+    openAuthorization: () -> Unit,
     openTripCard: (String) -> Unit,
     openAddTrip: () -> Unit,
 ) {
@@ -54,10 +53,6 @@ fun Home(
                 when (screen) {
                     HomeSections.Trips -> composable(
                         route = screen.route,
-                        enterTransition = { fadeIn(animationSpec = tween(0)) },
-                        exitTransition = { fadeOut(animationSpec = tween(0)) },
-                        popEnterTransition = { fadeIn(animationSpec = tween(0)) },
-                        popExitTransition = { fadeOut(animationSpec = tween(0)) },
                     ) {
                         val userTripListViewModel: UserTripListViewModel = hiltViewModel()
                         val uiState = userTripListViewModel.component.state.collectAsState()
@@ -90,13 +85,22 @@ fun Home(
 
                     HomeSections.Profile -> composable(
                         route = screen.route,
-                        enterTransition = { fadeIn(animationSpec = tween(0)) },
-                        exitTransition = { fadeOut(animationSpec = tween(0)) },
-                        popEnterTransition = { fadeIn(animationSpec = tween(0)) },
-                        popExitTransition = { fadeOut(animationSpec = tween(0)) },
                     ) {
-                        Profile(
-                            navigateToLogin = openLogin
+                        val profileViewModel: ProfileViewModel = hiltViewModel()
+                        val uiState = profileViewModel.component.state.collectAsState()
+                        val component = profileViewModel.component
+
+                        LaunchedEffect(Unit) {
+                            profileViewModel.component.news.collect { news ->
+                                when (news) {
+                                    is ProfileFeature.News.OpenAuthorization -> openAuthorization()
+                                }
+                            }
+                        }
+
+                        ProfileScreen(
+                            state = uiState.value,
+                            openAuthorization = { component.accept(ProfileFeature.Intent.OpenAuthorization) },
                         )
                     }
                 }

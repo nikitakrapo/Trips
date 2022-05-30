@@ -1,15 +1,15 @@
 package com.nikitakrapo.am
 
-import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.nikitakrapo.am.AccountManager.AuthorizationResult
-import com.nikitakrapo.dto.Account
 import com.nikitakrapo.firebase.FirebaseWrapper
 import kotlinx.coroutines.tasks.asDeferred
 import timber.log.Timber
 import javax.inject.Inject
 
-class AccountManagerImpl @Inject constructor() : AccountManager {
+class AccountManagerImpl @Inject constructor(
+    private val accountStorageImpl: AccountStorageImpl,
+) : AccountManager {
 
     private val auth: FirebaseAuth
         get() = FirebaseWrapper.auth
@@ -32,6 +32,7 @@ class AccountManagerImpl @Inject constructor() : AccountManager {
         val resultDeferred = auth.createUserWithEmailAndPassword(email, password).asDeferred()
         return try {
             val firebaseAuthResult = resultDeferred.await()
+            onNewAccount()
             AuthorizationResult.Success(firebaseAuthResult.toAccount())
         } catch (e: Exception) {
             Timber.e(e, "Creating user failed")
@@ -57,6 +58,7 @@ class AccountManagerImpl @Inject constructor() : AccountManager {
         return try {
             val firebaseAuthResult = resultDeferred.await()
             Timber.d("Signing success with $firebaseAuthResult")
+            onNewAccount()
             AuthorizationResult.Success(firebaseAuthResult.toAccount())
         } catch (e: Exception) {
             Timber.e(e, "Signing in user failed")
@@ -64,13 +66,7 @@ class AccountManagerImpl @Inject constructor() : AccountManager {
         }
     }
 
-    private fun AuthResult.toAccount(): Account? {
-        return user?.let { firebaseUser ->
-            Account(
-                uid = firebaseUser.uid,
-                email = firebaseUser.email,
-                displayName = firebaseUser.displayName,
-            )
-        }
+    private fun onNewAccount() {
+        accountStorageImpl.onNewAccount()
     }
 }
