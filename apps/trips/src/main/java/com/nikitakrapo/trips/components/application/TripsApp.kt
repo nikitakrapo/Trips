@@ -1,6 +1,5 @@
 package com.nikitakrapo.trips.components.application
 
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -18,8 +17,11 @@ import com.nikitakrapo.add_trip.impl.ui.AddTripScreen
 import com.nikitakrapo.add_trip.impl.viewmodel.AddTripViewModel
 import com.nikitakrapo.login.AuthDestinations
 import com.nikitakrapo.login.LoginFeature
+import com.nikitakrapo.login.RegistrationFeature
 import com.nikitakrapo.login.ui.LogInScreen
+import com.nikitakrapo.login.ui.RegistrationScreen
 import com.nikitakrapo.login.viewmodel.LoginViewModel
+import com.nikitakrapo.login.viewmodel.RegistrationViewModel
 import com.nikitakrapo.trip_details.TripDetailsFeature
 import com.nikitakrapo.trip_details.impl.ui.TripDetailsScreen
 import com.nikitakrapo.trip_details.impl.viewmodel.TripDetailsViewModel
@@ -45,6 +47,7 @@ sealed class MainDestinations(val route: String) {
         const val tripNameArg = "tripName"
         val fullRoute = "$route/{$tripNameArg}"
     }
+
     object AddTrip : MainDestinations("add_trip")
 }
 
@@ -93,19 +96,62 @@ fun NavGraphBuilder.tripsAppNavGraph(
                     component.accept(LoginFeature.Intent.ChangePasswordText(password))
                 },
                 onPasswordVisibilityClick = {
-                    component.accept(LoginFeature.Intent.ChangePassportVisibility)
+                    component.accept(LoginFeature.Intent.ChangePasswordVisibility)
                 },
-                doLogin = {
+                onLoginClicked = {
                     component.accept(LoginFeature.Intent.PerformLogin)
                 },
                 openRegistration = {
                     component.accept(LoginFeature.Intent.OpenRegistration)
                 },
+                onBackArrowPressed = {
+                    component.accept(LoginFeature.Intent.CloseScreen)
+                },
             )
         }
 
         composable(route = AuthDestinations.Registration.route) {
-            Text("NOT YET IMPLEMENTED")
+            val registrationViewModel: RegistrationViewModel = hiltViewModel()
+            val component = registrationViewModel.component
+            val uiState = component.state.collectAsState()
+
+            LaunchedEffect(Unit) {
+                component.news.collect { news ->
+                    when (news) {
+                        is RegistrationFeature.News.CloseScreen -> {
+                            navController.popBackStack(
+                                AuthDestinations.Registration.route,
+                                true
+                            )
+                        }
+                        is RegistrationFeature.News.CloseAuthorization -> {
+                            navController.popBackStack(
+                                MainDestinations.Authorization.route,
+                                true
+                            )
+                        }
+                    }
+                }
+            }
+
+            RegistrationScreen(
+                state = uiState.value,
+                onEmailTextChanged = { email ->
+                    component.accept(RegistrationFeature.Intent.ChangeEmailText(email))
+                },
+                onPasswordTextChanged = { password ->
+                    component.accept(RegistrationFeature.Intent.ChangePasswordText(password))
+                },
+                onPasswordVisibilityClick = {
+                    component.accept(RegistrationFeature.Intent.ChangePasswordVisibility)
+                },
+                onRegisterClicked = {
+                    component.accept(RegistrationFeature.Intent.PerformRegistration)
+                },
+                onBackArrowPressed = {
+                    component.accept(RegistrationFeature.Intent.GoBack)
+                }
+            )
         }
     }
 

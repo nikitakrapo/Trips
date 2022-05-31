@@ -1,20 +1,15 @@
-@file:JvmName("LogInScreenKt")
-
 package com.nikitakrapo.login.ui
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.OutlinedTextField
@@ -34,27 +29,23 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.nikitakrapo.login.LoginFeature.State
+import com.nikitakrapo.login.RegistrationFeature.State
 import com.nikitakrapo.login.impl.R
-import com.nikitakrapo.trips_design.preview.ThemedPreview
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LogInScreen(
+fun RegistrationScreen(
     modifier: Modifier = Modifier,
     state: State,
     onEmailTextChanged: (String) -> Unit,
     onPasswordTextChanged: (String) -> Unit,
     onPasswordVisibilityClick: () -> Unit,
-    onLoginClicked: () -> Unit,
-    openRegistration: () -> Unit,
+    onRegisterClicked: () -> Unit,
     onBackArrowPressed: () -> Unit,
 ) {
     Scaffold(
@@ -87,7 +78,7 @@ fun LogInScreen(
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            OutlinedTextField(
+            OutlinedTextField( //TODO: maybe move out password textfield logic
                 modifier = Modifier.fillMaxWidth(),
                 isError = state.loginError != null,
                 visualTransformation = if (state.isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
@@ -138,46 +129,15 @@ fun LogInScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(42.dp),
-                onClick = onLoginClicked,
-                enabled = !state.isLoggingIn,
+                onClick = onRegisterClicked,
+                enabled = !state.isRegistering,
             ) {
-                if (!state.isLoggingIn) {
-                    Text(text = stringResource(R.string.login_button_text))
+                if (!state.isRegistering) {
+                    Text(text = stringResource(R.string.register_button_text))
                 } else {
                     CircularProgressIndicator(modifier = Modifier.size(32.dp))
                 }
             }
-
-            Spacer(modifier = Modifier.height(12.dp))
-
-            Row {
-                Text(text = stringResource(R.string.login_not_registered_yet_question))
-
-                Spacer(modifier = Modifier.width(4.dp))
-
-                Text(
-                    modifier = Modifier.clickable(onClick = openRegistration),
-                    text = stringResource(R.string.login_sign_up),
-                    color = Color.Blue,
-                )
-            }
         }
-
-    }
-}
-
-@Preview
-@Composable
-fun LoginScreenPreview() {
-    ThemedPreview {
-        LogInScreen(
-            state = State(),
-            onEmailTextChanged = {},
-            onPasswordTextChanged = {},
-            onPasswordVisibilityClick = {},
-            onLoginClicked = {},
-            openRegistration = {},
-            onBackArrowPressed = {}
-        )
     }
 }
