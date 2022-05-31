@@ -1,5 +1,6 @@
 package com.nikitakrapo.login.ui
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
@@ -48,6 +49,7 @@ fun RegistrationScreen(
     onRegisterClicked: () -> Unit,
     onBackArrowPressed: () -> Unit,
 ) {
+    BackHandler(onBack = onBackArrowPressed)
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar = {

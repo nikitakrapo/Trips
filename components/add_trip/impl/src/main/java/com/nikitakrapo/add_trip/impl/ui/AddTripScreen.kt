@@ -1,5 +1,6 @@
 package com.nikitakrapo.add_trip.impl.ui
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
@@ -37,10 +38,11 @@ import com.nikitakrapo.add_trip.impl.R
 fun AddTripScreen(
     modifier: Modifier = Modifier,
     state: State,
-    onBackArrowPressed: () -> Unit = {},
     onNameChanged: (String) -> Unit = {},
     onAddClick: () -> Unit = {},
+    onBackArrowPressed: () -> Unit = {},
 ) {
+    BackHandler(onBack = onBackArrowPressed)
     val localFocusManager = LocalFocusManager.current
     Scaffold(
         modifier = modifier

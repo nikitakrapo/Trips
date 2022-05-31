@@ -7,7 +7,6 @@ import com.nikitakrapo.mvi.elements.NewsPublisher
 import com.nikitakrapo.mvi.elements.Reducer
 import com.nikitakrapo.mvi.extensions.SameThreadVerifier
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -45,7 +44,7 @@ open class BaseFeature<Intent : Any, Action : Any, Effect : Any, State : Any, Ne
     private val actions: MutableSharedFlow<Action> = MutableSharedFlow()
 
     init {
-        featureScope.launch(Dispatchers.Unconfined) {
+        featureScope.launch(dispatchers.unconfined) {
             actions.collect { action ->
                 actorInternalWrapper.act(action, state.value)
             }
@@ -61,7 +60,7 @@ open class BaseFeature<Intent : Any, Action : Any, Effect : Any, State : Any, Ne
     }
 
     override fun accept(intent: Intent) {
-        featureScope.launch(Dispatchers.Unconfined) { actions.emit(intentToAction(intent)) }
+        featureScope.launch(dispatchers.unconfined) { actions.emit(intentToAction(intent)) }
     }
 
     override fun dispose() {
@@ -101,7 +100,7 @@ open class BaseFeature<Intent : Any, Action : Any, Effect : Any, State : Any, Ne
     ) {
         fun publish(action: Action, effect: Effect, state: State) {
             newsPublisher?.publish(action, effect, state)?.let { news ->
-                featureScope.launch {
+                featureScope.launch (dispatchers.mainImmediate){
                     _news.emit(news)
                 }
             }

@@ -5,18 +5,13 @@ import com.google.firebase.auth.FirebaseUser
 import com.nikitakrapo.dto.Account
 
 fun AuthResult.toAccount(): Account? {
-    return user?.let { firebaseUser ->
-        Account(
-            uid = firebaseUser.uid,
-            email = firebaseUser.email,
-            displayName = firebaseUser.displayName,
-        )
-    }
+    return user?.toAccount()
 }
 
 fun FirebaseUser.toAccount(): Account {
     return Account(
         uid = uid,
+        isEmailConfirmed = isEmailVerified,
         email = email,
         displayName = displayName
     )

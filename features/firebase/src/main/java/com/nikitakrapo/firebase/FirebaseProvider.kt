@@ -5,12 +5,22 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import javax.inject.Inject
+import javax.inject.Singleton
 
-object FirebaseWrapper {
+@Singleton
+class FirebaseProvider @Inject constructor() {
+
+    @Volatile
+    private var isInitialized = false
+
     fun init(
         context: Context,
     ) {
-        FirebaseApp.initializeApp(context)
+        if (!isInitialized) {
+            FirebaseApp.initializeApp(context)
+            isInitialized = true
+        }
     }
 
     val auth: FirebaseAuth

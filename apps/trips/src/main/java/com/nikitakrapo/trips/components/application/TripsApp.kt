@@ -179,7 +179,7 @@ fun NavGraphBuilder.tripsAppNavGraph(
 
         TripDetailsScreen(
             state = uiState.value,
-            onBackArrowClicked = {
+            onBackArrowPressed = {
                 navController.popBackStack(MainDestinations.TripDetails.fullRoute, true)
             },
             onMoreClicked = {

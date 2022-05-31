@@ -1,10 +1,19 @@
 package com.nikitakrapo.trip_details.impl.ui
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material3.*
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SmallTopAppBar
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -19,18 +28,19 @@ import com.nikitakrapo.trip_details.TripDetailsFeature.State
 fun TripDetailsScreen(
     modifier: Modifier = Modifier,
     state: State,
-    onBackArrowClicked: () -> Unit,
     onMoreClicked: () -> Unit,
     onMoreDismiss: () -> Unit,
     onDeleteClicked: () -> Unit,
+    onBackArrowPressed: () -> Unit,
 ) {
+    BackHandler(onBack = onBackArrowPressed)
     Scaffold(
         modifier = modifier,
         topBar = {
             SmallTopAppBar(
                 title = {},
                 navigationIcon = {
-                    IconButton(onClick = onBackArrowClicked) {
+                    IconButton(onClick = onBackArrowPressed) {
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
                             contentDescription = stringResource(R.string.cd_back_icon)

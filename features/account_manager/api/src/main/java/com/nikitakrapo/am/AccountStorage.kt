@@ -5,8 +5,5 @@ import kotlinx.coroutines.flow.StateFlow
 
 interface AccountStorage {
 
-    val account: Account?
-        get() = accountFlow.value
-
-    val accountFlow: StateFlow<Account?>
+    val accountStateFlow: StateFlow<Account?>
 }

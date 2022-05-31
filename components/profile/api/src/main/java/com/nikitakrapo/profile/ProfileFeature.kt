@@ -21,7 +21,7 @@ class ProfileFeature(
     accountManager: AccountManager,
     accountStorage: AccountStorage,
 ) : BaseFeature<Intent, Action, Effect, State, News>(
-    initialState = State(accountStorage.account?.toProfileAccount()),
+    initialState = State(accountStorage.accountStateFlow.value?.toProfileAccount()),
     intentToAction = {
         when (it) {
             Intent.OpenAuthorization -> Action.OpenAuthorization
@@ -59,7 +59,7 @@ class ProfileFeature(
         private val accountStorage: AccountStorage,
     ) : Bootstrapper<Action> {
         override fun bootstrap(): Flow<Action> =
-            accountStorage.accountFlow.map { Action.UpdateAccount(it) }
+            accountStorage.accountStateFlow.map { Action.UpdateAccount(it) }
     }
 
     private class ActorImpl(
