@@ -32,6 +32,10 @@ class FirebaseAccountManager @Inject constructor(
         return auth.signInWithEmailAndPassword(email, password).awaitAuthorizationResult()
     }
 
+    override fun signOut() {
+        auth.signOut()
+    }
+
     private suspend fun Task<AuthResult>.awaitAuthorizationResult(): AuthorizationResult {
         return try {
             val firebaseAuthResult = this.asDeferred().await()

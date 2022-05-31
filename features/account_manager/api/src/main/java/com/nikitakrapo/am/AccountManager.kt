@@ -8,6 +8,8 @@ interface AccountManager {
 
     suspend fun signInUserByEmailPassword(email: String, password: String): AuthorizationResult
 
+    fun signOut()
+
     sealed class AuthorizationResult {
         class Success(val account: Account?) : AuthorizationResult()
         class Error(val error: Exception) : AuthorizationResult()

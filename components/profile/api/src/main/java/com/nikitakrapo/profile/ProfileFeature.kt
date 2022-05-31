@@ -25,6 +25,7 @@ class ProfileFeature(
     intentToAction = {
         when (it) {
             Intent.OpenAuthorization -> Action.OpenAuthorization
+            Intent.SignOut -> Action.SignOut
         }
     },
     bootstrapper = BootstrapperImpl(accountStorage),
@@ -35,10 +36,12 @@ class ProfileFeature(
 
     sealed class Intent {
         object OpenAuthorization : Intent()
+        object SignOut : Intent()
     }
 
     sealed class Action {
         object OpenAuthorization : Action()
+        object SignOut : Action()
         class UpdateAccount(val account: Account?) : Action()
     }
 
@@ -71,6 +74,10 @@ class ProfileFeature(
                     flow { emit(Effect.OpenAuthorization) }
                 is Action.UpdateAccount ->
                     flow { emit(Effect.AccountUpdated(action.account?.toProfileAccount())) }
+                is Action.SignOut ->
+                    flow {
+                        accountManager.signOut()
+                    }
             }
     }
 
