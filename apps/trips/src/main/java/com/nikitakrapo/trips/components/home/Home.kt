@@ -101,7 +101,8 @@ fun Home(
                         ProfileScreen(
                             state = uiState.value,
                             openAuthorization = { component.accept(ProfileFeature.Intent.OpenAuthorization) },
-                            signOut = { component.accept(ProfileFeature.Intent.SignOut) }
+                            signOut = { component.accept(ProfileFeature.Intent.SignOut) },
+                            deleteAccount = { component.accept(ProfileFeature.Intent.RemoveAccount) }
                         )
                     }
                 }

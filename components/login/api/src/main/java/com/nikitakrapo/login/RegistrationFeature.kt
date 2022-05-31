@@ -1,6 +1,7 @@
 package com.nikitakrapo.login
 
 import com.nikitakrapo.am.AccountManager
+import com.nikitakrapo.dto.AuthorizationResult
 import com.nikitakrapo.login.RegistrationFeature.Effect
 import com.nikitakrapo.login.RegistrationFeature.Intent
 import com.nikitakrapo.login.RegistrationFeature.News
@@ -37,7 +38,7 @@ class RegistrationFeature(
         class ChangePasswordVisibility(val isVisible: Boolean) : Effect()
 
         object StartedRegistration : Effect()
-        class FinishedRegistration(val result: AccountManager.AuthorizationResult) : Effect()
+        class FinishedRegistration(val result: AuthorizationResult) : Effect()
         class UpdateRegistrationError(val e: Exception?) : Effect()
 
         object CloseScreen : Effect()
@@ -76,7 +77,7 @@ class RegistrationFeature(
                             password = state.passwordText
                         )
                         emit(Effect.FinishedRegistration(result))
-                        if (result is AccountManager.AuthorizationResult.Error) {
+                        if (result is AuthorizationResult.Error) {
                             emit(Effect.UpdateRegistrationError(result.error))
                         }
                     }
@@ -102,7 +103,7 @@ class RegistrationFeature(
         override fun publish(action: Intent, effect: Effect, state: State): News? =
             when (effect) {
                 is Effect.FinishedRegistration -> {
-                    if (effect.result is AccountManager.AuthorizationResult.Success)
+                    if (effect.result is AuthorizationResult.Success)
                         News.CloseAuthorization
                     else null
                 } //FIXME: inform user that he's registered

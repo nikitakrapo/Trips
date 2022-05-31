@@ -1,6 +1,7 @@
 package com.nikitakrapo.am
 
-import com.nikitakrapo.dto.Account
+import com.nikitakrapo.dto.AccountDeletionResult
+import com.nikitakrapo.dto.AuthorizationResult
 
 interface AccountManager {
 
@@ -10,8 +11,5 @@ interface AccountManager {
 
     fun signOut()
 
-    sealed class AuthorizationResult {
-        class Success(val account: Account?) : AuthorizationResult()
-        class Error(val error: Exception) : AuthorizationResult()
-    }
+    suspend fun deleteCurrentAccount(): AccountDeletionResult
 }

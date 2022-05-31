@@ -26,6 +26,7 @@ class ProfileFeature(
         when (it) {
             Intent.OpenAuthorization -> Action.OpenAuthorization
             Intent.SignOut -> Action.SignOut
+            Intent.RemoveAccount -> Action.RemoveAccount
         }
     },
     bootstrapper = BootstrapperImpl(accountStorage),
@@ -37,12 +38,14 @@ class ProfileFeature(
     sealed class Intent {
         object OpenAuthorization : Intent()
         object SignOut : Intent()
+        object RemoveAccount : Intent()
     }
 
     sealed class Action {
         object OpenAuthorization : Action()
         object SignOut : Action()
         class UpdateAccount(val account: Account?) : Action()
+        object RemoveAccount : Action()
     }
 
     sealed class Effect {
@@ -77,6 +80,11 @@ class ProfileFeature(
                 is Action.SignOut ->
                     flow {
                         accountManager.signOut()
+                    }
+                is Action.RemoveAccount ->
+                    flow {
+                        val result = accountManager.deleteCurrentAccount()
+                        //FIXME: handle deletion error
                     }
             }
     }

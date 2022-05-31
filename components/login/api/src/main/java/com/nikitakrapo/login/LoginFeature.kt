@@ -1,7 +1,7 @@
 package com.nikitakrapo.login
 
 import com.nikitakrapo.am.AccountManager
-import com.nikitakrapo.am.AccountManager.AuthorizationResult
+import com.nikitakrapo.dto.AuthorizationResult
 import com.nikitakrapo.login.LoginFeature.Effect
 import com.nikitakrapo.login.LoginFeature.Intent
 import com.nikitakrapo.login.LoginFeature.News

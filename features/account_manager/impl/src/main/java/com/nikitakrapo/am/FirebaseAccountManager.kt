@@ -3,7 +3,10 @@ package com.nikitakrapo.am
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
-import com.nikitakrapo.am.AccountManager.AuthorizationResult
+import com.google.firebase.auth.FirebaseAuthRecentLoginRequiredException
+import com.nikitakrapo.dto.AccountDeletionException
+import com.nikitakrapo.dto.AccountDeletionResult
+import com.nikitakrapo.dto.AuthorizationResult
 import com.nikitakrapo.firebase.FirebaseProvider
 import kotlinx.coroutines.tasks.asDeferred
 import timber.log.Timber
@@ -35,6 +38,24 @@ class FirebaseAccountManager @Inject constructor(
     override fun signOut() {
         auth.signOut()
     }
+
+    override suspend fun deleteCurrentAccount(): AccountDeletionResult {
+        return auth.currentUser?.let { user ->
+            try {
+                user.delete().asDeferred().await()
+                AccountDeletionResult.Success
+            } catch (e: Exception) {
+                AccountDeletionResult.Error(e.toAccountDeletionException())
+            }
+        } ?: AccountDeletionResult.Error(AccountDeletionException.NoCurrentUserException)
+    }
+
+    private fun Exception.toAccountDeletionException(): AccountDeletionException =
+        when (this) {
+            is FirebaseAuthRecentLoginRequiredException ->
+                AccountDeletionException.RecentLoginRequiredException
+            else -> AccountDeletionException.UnknownException
+        }
 
     private suspend fun Task<AuthResult>.awaitAuthorizationResult(): AuthorizationResult {
         return try {
