@@ -21,7 +21,9 @@ class ProfileFeature(
     accountManager: AccountManager,
     accountStorage: AccountStorage,
 ) : BaseFeature<Intent, Action, Effect, State, News>(
-    initialState = State(accountStorage.accountStateFlow.value?.toProfileAccount()),
+    initialState = accountStorage.account?.let {
+        State.Authorized(it.toProfileModel())
+    } ?: State.Unauthorized,
     intentToAction = {
         when (it) {
             Intent.OpenAuthorization -> Action.OpenAuthorization
@@ -53,9 +55,13 @@ class ProfileFeature(
         class AccountUpdated(val user: ProfileAccount?) : Effect()
     }
 
-    data class State(
-        val authorizedUser: ProfileAccount?,
-    )
+    sealed class State {
+        data class Authorized(
+            val authorizedUser: ProfileAccount
+        ) : State()
+
+        object Unauthorized : State()
+    }
 
     sealed class News {
         object OpenAuthorization : News()
@@ -76,7 +82,7 @@ class ProfileFeature(
                 is Action.OpenAuthorization ->
                     flow { emit(Effect.OpenAuthorization) }
                 is Action.UpdateAccount ->
-                    flow { emit(Effect.AccountUpdated(action.account?.toProfileAccount())) }
+                    flow { emit(Effect.AccountUpdated(action.account?.toProfileModel())) }
                 is Action.SignOut ->
                     flow {
                         accountManager.signOut()
@@ -92,7 +98,10 @@ class ProfileFeature(
     private object ReducerImpl : Reducer<Effect, State> {
         override fun reduce(effect: Effect, state: State): State =
             when (effect) {
-                is Effect.AccountUpdated -> state.copy(authorizedUser = effect.user)
+                is Effect.AccountUpdated -> {
+                    val account = effect.user
+                    if (account != null) State.Authorized(effect.user) else State.Unauthorized
+                }
                 is Effect.OpenAuthorization -> state
             }
     }

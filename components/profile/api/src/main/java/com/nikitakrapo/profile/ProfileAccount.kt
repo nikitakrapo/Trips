@@ -6,7 +6,7 @@ data class ProfileAccount(
     val email: String?
 )
 
-fun Account.toProfileAccount(): ProfileAccount {
+fun Account.toProfileModel(): ProfileAccount {
     return ProfileAccount(
         email = this.email
     )
