@@ -10,13 +10,16 @@ fun ProfileScreen(
     state: State,
     openAuthorization: () -> Unit,
     signOut: () -> Unit,
+    openSettings: () -> Unit,
     deleteAccount: () -> Unit,
 ) {
     when (state) {
         is State.Authorized -> AuthorizedProfileScreen(
             modifier = modifier,
             state = state,
-            signOut = signOut,
+            logout = signOut,
+            openSettings = openSettings,
+            deleteAccount = deleteAccount,
         )
         is State.Unauthorized -> UnauthorizedProfileScreen(
             modifier = modifier,

@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="cd_profile_delete_account">Delete account</string>
+    <string name="profile_profile_picture">Profile picture</string>
+    <string name="profile_cd_logout">Logout</string>
+    <string name="profile_logout">Logout</string>
+    <string name="profile_cd_settings">Settings</string>
+    <string name="profile_settings">Settings</string>
+    <string name="profile_cd_delete_account">Delete account</string>
+    <string name="profile_delete_account">Delete account</string>
+    <string name="profile_delete_account_reauth">You may need to re-authorize</string>
 </resources>

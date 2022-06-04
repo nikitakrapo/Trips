@@ -44,11 +44,14 @@ android {
 dependencies {
     api(project(Components.profileCore))
     implementation(project(Features.accountManagerImpl))
+    implementation(project(Features.tripsDesign))
 
     implementation(JetpackCompose.ui)
     implementation(JetpackCompose.material)
     implementation(JetpackCompose.material3)
     implementation(JetpackCompose.constraintLayout)
+    implementation(JetpackCompose.uiToolingPreview)
+    implementation(Google.accompanistSystemUiController)
 
     implementation(Google.hilt)
     implementation(Google.hiltNavigationCompose)

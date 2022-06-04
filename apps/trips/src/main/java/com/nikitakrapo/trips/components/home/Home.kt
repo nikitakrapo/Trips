@@ -96,6 +96,7 @@ fun Home(
                             state = uiState.value,
                             openAuthorization = { component.accept(ProfileFeature.Intent.OpenAuthorization) },
                             signOut = { component.accept(ProfileFeature.Intent.SignOut) },
+                            openSettings = { /*TODO*/ },
                             deleteAccount = { component.accept(ProfileFeature.Intent.RemoveAccount) }
                         )
                     }
