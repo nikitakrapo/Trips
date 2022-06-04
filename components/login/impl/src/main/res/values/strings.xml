@@ -11,4 +11,6 @@
     <string name="login_sign_up">Sign Up</string>
     <string name="login_not_registered_yet_question">Not registered yet?</string>
     <string name="register_button_text">Register</string>
+    <string name="login_registration_title">Registration</string>
+    <string name="login_login_title">Logging in</string>
 </resources>

@@ -7,6 +7,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -20,6 +21,7 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -27,7 +29,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SmallTopAppBar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -56,8 +57,8 @@ fun LogInScreen(
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar = {
-            SmallTopAppBar(
-                title = {},
+            CenterAlignedTopAppBar(
+                title = { Text(text = stringResource(id = R.string.login_login_title)) },
                 navigationIcon = {
                     IconButton(onClick = onBackArrowPressed) {
                         Icon(
@@ -70,7 +71,10 @@ fun LogInScreen(
         },
     ) {
         Column(
-            modifier = Modifier.padding(horizontal = 54.dp),
+            modifier = Modifier
+                .padding(horizontal = 54.dp)
+                .fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             OutlinedTextField(

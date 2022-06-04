@@ -1,6 +1,5 @@
 package com.nikitakrapo.trips.components.home
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
@@ -9,9 +8,9 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.google.accompanist.navigation.animation.AnimatedNavHost
-import com.google.accompanist.navigation.animation.composable
-import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.nikitakrapo.profile.ProfileFeature
 import com.nikitakrapo.profile.ui.ProfileScreen
 import com.nikitakrapo.profile.viewmodel.ProfileViewModel
@@ -20,11 +19,6 @@ import com.nikitakrapo.trip_list.impl.ui.TripList
 import com.nikitakrapo.trip_list.impl.viewmodel.UserTripListViewModel
 
 //TODO: move to "home" module
-@OptIn(
-    ExperimentalAnimationApi::class,
-    com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi::class,
-    androidx.compose.material.ExperimentalMaterialApi::class
-)
 @Composable
 fun Home(
     openAuthorization: () -> Unit,
@@ -35,7 +29,7 @@ fun Home(
         HomeSections.Trips,
         HomeSections.Profile
     )
-    val navController = rememberAnimatedNavController()
+    val navController = rememberNavController()
     Scaffold(
         bottomBar = {
             TripsNavigationBar(
@@ -44,7 +38,7 @@ fun Home(
             )
         }
     ) { innerPadding ->
-        AnimatedNavHost(
+        NavHost(
             navController,
             startDestination = HomeSections.Trips.route,
             Modifier.padding(innerPadding)
