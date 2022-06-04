@@ -17,12 +17,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -37,13 +34,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.nikitakrapo.login.LoginFeature.State
 import com.nikitakrapo.login.impl.R
+import com.nikitakrapo.trips_design.components.PasswordOutlinedTextField
 import com.nikitakrapo.trips_design.preview.ThemedPreview
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -53,7 +48,6 @@ fun LogInScreen(
     state: State,
     onEmailTextChanged: (String) -> Unit,
     onPasswordTextChanged: (String) -> Unit,
-    onPasswordVisibilityClick: () -> Unit,
     onLoginClicked: () -> Unit,
     openRegistration: () -> Unit,
     onBackArrowPressed: () -> Unit,
@@ -89,32 +83,11 @@ fun LogInScreen(
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            OutlinedTextField(
+            PasswordOutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
-                isError = state.loginError != null,
-                visualTransformation = if (state.isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                trailingIcon = {
-                    val image = if (state.isPasswordVisible) {
-                        Icons.Filled.Visibility
-                    } else {
-                        Icons.Filled.VisibilityOff
-                    }
-                    val description = stringResource(
-                        if (state.isPasswordVisible) {
-                            R.string.login_cd_show_password
-                        } else {
-                            R.string.login_cd_hide_password
-                        }
-                    )
-
-                    IconButton(onClick = onPasswordVisibilityClick) {
-                        Icon(imageVector = image, description)
-                    }
-                },
-                label = { Text(text = stringResource(R.string.password_text_field_label)) },
                 value = state.passwordText,
                 onValueChange = onPasswordTextChanged,
+                isError = state.loginError != null
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -176,7 +149,6 @@ fun LoginScreenPreview() {
             state = State(),
             onEmailTextChanged = {},
             onPasswordTextChanged = {},
-            onPasswordVisibilityClick = {},
             onLoginClicked = {},
             openRegistration = {},
             onBackArrowPressed = {}

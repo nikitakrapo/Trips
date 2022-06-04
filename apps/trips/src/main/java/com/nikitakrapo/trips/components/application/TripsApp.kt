@@ -95,9 +95,6 @@ fun NavGraphBuilder.tripsAppNavGraph(
                 onPasswordTextChanged = { password ->
                     component.accept(LoginFeature.Intent.ChangePasswordText(password))
                 },
-                onPasswordVisibilityClick = {
-                    component.accept(LoginFeature.Intent.ChangePasswordVisibility)
-                },
                 onLoginClicked = {
                     component.accept(LoginFeature.Intent.PerformLogin)
                 },
@@ -141,9 +138,6 @@ fun NavGraphBuilder.tripsAppNavGraph(
                 },
                 onPasswordTextChanged = { password ->
                     component.accept(RegistrationFeature.Intent.ChangePasswordText(password))
-                },
-                onPasswordVisibilityClick = {
-                    component.accept(RegistrationFeature.Intent.ChangePasswordVisibility)
                 },
                 onRegisterClicked = {
                     component.accept(RegistrationFeature.Intent.PerformRegistration)

@@ -30,7 +30,6 @@ class LoginFeature(
     sealed class Intent {
         class ChangeEmailText(val text: String) : Intent()
         class ChangePasswordText(val text: String) : Intent()
-        object ChangePasswordVisibility : Intent()
         object PerformLogin : Intent()
 
         object OpenRegistration : Intent()
@@ -40,7 +39,6 @@ class LoginFeature(
     sealed class Effect {
         class EmailTextChanged(val text: String) : Effect()
         class PasswordTextChanged(val text: String) : Effect()
-        class ChangePasswordVisibility(val isVisible: Boolean) : Effect()
 
         object StartedLoggingIn : Effect()
         class FinishedLoggingIn(val result: AuthorizationResult) : Effect()
@@ -53,7 +51,6 @@ class LoginFeature(
     data class State(
         val emailText: String = "",
         val passwordText: String = "",
-        val isPasswordVisible: Boolean = false,
         val loginError: String? = null,
         val isLoggingIn: Boolean = false,
     )
@@ -78,8 +75,6 @@ class LoginFeature(
                         emit(Effect.UpdateLoginError(null))
                         emit(Effect.PasswordTextChanged(action.text))
                     }
-                is Intent.ChangePasswordVisibility ->
-                    flow { emit(Effect.ChangePasswordVisibility(!state.isPasswordVisible)) }
                 is Intent.PerformLogin -> flow {
                     emit(Effect.StartedLoggingIn)
                     emit(Effect.UpdateLoginError(null))
@@ -99,7 +94,6 @@ class LoginFeature(
             when (effect) {
                 is Effect.EmailTextChanged -> state.copy(emailText = effect.text)
                 is Effect.PasswordTextChanged -> state.copy(passwordText = effect.text)
-                is Effect.ChangePasswordVisibility -> state.copy(isPasswordVisible = effect.isVisible)
                 //FIXME: normal message (probably make LoginError enum)
                 is Effect.UpdateLoginError -> state.copy(loginError = effect.e?.message)
                 is Effect.FinishedLoggingIn -> {
@@ -127,8 +121,7 @@ class LoginFeature(
                 is Effect.StartedLoggingIn,
                 is Effect.EmailTextChanged,
                 is Effect.UpdateLoginError,
-                is Effect.PasswordTextChanged,
-                is Effect.ChangePasswordVisibility -> null
+                is Effect.PasswordTextChanged -> null
             }
     }
 

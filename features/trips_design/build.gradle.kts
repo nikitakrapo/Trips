@@ -36,16 +36,22 @@ android {
         kotlinCompilerExtensionVersion = Versions.compose
         kotlinCompilerVersion = Config.kotlin
     }
+    packagingOptions {
+        resources.excludes.add("META-INF/AL2.0")
+        resources.excludes.add("META-INF/LGPL2.1")
+    }
 }
 
 dependencies {
     implementation(JetpackCompose.material)
+    implementation(JetpackCompose.materialIconsExtended)
     implementation(JetpackCompose.uiToolingPreview)
     implementation(JetpackCompose.ui)
     implementation(JetpackCompose.constraintLayout)
     implementation(JetpackCompose.material3)
     debugImplementation(JetpackCompose.uiTooling)
     androidTestImplementation(JetpackCompose.uiTestJunit4)
+    debugImplementation(JetpackCompose.uiTestManifest)
 
     implementation(Google.gson)
     implementation(Google.androidMaterial)

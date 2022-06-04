@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="cd_search">Search</string>
+    <string name="password_text_field_label">Password</string>
+    <string name="login_cd_show_password">Show password</string>
+    <string name="login_cd_hide_password">Hide password</string>
+    <string name="trips_design_cd_password_input">Password input</string>
+    <string name="trips_design_cd_toggle_password_visibility">Toggle password visibility</string>
 </resources>

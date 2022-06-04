@@ -26,7 +26,6 @@ class RegistrationFeature(
     sealed class Intent {
         class ChangeEmailText(val text: String) : Intent()
         class ChangePasswordText(val text: String) : Intent()
-        object ChangePasswordVisibility : Intent()
         object PerformRegistration : Intent()
 
         object GoBack : Intent()
@@ -35,7 +34,6 @@ class RegistrationFeature(
     sealed class Effect {
         class EmailTextChanged(val text: String) : Effect()
         class PasswordTextChanged(val text: String) : Effect()
-        class ChangePasswordVisibility(val isVisible: Boolean) : Effect()
 
         object StartedRegistration : Effect()
         class FinishedRegistration(val result: AuthorizationResult) : Effect()
@@ -47,7 +45,6 @@ class RegistrationFeature(
     data class State(
         val emailText: String = "",
         val passwordText: String = "",
-        val isPasswordVisible: Boolean = false,
         val loginError: String? = null,
         val isRegistering: Boolean = false,
     )
@@ -66,8 +63,6 @@ class RegistrationFeature(
                     flow { emit(Effect.EmailTextChanged(action.text)) }
                 is Intent.ChangePasswordText ->
                     flow { emit(Effect.PasswordTextChanged(action.text)) }
-                is Intent.ChangePasswordVisibility ->
-                    flow { emit(Effect.ChangePasswordVisibility(!state.isPasswordVisible)) }
                 is Intent.PerformRegistration ->
                     flow {
                         emit(Effect.StartedRegistration)
@@ -91,7 +86,6 @@ class RegistrationFeature(
             when (effect) {
                 is Effect.EmailTextChanged -> state.copy(emailText = effect.text)
                 is Effect.PasswordTextChanged -> state.copy(passwordText = effect.text)
-                is Effect.ChangePasswordVisibility -> state.copy(isPasswordVisible = effect.isVisible)
                 is Effect.UpdateRegistrationError -> state.copy(loginError = effect.e?.message)
                 is Effect.StartedRegistration -> state.copy(isRegistering = true)
                 is Effect.FinishedRegistration -> state.copy(isRegistering = false)
@@ -108,7 +102,6 @@ class RegistrationFeature(
                     else null
                 } //FIXME: inform user that he's registered
                 is Effect.CloseScreen -> News.CloseScreen
-                is Effect.ChangePasswordVisibility,
                 is Effect.EmailTextChanged,
                 is Effect.PasswordTextChanged,
                 is Effect.StartedRegistration,
