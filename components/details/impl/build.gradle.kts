@@ -42,8 +42,9 @@ android {
 }
 
 dependencies {
+    api(project(Features.navigation))
     implementation(project(Features.trips))
-    implementation(project(Components.tripDetailsCore))
+    api(project(Components.tripDetailsCore))
 
     implementation(JetpackCompose.ui)
     implementation(JetpackCompose.material)
@@ -51,8 +52,6 @@ dependencies {
     implementation(JetpackCompose.uiToolingPreview)
     implementation(JetpackCompose.constraintLayout)
     androidTestImplementation(JetpackCompose.uiTestJunit4)
-
-    implementation(project(Features.mvi))
 
     implementation(Google.hilt)
     implementation(Google.hiltNavigationCompose)

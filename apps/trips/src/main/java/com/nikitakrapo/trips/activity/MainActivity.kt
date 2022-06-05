@@ -10,7 +10,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.nikitakrapo.trips.appComponent
 import com.nikitakrapo.trips.components.application.TripsApp
 import com.nikitakrapo.trips_design.theme.TripsTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,7 +25,6 @@ class MainActivity : ComponentActivity() {
         splashScreen.setKeepOnScreenCondition { showSplashScreen }
 
         super.onCreate(savedInstanceState)
-        appComponent.inject(this)
         setContent {
             TripsTheme {
                 Surface(color = MaterialTheme.colorScheme.background) {

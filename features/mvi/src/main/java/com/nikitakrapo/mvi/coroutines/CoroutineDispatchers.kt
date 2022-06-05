@@ -8,4 +8,5 @@ class CoroutineDispatchers(
     val mainImmediate: CoroutineDispatcher = Dispatchers.Main.immediate,
     val io: CoroutineDispatcher = Dispatchers.IO,
     val default: CoroutineDispatcher = Dispatchers.Default,
+    val unconfined: CoroutineDispatcher = Dispatchers.Unconfined
 )

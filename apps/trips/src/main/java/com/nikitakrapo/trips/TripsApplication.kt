@@ -2,40 +2,36 @@ package com.nikitakrapo.trips
 
 import android.app.Application
 import android.content.Context
-import com.nikitakrapo.trips.analytics.firebase.AnalyticsCommonParameters
-import com.nikitakrapo.trips.analytics.firebase.AnalyticsEnvironment
+import com.nikitakrapo.firebase.FirebaseProvider
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
+import javax.inject.Inject
 
 @HiltAndroidApp
 class TripsApplication : Application() {
 
     lateinit var appComponent: AppComponent
 
+    @Inject
+    lateinit var firebaseProvider: FirebaseProvider
+
     override fun onCreate() {
         super.onCreate()
         appComponent = DaggerAppComponent.factory().create(this)
-        if (BuildConfig.DEBUG) {
-            Timber.plant(Timber.DebugTree())
-        }
+        appComponent.inject(this)
+
         initFirebase()
     }
 
     private fun initFirebase() {
-        val environment = if (BuildConfig.DEBUG) {
-            AnalyticsEnvironment.TESTING
-        } else {
-            AnalyticsEnvironment.PRODUCTION
-        }
-        val firebaseProvider = appComponent.firebaseProvider()
-        firebaseProvider.init(
-            this,
-            AnalyticsCommonParameters(
-                environment
-            )
-        )
+        firebaseProvider.init(this)
     }
 
+    private fun plantTimber() {
+        if (BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
+        }
+    }
 }
 
 val Context.appComponent: AppComponent

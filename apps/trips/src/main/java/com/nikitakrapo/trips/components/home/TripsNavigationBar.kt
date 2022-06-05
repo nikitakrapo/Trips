@@ -18,7 +18,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.nikitakrapo.trips.ui.NoRippleTheme
+import com.nikitakrapo.trips_design.composition_local.NoRippleTheme
 
 // TODO: separate from Navigation Component
 @Composable
