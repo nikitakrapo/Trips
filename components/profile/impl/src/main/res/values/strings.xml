@@ -9,4 +9,7 @@
     <string name="profile_cd_delete_account">Delete account</string>
     <string name="profile_delete_account">Delete account</string>
     <string name="profile_delete_account_reauth">You may need to re-authorize</string>
+    <string name="profile_to_auth">Sign In</string>
+    <string name="profile_to_registration">Sign Up</string>
+    <string name="profile_login_expanation">Login to use all features</string>
 </resources>
