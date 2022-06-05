@@ -11,17 +11,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import androidx.navigation.navigation
 import com.nikitakrapo.add_trip.AddTripFeature
 import com.nikitakrapo.add_trip.impl.ui.AddTripScreen
 import com.nikitakrapo.add_trip.impl.viewmodel.AddTripViewModel
-import com.nikitakrapo.login.AuthDestinations
-import com.nikitakrapo.login.LoginFeature
-import com.nikitakrapo.login.RegistrationFeature
-import com.nikitakrapo.login.ui.LogInScreen
-import com.nikitakrapo.login.ui.RegistrationScreen
-import com.nikitakrapo.login.viewmodel.LoginViewModel
-import com.nikitakrapo.login.viewmodel.RegistrationViewModel
+import com.nikitakrapo.login.navigation.AuthorizationDestinations
+import com.nikitakrapo.login.navigation.authorizationNavGraph
 import com.nikitakrapo.trip_details.TripDetailsFeature
 import com.nikitakrapo.trip_details.impl.ui.TripDetailsScreen
 import com.nikitakrapo.trip_details.impl.viewmodel.TripDetailsViewModel
@@ -40,9 +34,9 @@ fun TripsApp() {
     }
 }
 
+//FIXME: get rid of MainDestinations
 sealed class MainDestinations(val route: String) {
     object Home : MainDestinations("home")
-    object Authorization : MainDestinations("authorization")
     object TripDetails : MainDestinations("trip_details") {
         const val tripNameArg = "tripName"
         val fullRoute = "$route/{$tripNameArg}"
@@ -56,98 +50,14 @@ fun NavGraphBuilder.tripsAppNavGraph(
 ) {
     composable(MainDestinations.Home.route) {
         Home(
-            openAuthorization = { navController.navigate(MainDestinations.Authorization.route) },
+            openLogin = { navController.navigate(AuthorizationDestinations.LogIn.route) },
+            openRegistration = { navController.navigate(AuthorizationDestinations.Registration.route) },
             openTripCard = { navController.navigate("${MainDestinations.TripDetails.route}/${it}") },
             openAddTrip = { navController.navigate(MainDestinations.AddTrip.route) },
         )
     }
 
-    navigation(
-        route = MainDestinations.Authorization.route,
-        startDestination = AuthDestinations.LogIn.route
-    ) {
-        composable(route = AuthDestinations.LogIn.route) {
-            val loginViewModel: LoginViewModel = hiltViewModel()
-            val component = loginViewModel.component
-            val uiState = loginViewModel.component.state.collectAsState()
-
-            LaunchedEffect(Unit) {
-                loginViewModel.component.news.collect { news ->
-                    when (news) {
-                        is LoginFeature.News.CloseScreen -> {
-                            navController.popBackStack(
-                                AuthDestinations.LogIn.route,
-                                true
-                            )
-                        }
-                        is LoginFeature.News.OpenRegistration -> {
-                            navController.navigate(AuthDestinations.Registration.route)
-                        }
-                    }
-                }
-            }
-
-            LogInScreen(
-                state = uiState.value,
-                onEmailTextChanged = { email ->
-                    component.accept(LoginFeature.Intent.ChangeEmailText(email))
-                },
-                onPasswordTextChanged = { password ->
-                    component.accept(LoginFeature.Intent.ChangePasswordText(password))
-                },
-                onLoginClicked = {
-                    component.accept(LoginFeature.Intent.PerformLogin)
-                },
-                openRegistration = {
-                    component.accept(LoginFeature.Intent.OpenRegistration)
-                },
-                onBackArrowPressed = {
-                    component.accept(LoginFeature.Intent.CloseScreen)
-                },
-            )
-        }
-
-        composable(route = AuthDestinations.Registration.route) {
-            val registrationViewModel: RegistrationViewModel = hiltViewModel()
-            val component = registrationViewModel.component
-            val uiState = component.state.collectAsState()
-
-            LaunchedEffect(Unit) {
-                component.news.collect { news ->
-                    when (news) {
-                        is RegistrationFeature.News.CloseScreen -> {
-                            navController.popBackStack(
-                                AuthDestinations.Registration.route,
-                                true
-                            )
-                        }
-                        is RegistrationFeature.News.CloseAuthorization -> {
-                            navController.popBackStack(
-                                MainDestinations.Authorization.route,
-                                true
-                            )
-                        }
-                    }
-                }
-            }
-
-            RegistrationScreen(
-                state = uiState.value,
-                onEmailTextChanged = { email ->
-                    component.accept(RegistrationFeature.Intent.ChangeEmailText(email))
-                },
-                onPasswordTextChanged = { password ->
-                    component.accept(RegistrationFeature.Intent.ChangePasswordText(password))
-                },
-                onRegisterClicked = {
-                    component.accept(RegistrationFeature.Intent.PerformRegistration)
-                },
-                onBackArrowPressed = {
-                    component.accept(RegistrationFeature.Intent.GoBack)
-                }
-            )
-        }
-    }
+    authorizationNavGraph(navController)
 
     composable(
         route = "${MainDestinations.TripDetails.route}/{${MainDestinations.TripDetails.tripNameArg}}",

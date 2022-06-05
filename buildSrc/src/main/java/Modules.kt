@@ -1,5 +1,6 @@
 object Features {
     const val mvi = ":features:mvi"
+    const val navigation = ":features:navigation"
     const val accountManager = ":features:account_manager:api"
     const val accountManagerImpl = ":features:account_manager:impl"
     const val firebase = ":features:firebase"

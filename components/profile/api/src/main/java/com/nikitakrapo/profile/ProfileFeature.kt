@@ -26,7 +26,8 @@ class ProfileFeature(
     } ?: State.Unauthorized,
     intentToAction = {
         when (it) {
-            Intent.OpenAuthorization -> Action.OpenAuthorization
+            Intent.OpenLogin -> Action.OpenLogin
+            Intent.OpenRegistration -> Action.OpenRegistration
             Intent.SignOut -> Action.SignOut
             Intent.RemoveAccount -> Action.RemoveAccount
         }
@@ -38,20 +39,23 @@ class ProfileFeature(
 ) {
 
     sealed class Intent {
-        object OpenAuthorization : Intent()
+        object OpenLogin : Intent()
+        object OpenRegistration : Intent()
         object SignOut : Intent()
         object RemoveAccount : Intent()
     }
 
     sealed class Action {
-        object OpenAuthorization : Action()
+        object OpenLogin : Action()
+        object OpenRegistration : Action()
         object SignOut : Action()
         class UpdateAccount(val account: Account?) : Action()
         object RemoveAccount : Action()
     }
 
     sealed class Effect {
-        object OpenAuthorization : Effect()
+        object OpenLogin : Effect()
+        object OpenRegistration : Effect()
         class AccountUpdated(val user: ProfileAccount?) : Effect()
     }
 
@@ -64,7 +68,8 @@ class ProfileFeature(
     }
 
     sealed class News {
-        object OpenAuthorization : News()
+        object OpenLogin : News()
+        object OpenRegistration : News()
     }
 
     private class BootstrapperImpl(
@@ -79,8 +84,10 @@ class ProfileFeature(
     ) : Actor<Action, Effect, State> {
         override fun act(action: Action, state: State): Flow<Effect> =
             when (action) {
-                is Action.OpenAuthorization ->
-                    flow { emit(Effect.OpenAuthorization) }
+                is Action.OpenLogin ->
+                    flow { emit(Effect.OpenLogin) }
+                is Action.OpenRegistration ->
+                    flow { emit(Effect.OpenRegistration) }
                 is Action.UpdateAccount ->
                     flow { emit(Effect.AccountUpdated(action.account?.toProfileModel())) }
                 is Action.SignOut ->
@@ -102,14 +109,16 @@ class ProfileFeature(
                     val account = effect.user
                     if (account != null) State.Authorized(effect.user) else State.Unauthorized
                 }
-                is Effect.OpenAuthorization -> state
+                is Effect.OpenLogin,
+                is Effect.OpenRegistration -> state
             }
     }
 
     private object NewsPublisherImpl : NewsPublisher<Action, Effect, State, News> {
         override fun publish(action: Action, effect: Effect, state: State): News? =
             when (effect) {
-                is Effect.OpenAuthorization -> News.OpenAuthorization
+                is Effect.OpenLogin -> News.OpenLogin
+                is Effect.OpenRegistration -> News.OpenRegistration
                 is Effect.AccountUpdated -> null
             }
     }

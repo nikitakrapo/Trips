@@ -1,5 +1,6 @@
 package com.nikitakrapo.profile.ui
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -10,9 +11,16 @@ import com.nikitakrapo.profile.ProfileFeature
 fun UnauthorizedProfileScreen(
     modifier: Modifier = Modifier,
     state: ProfileFeature.State.Unauthorized,
-    openAuthorization: () -> Unit,
+    openLogin: () -> Unit,
+    openRegistration: () -> Unit,
 ) {
-    Button(onClick = openAuthorization) {
-        Text("To authorization")
+    Column(modifier = modifier) {
+        Button(onClick = openLogin) {
+            Text("To authorization")
+        }
+
+        Button(onClick = openRegistration) {
+            Text("To registration")
+        }
     }
 }

@@ -21,7 +21,8 @@ import com.nikitakrapo.trip_list.impl.viewmodel.UserTripListViewModel
 //TODO: move to "home" module
 @Composable
 fun Home(
-    openAuthorization: () -> Unit,
+    openLogin: () -> Unit,
+    openRegistration: () -> Unit,
     openTripCard: (String) -> Unit,
     openAddTrip: () -> Unit,
 ) {
@@ -87,14 +88,16 @@ fun Home(
                         LaunchedEffect(Unit) {
                             profileViewModel.component.news.collect { news ->
                                 when (news) {
-                                    is ProfileFeature.News.OpenAuthorization -> openAuthorization()
+                                    is ProfileFeature.News.OpenLogin -> openLogin()
+                                    is ProfileFeature.News.OpenRegistration -> openRegistration()
                                 }
                             }
                         }
 
                         ProfileScreen(
                             state = uiState.value,
-                            openAuthorization = { component.accept(ProfileFeature.Intent.OpenAuthorization) },
+                            openLogin = { component.accept(ProfileFeature.Intent.OpenLogin) },
+                            openRegistration = { component.accept(ProfileFeature.Intent.OpenRegistration) },
                             signOut = { component.accept(ProfileFeature.Intent.SignOut) },
                             openSettings = { /*TODO*/ },
                             deleteAccount = { component.accept(ProfileFeature.Intent.RemoveAccount) }

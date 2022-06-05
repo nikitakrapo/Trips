@@ -8,7 +8,8 @@ import com.nikitakrapo.profile.ProfileFeature.State
 fun ProfileScreen(
     modifier: Modifier = Modifier,
     state: State,
-    openAuthorization: () -> Unit,
+    openLogin: () -> Unit,
+    openRegistration: () -> Unit,
     signOut: () -> Unit,
     openSettings: () -> Unit,
     deleteAccount: () -> Unit,
@@ -24,7 +25,8 @@ fun ProfileScreen(
         is State.Unauthorized -> UnauthorizedProfileScreen(
             modifier = modifier,
             state = state,
-            openAuthorization = openAuthorization
+            openLogin = openLogin,
+            openRegistration = openRegistration
         )
     }
 }
