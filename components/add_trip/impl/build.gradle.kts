@@ -42,6 +42,7 @@ android {
 }
 
 dependencies {
+    api(project(Features.navigation))
     implementation(project(Features.trips))
     implementation(project(Features.tripsDesign))
     api(project(Components.addTripCore))
