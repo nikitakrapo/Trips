@@ -14,7 +14,7 @@ import com.nikitakrapo.login.viewmodel.LoginViewModel
 import com.nikitakrapo.login.viewmodel.RegistrationViewModel
 import com.nikitakrapo.navigation.NavigationDestination
 
-sealed class AuthorizationDestinations(route: String) : NavigationDestination(route) {
+sealed class AuthorizationDestinations(override val route: String) : NavigationDestination {
     object LogIn : AuthorizationDestinations("login")
     object Registration : AuthorizationDestinations("registration")
 }

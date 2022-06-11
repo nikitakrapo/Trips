@@ -11,7 +11,7 @@ import com.nikitakrapo.add_trip.impl.ui.AddTripScreen
 import com.nikitakrapo.add_trip.impl.viewmodel.AddTripViewModel
 import com.nikitakrapo.navigation.NavigationDestination
 
-sealed class AddTripDestinations(route: String) : NavigationDestination(route) {
+sealed class AddTripDestinations(override val route: String) : NavigationDestination {
     object AddTrip : AddTripDestinations("add_trip")
 }
 

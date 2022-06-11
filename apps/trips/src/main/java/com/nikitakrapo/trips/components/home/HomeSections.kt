@@ -11,7 +11,7 @@ import androidx.navigation.compose.composable
 import com.nikitakrapo.navigation.NavigationDestination
 import com.nikitakrapo.trips.R
 
-sealed class HomeDestinations(route: String) : NavigationDestination(route) {
+sealed class HomeDestinations(override val route: String) : NavigationDestination {
     object Home : HomeDestinations("home")
 }
 

@@ -13,7 +13,7 @@ import com.nikitakrapo.trip_details.TripDetailsFeature
 import com.nikitakrapo.trip_details.impl.ui.TripDetailsScreen
 import com.nikitakrapo.trip_details.impl.viewmodel.TripDetailsViewModel
 
-sealed class TripDetailsDestinations(route: String) : NavigationDestination(route) {
+sealed class TripDetailsDestinations(override val route: String) : NavigationDestination {
     object TripDetails : TripDetailsDestinations("trip_details") {
         const val tripNameArg = "tripName"
         val fullRoute = "$route/{$tripNameArg}"
